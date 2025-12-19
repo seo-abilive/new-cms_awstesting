@@ -1,0 +1,650 @@
+@charset "utf-8";
+/* ===================================================================
+CSS information
+
+file name  : telework.css
+author     : Abilive
+style info : テレワーク
+=================================================================== */
+@import "settings";
+
+// -----------------------------------------------------------
+//  con_intro
+// -----------------------------------------------------------
+.con_intro {
+	@extend %bw;
+	@include cV(margin-top, 80px, 10%);
+	text-align: center;
+	.txt {
+		@include cV(margin-top, 40px, 5%);
+		@include mq(sp) {text-align: left;}
+	}
+}
+
+// -----------------------------------------------------------
+//  con_pnav
+// -----------------------------------------------------------
+.con_pnav {
+	@extend %bw;
+	@include cV(margin, 40px auto 0,5% auto 0);
+	text-align: center;
+	display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+	li {
+		align-self: stretch;
+		letter-spacing: normal;
+		@include mq(pc) {
+			width: wCon(470,1920);
+			&:not(:nth-child(3n+1)) {
+				margin-left: 1.5%;
+			}
+			&:nth-child(n+4) {
+				margin-top: 2%;
+			}
+		}
+		@include mq(tab) {
+			width: wCon(520,1920);
+			&:not(:nth-child(3n+1)) {
+				margin-left: 1%;
+			}
+			&:nth-child(n+4) {
+				margin-top: 1.5%;
+			}
+		}
+		@include mq(sp) {
+			width: 90%;
+			margin-bottom: .5em;
+		}
+		a {
+			display: flex;
+			height: 100%;
+			justify-content: center;
+			align-items: center;
+			position: relative;
+			@include mq(sp) {
+				padding-bottom: .4em;
+			}
+			@include icon($下矢印,after) {
+				position: absolute;
+				right: .5em;
+				top: 50%;
+				@include transform(translateY(-50%));
+				color: #8c8c8c;
+				@include mq(tab) {
+					display: block;
+				}
+			}
+		}
+		&.c-btn1 {
+			a {
+				padding: 1.5em 2em;
+				@include mq(tab) {
+					padding: 1.5em 1em;
+					line-height: 1.2;
+				}
+			}
+		}
+		&:nth-child(2) {
+			a {
+				@include mq(tab) {
+					padding: 2.1em 1em;
+				}
+			}
+		}
+	}
+}
+
+// -----------------------------------------------------------
+//  con_case
+// -----------------------------------------------------------
+.con_case {
+	@extend %bw;
+	padding-top: wCon(145,1920);
+	@include mq(sp) {
+		padding-top: 4em;
+	}
+	.box_case {
+		@include mq(pc_tab) {
+			@include display-flex();
+			@include align-items(center);
+			margin-top: wCon(80,1920);
+		}
+		@include mq(tab) {
+			@include align-items(stretch);
+		}
+		@include mq(tab_s) {
+			@include flex-direction(column);
+			margin-top: wCon(100,1920);
+		}
+		@include mq(sp) {
+			margin-top: 3em;
+		}
+		.photo {
+			@include mq(pc_tab) {
+				width: wCon(600,1200);
+			}
+			@include mq(tab_s) {
+				width: 100%;
+				img {width: 100%;}
+			}
+		}
+		.box_txt {
+			@include mq(pc_tab) {
+				margin-left: 40px;
+				max-width: 512px;
+				width: wCon(512,1200);
+			}
+			@include mq(tab_s) {
+				margin: 1em 0 0 0;
+				max-width: 100%;
+				width: 100%;
+			}
+			@include mq(sp) {margin-top: 1em;}
+			.st {
+				border-bottom: 1px solid #c5c5c5;
+				padding-bottom: .5em;
+				margin-bottom: .5em;
+			}
+		}
+		&:nth-of-type(even) {
+			@include mq(pc_tab) {
+				@include flex-direction(row-reverse);
+				.box_txt {
+					margin-left: 0;
+					margin-right: 40px;
+				}
+			}
+			@include mq(tab_s) {
+				@include flex-direction(column);
+				.box_txt {
+					margin-right: 0;
+				}
+			}
+		}
+	}
+}
+
+// -----------------------------------------------------------
+//  con_recommend
+// -----------------------------------------------------------
+.con_recommend {
+	@extend %bw;
+	border-bottom: 1px solid #c5c5c5;
+	padding: wCon(145,1920) 0 wCon(105,1920);
+	@include mq(sp) {
+		padding: 6em 0 4em;
+	}
+	.box_rec {
+		@extend %cf;
+		@include cV(margin, wCon(80,1920) auto 0, 3em auto 0);
+		li {
+			@include mq(pc_tab) {
+				float: left;
+				width: wCon(384,1200);
+				&:nth-child(n+2) {margin-left: wCon(24,1200);}
+				&:nth-child(n+4) {margin-top: 40px;}
+				&:nth-child(3n+1) {
+					margin-left: 0;
+					clear: left;
+				}
+			}
+			@include mq(sp) {
+				&:not(:first-child) {margin-top: 1.5em;}
+			}
+			.photo {
+				position: relative;
+				z-index: 1;
+				em {
+					position: absolute;
+					z-index: 1;
+					top: 0;
+					left: 0;
+					background-color: $c-poc;
+					color: #fff;
+					padding: .8em 1em;
+					@include mq(sp) {padding: .3em .5em;}
+				}
+				img {
+					@include mq(sp) {width: 100%;}
+				}
+			}
+			.box_txt {
+				padding: .8em 0;
+				.st {
+					margin-bottom: .4em;
+				}
+			}
+		}
+	}
+}
+
+// -----------------------------------------------------------
+//  con_work
+// -----------------------------------------------------------
+.con_work {
+	@extend %bw;
+	padding-top: wCon(100,1920);
+	@include mq(sp) {
+		padding-top: 4em;
+	}
+	.box_work {
+		@include display-flex();
+		margin-top: wCon(80,1920);
+		@include mq(tab_s) {
+			@include flex-direction(column);
+		}
+		@include mq(sp) {
+			@include flex-direction(column);
+			margin-top: 3em;
+		}
+		.photo {
+			img {
+				@include mq(sp) {
+					width: 100%;
+				}
+			}
+		 }
+		.box_txt {
+			@include mq(sp) {margin-top: 1em;}
+			.txt {
+				span {@include fsz(14,16);}
+			}
+		}
+	}
+	>.box_work {
+		@include mq(pc) {
+			@include align-items(center);
+		}
+		@include mq(tab) {
+			@include align-items(stretch);
+		}
+		@include mq(tab_s) {
+			margin-top: wCon(100,1920);
+		}
+		.photo {
+			@include mq(pc_tab) {
+				width: wCon(600,1200);
+			}
+			@include mq(tab_s) {
+				width: 100%;
+				img {width: 100%;}
+			}
+		}
+		.box_txt {
+			@include mq(pc_tab) {
+				margin-left: 40px;
+				max-width: 560px;
+				width: wCon(583,1200);
+			}
+			@include mq(tab_s) {
+				margin: 1em 0 0 0;
+				max-width: 100%;
+				width: 100%;
+			}
+			.st {
+				@extend %jp_h3;
+				margin-bottom: 1.5em;
+				@include mq(sp) {margin-bottom: 1em;}
+			}
+		}
+	}
+	.inner {
+		@include display-flex();
+		@include flex-wrap(wrap);
+		.box_work {
+			@include mq(pc_tab) {
+				width: wCon(580,1200);
+			}
+			@include mq(sp) {
+				margin-top: 2em;
+			}
+			.photo {
+				@include mq(pc_tab) {
+					width: wCon(580,1200);
+				}
+				@include mq(tab_s) {
+					width: 100%;
+					img {width: 100%;}
+				}
+			}
+			.box_txt {
+				@include mq(pc_tab) {
+					margin: .8em 0 0 1em;
+					width: wCon(630,1200);
+				}
+				@include mq(tab_s) {
+					margin: 1em 0 0 0;
+					max-width: 100%;
+					width: 100%;
+				}
+				.st {
+					@extend %jp_st;
+					position: relative;
+					margin-bottom: .8em;
+					padding-left: 2em;
+					span {
+						position: absolute;
+						left: 0;
+						top: .2rem;
+						width: 1.5em;
+					}
+				}
+			}
+			&:nth-child(2n) {
+				@include mq(pc_tab) {margin-left: wCon(20,1200);}
+				@include mq(tab_s) {margin-left: wCon(40,1200);}
+			}
+			&:nth-child(2) .box_txt .st span {
+				top: -.7rem;
+			}
+			&:nth-child(5) .box_txt .st span {
+				top: .5rem;
+			}
+		}
+	}
+	.box_note {
+		border: 1px solid #8c8c8c;
+		margin-top: wCon(60,1200);
+		padding: wCon(50,1200) wCon(60,1200);
+		@include mq(sp) {padding: 2em 1em;}
+		.st {
+			border-bottom: 1px solid #c5c5c5;
+			padding-bottom: .5em;
+			margin-bottom: wCon(50,1200);
+			text-align: center;
+			@include mq(sp) {margin-bottom: 1.5em;}
+		}
+		ul {
+			li {
+				position: relative;
+				padding-left: 2em;
+				&:not(:first-child) {
+					margin-top: 1.5em;
+				}
+				&:before {
+					content: '※';
+					position: absolute;
+					left: 0;
+					top: 0;
+				}
+			}
+		}
+	}
+}
+
+// -----------------------------------------------------------
+//  con_flow
+// -----------------------------------------------------------
+.con_flow {
+	@extend %bw;
+	@include cV(padding-top, 80px, 10%);
+	h2 {
+		@include cV(margin-bottom, 60px, 10%);
+		text-align: center;
+	}
+	.inner {
+		position: relative;
+		@include mq(pc_tab) {
+			@include display-flex();
+			@include flex-wrap(wrap);
+			@include flex-direction(row-reverse);
+		}
+		@include mq(tab_s) {
+			@include flex-direction(column);
+		}
+		&:before {
+			content: '';
+			position: absolute;
+			left: 50%;
+			bottom: 0;
+			@include transform(translateX(-50%));
+			width: 1px;
+			height: 100%;
+			border-left: 1px solid #000;
+			background-color: #000;
+			@include mq(tab_s) {
+				left: 4rem;
+				@include transform(translateX(0));
+			}
+			@include mq(sp) {
+				left: 2rem;
+				@include transform(translateX(0));
+			}
+		}
+		.box_flow {
+			position: relative;
+			@include mq(pc_tab) {
+				width: wCon(600,1200);
+				margin-top: 120px;
+			}
+			@include mq(tab_s) {
+				width: 100%;
+				margin-top: 2em;
+			}
+			@include mq(sp) {
+				margin-top: 2em;
+			}
+			.time {
+				@include display-flex();
+				@include align-items(center);
+				position: absolute;
+				left: -.35rem;
+				top: 20%;
+				@include mq(tab_s) {left: 3.5rem;}
+				@include mq(sp) {left: 1.7rem;}
+				span {margin-left: 1em;}
+				i {@include fsz(10,16);}
+			}
+			.box_det {
+				border-bottom: 1px solid #c5c5c5;
+				padding-bottom: 1em;
+				margin-left: wCon(198,1200);
+				@include mq(pc_tab) {
+					@include display-flex();
+					@include flex-wrap(wrap);
+					@include align-items(center);
+				}
+				@include mq(tab_s) {
+					@include flex-direction(column);
+					@include align-items(flex-start);
+					margin-left: 13rem;
+				}
+				@include mq(sp) {
+					margin-left: 8rem;
+				}
+				.photo {
+					@include mq(pc_tab) {
+						width: wCon(435,1200);
+					}
+					@include mq(tab_s) {
+						width: 80%;
+					}
+					@include mq(sp) {
+						width: 70%;
+					}
+				}
+				.box_txt {
+					@include mq(pc_tab) {
+						margin-left: wCon(54,1200);
+						width: wCon(678,1200);
+					}
+					@include mq(tab_s) {
+						margin: 1em 0 0 0;
+						width: 100%;
+					}
+					@include mq(sp) {margin-top: 1em;}
+					.st {
+						position: relative;
+						margin-bottom: .5em;
+					}
+				}
+			}
+			&:nth-child(odd) {
+				@include mq(pc_tab) {margin-top: 0;}
+				@include mq(tab_s) {margin-top: 2rem;}
+			}
+			&:first-child {margin-top: 0;}
+			&:nth-child(even) {
+				.time {
+					@include mq(pc_tab) {
+						@include flex-direction(row-reverse);
+						left: auto;
+						right: -.4rem;
+						top: 35%;
+					}
+					@include mq(tab_s) {
+						@include flex-direction(row);
+						left: 3.5rem;
+						right: auto;
+						top: 20%;
+					}
+					span {
+						@include mq(pc_tab) {
+							margin: 0 1em 0 0;
+						}
+						@include mq(tab_s) {
+							margin: 0 0 0 1em;
+						}
+					}
+				}
+				.box_det {
+					@include mq(pc_tab) {
+						margin: 0 wCon(198,1200) 0 0;
+					}
+					@include mq(tab_s) {
+						margin: 0 0 0 13rem;
+					}
+				}
+			}
+		}
+	}
+}
+
+// -----------------------------------------------------------
+//  con_hotel
+// -----------------------------------------------------------
+.con_hotel {
+	@extend %bw;
+	padding-top: wCon(145,1920);
+	@include mq(sp) {
+		padding-top: 6em;
+	}
+	.box_hotel {
+		@include mq(pc_tab) {
+			@include display-flex();
+			@include flex-wrap(wrap);
+			justify-content: center;
+			margin: wCon(80,1920) 0;
+		}
+		@include mq(sp) {
+			margin: 3em 0;
+		}
+		li {
+			@include display-flex();
+			margin-bottom: wCon(50,1200);
+			position: relative;
+			@include mq(pc_tab) {
+				margin-left: wCon(24,1200);
+				width: wCon(380,1200);
+				&:nth-child(4n+1) {
+					margin-left: 0;
+				}
+			}
+			@include mq(tab_s) {
+				width: wCon(576,1200);
+				&:nth-child(2n+1) {
+					margin-left: 0;
+				}
+			}
+			@include mq(sp) {
+				display: flex;
+				flex-direction: row;
+				justify-content: space-between;
+				padding-bottom: 1em;
+				margin-bottom: 1em;
+				border-bottom: 1px solid #8c8c8c;
+			}
+			.wrp_img {
+				width: wCon(528,1200);
+				@include mq(pc_tab) {
+					position: relative;                       
+				}
+				@include mq(tab_s) {width: wCon(660,1200);}
+				@include mq(sp) {width: wCon(280,880);}
+			}
+			.wrp_txt {
+				@include mq(pc_tab) {
+					margin-left: 1em;
+				}
+				@include mq(sp) {
+					width: wCon(560,880);
+				}
+				.st {
+					position: relative;
+					padding-left: 1em;
+					margin-bottom: .5em;
+					@include mq(tab_s) {margin: -.2em 0 0 0;}
+					@include mq(sp) {margin: -.2em 0 0 0;}
+					&:before {
+						content: '';
+						width: 8px;
+						height: 8px;
+						position: absolute;
+						top: .8em;
+						left: 0;
+						background: $c-poc;
+						@include mq(sp) {
+							top: .7em;
+							width: .6em;
+							height: .6em;
+						}
+					}
+					a {
+						@extend %jp_b1;
+						display: inline-block;
+						text-decoration: none;
+						&:hover {
+							text-decoration: underline;
+						}
+					}
+				}
+				.btn {
+					margin-top: .5em;
+					a {
+						@extend %jp_btn;
+						text-decoration: none;
+						display: block;
+						padding: .8em;
+						background: $c1;
+						color: #FFF;
+						text-align: center;
+						border-radius: .3em;
+						transition: background 400ms ease;
+						@include over;
+						@include mq(sp) {
+							padding: .8em 1.5em;
+						}
+						&:hover {
+							background: lighten($c1,0%);
+						}
+					}
+				}
+				.txt_tel {
+					a,span {
+						@extend %jp_btn;
+						@include icon($電話,before) {
+							vertical-align: -.1em;
+						}
+					}
+				}
+			}
+			&:last-child {
+				@include mq(sp) {
+					border-bottom: none;
+				}
+			}
+		}
+	}
+}

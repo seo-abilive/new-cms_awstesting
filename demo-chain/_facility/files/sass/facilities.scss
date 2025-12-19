@@ -1,0 +1,463 @@
+@charset "utf-8";
+/* ===================================================================
+CSS information
+
+file name  : facilities.css
+author     : Abilive
+style info : 施設・設備
+=================================================================== */
+@import "settings";
+
+// --------------
+//  con_view
+// --------------
+.con_view {
+	// width: 100%;
+	// max-width: 1200px;
+	@include cV(width, 90%, 100%);
+	max-width: 1010px;
+	margin: auto;
+	@include cV(margin-top, 45px, 2em);
+	.box_view {
+		position: relative;
+		z-index: 1;
+		width: 100%;
+		max-width: 1010px;
+		margin: auto;
+		// @include cV(min-height, 650px, 500px, 24em);
+		@include cV(min-height, 540px, 500px, 24em);
+		@include mq(tab_s) {min-height: 360px;}
+		iframe {
+			position: absolute;
+			z-index: 1;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			border: none;
+		}
+	}
+	p.btn {
+		max-width: 300px;
+		margin: auto;
+		@include cV(margin-top, 50px, 2em);
+		a {
+			position: relative;
+			z-index: 1;
+			&:after {
+				position: absolute;
+				z-index: 1;
+				top: 50%;
+				right: 1em;
+				content: "";
+				display: block;
+				width: 33px;
+				height: 20px;
+				@include transform(translateY(-50%));
+				background: url(../../rooms/images/ic_view.png) no-repeat center center;
+			}
+		}
+	}
+}
+
+// --------------
+//  con_fac
+// --------------
+.con_fac {
+	@extend %bw;
+	@include cV(margin-top, 110px, 10%);
+	h2.st {
+		text-align: center;
+		@extend %jp_h2;
+	}
+	ul.box_fac {
+		width: 100%;
+		@include cV(margin-top, 45px, 2em);
+		@extend %cf;
+		li {
+			@include cV(float, left, none);
+			@include cV(width, wCon(384,1200), 100%);
+			&:nth-child(n+2) {
+				@include mq(pc_tab) {margin-left: wCon(24,1200);}
+				@include mq(sp) {margin-top: 3em;}
+			}
+			@include mq(pc_tab) {
+				&:nth-child(n+4) {margin-top: 60px;}
+				&:nth-child(3n+1) {
+					margin-left: 0;
+					clear: left;
+				}
+			}
+			.box_photo {
+				width: 100%;
+				position: relative;
+				z-index: 1;
+				p.floor {
+					position: absolute;
+					z-index: 2;
+					top: 0;
+					left: 0;
+					color: #fff;
+					@extend %jp_b1;
+					background-color: $c1;
+					min-width: 70px;
+					// width: 100%;
+					text-align: center;
+					padding: 0 .2em;
+				}
+				p.photo {
+					width: 100%;
+					img {width: 100%;}
+				}
+			}
+			.box_txt {
+				.sst {
+					@extend %jp_h3;
+					margin: 1em 0 .5em;
+				}
+				.txt {
+					@extend %jp_b1;
+				}
+				p.btn {
+					width: 90%;
+					max-width: 300px;
+					margin: 2em auto 0;
+				}
+                p.note{
+                    margin-top: 1em;
+                }
+			}
+		}
+	}
+	p.note_fac {
+		text-align: right;
+		@extend %jp_b1;
+		color: $color2;
+	}
+}
+
+// --------------
+//  con_service
+// --------------
+.con_service {
+	@extend %bw;
+	@include cV(margin-top, 100px, 10%);
+	h2.st {
+		text-align: center;
+		@extend %jp_h2;
+	}
+	.box_service {
+		border: solid 1px $color3;
+		@include cV(padding, 40px 0, 2em 0);
+		@include cV(margin-top, 50px, 3em);
+		.inner {
+			width: 95%;
+			max-width: 1100px;
+			margin: auto;
+			.sst {
+				@extend %jp_h3;
+				text-align: center;
+				padding-bottom: 1em;
+				border-bottom: solid 1px $color3;
+			}
+			ul {
+				margin: 2em auto 0;
+				@extend %cf;
+				li {
+					float: left;
+					@include cV(width, wCon(160,1100), 22%, 48%);
+					&:nth-child(n+2) {
+						@include cV(margin-left, wCon(64,1100), 4%, 4%);
+					}
+					@include mq(pc) {
+						&:nth-child(5n+1) {
+							margin-left: 0;
+							clear: left;
+						}
+						&:nth-child(n+6) {margin-top: 30px;}
+					}
+					@include mq(tab) {
+						&:nth-child(4n+1) {
+							margin-left: 0;
+							clear: left;
+						}
+						&:nth-child(n+5) {margin-top: 30px;}
+					}
+					@include mq(sp) {
+						&:nth-child(odd) {
+							margin-left: 0;
+							clear: left;
+						}
+						&:nth-child(n+3) {margin-top: 1em;}
+					}
+					i, em {
+						display: inline-block;
+						vertical-align: middle;
+					}
+					i {
+						@include cV(width, wCon(55,175),2.5em, 2.5em);
+						img {width: 100%;}
+					}
+					em {margin-left: 0.5em;}
+					.lang_en & {
+						@include cV(width, wCon(180,1100), 21%, 46%);
+						&:nth-child(n+2) {
+							@include cV(margin-left, wCon(50,1100), 4%, 4%);
+						}
+						@include mq(pc) {
+							&:nth-child(5n+1) {
+								margin-left: 0;
+								clear: left;
+							}
+							&:nth-child(n+6) {margin-top: 30px;}
+						}
+						@include mq(tab) {
+							&:nth-child(2),
+							&:nth-child(6) {
+								width: 25%;
+								i, em {
+									// vertical-align: top;
+								}
+							}
+							&:nth-child(4n+1) {
+								margin-left: 0;
+								clear: left;
+							}
+							&:nth-child(n+5) {margin-top: 30px;}
+						}
+						@include mq(sp) {
+							&:nth-child(2) {
+								width: 50%;
+								i, em {
+									vertical-align: top;
+								}
+							}
+							&:nth-child(odd) {
+								margin-left: 0;
+								clear: left;
+							}
+							&:nth-child(n+3) {margin-top: 1em;}
+						}
+					}
+				}
+			}
+			.note {margin: 1em auto 0;}
+		}
+	}
+}
+
+// --------------
+//  modal_movie
+// --------------
+.modal_disp {display: none;}
+
+.modaal-overlay {
+    z-index: 5000!important;
+}
+.modaal-video-wrap {
+    max-width: 975px!important;
+    margin: auto !important;
+}
+#modaal-close {display: none;}
+.modaal-video-container {
+    width: 100%;
+    padding: 0 0 56%!important;
+    position: relative;
+    height: 0 !important;
+    iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        vertical-align: top;
+        width: 100%;
+        height: 100%;
+    }
+}
+.modal_map {display: none;}
+// .modaal-content-container {
+//     padding: 0!important;
+//     >div {padding: 45px 56px!important;}
+//     .st {
+//         em {
+//             @include fsz-cha(28,26,24);
+//             line-height: 1;
+//         }
+//         span {
+//             display: block;
+//             @include fsz-cha(16,15,14);
+//             color: #8c8c8c;
+//             margin-top: .5em;
+//         }
+//     }
+//     .close {
+//         position: absolute;
+//         top: 1.5em;
+//         right: 1.5em;
+//         text-align: center;
+//         cursor: pointer;
+//         i {
+//             @include fsz-cha(40,36,20);
+//         }
+//         span {
+//             display: block;
+//             font-weight: bold;
+//             @include gothic(en);
+//             line-height: 1;
+//             @include fsz-cha(14,13,12);
+//         }
+//     }
+//     .box_map {
+//         margin-top: wCon(32,975);
+//         .sst {
+//             @include fsz-cha(18,17,16);
+//             padding-bottom: 1em;
+//             border-bottom: 1px solid #c5c5c5;
+//         }
+//         .wrp_map {
+//             position: relative;
+//             margin-top: 10px;
+//             .txt {
+//                 @include fsz-cha(16,15,14);
+//                 color: #8c8c8c;
+//                 margin-top: .5em;
+//                 position: absolute;
+//                 top: -.5em;
+//                 left: 0;
+//                 @include mq(tab) {
+//                     top: -1em;
+//                 }
+//             }
+//             ul {
+//                 li {
+//                     display: inline-block;
+//                     position: absolute;
+//                     a {
+//                         display: block;
+//                         text-decoration: none;
+//                         padding: .5em 1.5em;
+//                         @include fsz-cha(14,14,13);
+//                         border: 1px solid $color0;
+//                         @include gothic();
+//                         font-weight: bold;
+//                         border-radius: .5em;
+//                         background: #FFF;
+//                         transition: background 400ms ease,color 400ms ease;
+//                         &:hover {
+//                             background: $color0;
+//                             color: #FFF;
+//                         }
+//                     }
+//                     $mapW: 860;
+//                     $mapH: 524;
+//                     &.p1-1 {
+//                         left: wCon(393,$mapW);
+//                         top: wCon(123,$mapH);
+//                     }
+//                     &.p1-2 {
+//                         left: wCon(328,$mapW);
+//                         top: wCon(260,$mapH);
+//                     }
+//                     &.p1-3 {
+//                         left: wCon(376,$mapW);
+//                         top: wCon(341,$mapH);
+//                     }
+//                     &.p1-4 {
+//                         left: wCon(311,$mapW);
+//                         top: wCon(474,$mapH);
+//                     }
+//                     &.p2-1 {
+//                         left: wCon(370,$mapW);
+//                         top: wCon(140,$mapH);
+//                     }
+//                     &.p2-2 {
+//                         left: wCon(285,$mapW);
+//                         top: wCon(273,$mapH);
+//                     }
+//                     &.p2-3 {
+//                         left: wCon(285,$mapW);
+//                         top: wCon(340,$mapH);
+//                     }
+//                     &.p2-4 {
+//                         left: wCon(285,$mapW);
+//                         top: wCon(404,$mapH);
+//                     }
+//                     &.p2-5 {
+//                         left: wCon(457,$mapW);
+//                         top: wCon(398,$mapH);
+//                     }
+//                     &.p3-1 {
+//                         left: wCon(440,$mapW);
+//                         top: wCon(154,$mapH);
+//                     }
+//                     &.p3-2 {
+//                         left: wCon(282,$mapW);
+//                         top: wCon(442,$mapH);
+//                     }
+//                     &.p3-3 {
+//                         left: wCon(435,$mapW);
+//                         top: wCon(300,$mapH);
+//                     }
+//                     &.p4-1 {
+//                         left: wCon(344,$mapW);
+//                         top: wCon(125,$mapH);
+//                     }
+//                     &.p4-1 {
+//                         left: wCon(344,$mapW);
+//                         top: wCon(125,$mapH);
+//                     }
+//                     &.p4-1 {
+//                         left: wCon(344,$mapW);
+//                         top: wCon(125,$mapH);
+//                     }
+//                     &.p4-2 {
+//                         left: wCon(246,$mapW);
+//                         top: wCon(183,$mapH);
+//                     }
+//                     &.p4-3 {
+//                         left: wCon(470,$mapW);
+//                         top: wCon(162,$mapH);
+//                     }
+//                     &.p4-4 {
+//                         left: wCon(344,$mapW);
+//                         top: wCon(273,$mapH);
+//                     }
+//                     &.p5-1 {
+//                         left: wCon(358,$mapW);
+//                         top: wCon(161,$mapH);
+//                     }
+//                     &.p5-2 {
+//                         left: wCon(194,$mapW);
+//                         top: wCon(211,$mapH);
+//                     }
+//                     &.p5-3 {
+//                         left: wCon(339,$mapW);
+//                         top: wCon(292,$mapH);
+//                     }
+//                     &.p5-4 {
+//                         left: wCon(541,$mapW);
+//                         top: wCon(263,$mapH);
+//                     }
+//                     &.p6-1 {
+//                         left: wCon(390,$mapW);
+//                         top: wCon(238,$mapH);
+//                     }
+//                     &.p7-1 {
+//                         left: wCon(390,$mapW);
+//                         top: wCon(178,$mapH);
+//                     }
+//                     &.p7-2 {
+//                         left: wCon(325,$mapW);
+//                         top: wCon(440,$mapH);
+//                     }
+//                 }
+//             }
+//         }
+//     }
+// }
+
+// --------------
+//  box_view
+// --------------
+iframe {
+	button.gm-fullscreen-control {display: none !important;}
+}

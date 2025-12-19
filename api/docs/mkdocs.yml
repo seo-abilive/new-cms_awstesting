@@ -1,0 +1,87 @@
+site_name: API Documentation
+site_description: CMS API仕様書
+site_author: CMS Development Team
+
+docs_dir: api
+
+# リポジトリ情報（GitHub Pagesなどで公開する場合）
+# repo_url: https://github.com/your-org/your-repo
+# repo_name: your-org/your-repo
+
+theme:
+  name: material
+  language: ja
+  palette:
+    # ライトモード
+    - scheme: default
+      primary: blue
+      accent: blue
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    # ダークモード
+    - scheme: slate
+      primary: blue
+      accent: blue
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.annotate
+    - content.code.copy
+
+plugins:
+  - search:
+      lang: ja
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - plantuml_markdown:
+      server: http://www.plantuml.com/plantuml
+      format: svg
+  - admonition
+  - pymdownx.details
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+
+nav:
+  - ホーム: index.md
+  - 管理画面API:
+    - User API: admin/user.md
+    - Contract API: admin/contract.md
+    - Content API: admin/content.md
+    - ContentModel API: admin/content_model.md
+    - ContentField API: admin/content_field.md
+    - MediaLibrary API: admin/media_library.md
+    - ContactSetting API: admin/contact_setting.md
+    - ActionLog API: admin/action_log.md
+  - フロントエンドAPI:
+    - Content API: front/content.md
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com
+  version:
+    provider: mike
+

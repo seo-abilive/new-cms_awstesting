@@ -1,0 +1,58 @@
+@charset "utf-8";
+/* ===================================================================
+CSS information
+
+file name  : sample.css
+author     : Abilive
+style info : サンプル
+=================================================================== */
+@import "settings";
+
+// -----------------------------------------------------------
+//  .con_sample
+// -----------------------------------------------------------
+.con_sample {
+    @extend %bw;
+    @include cV(margin-top,4em,1.5em,1em);
+    padding-top: 4em;
+    border-top: 1px solid $color1;
+    .box_sample {
+        border: 1px solid $color3;
+        padding: 4.5em 2em 2em;
+        position: relative;
+        @include mq(sp) {
+            padding: 3em 1em 1em;            
+        }
+        & + .box_sample {
+            border-top: none;
+        }
+        .name {
+            background: $color0;
+            color: #FFF;
+            display: inline-block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: inline-block;
+            line-height: 1;
+            padding: .3em .5em;
+            @include fsz-cha(22,20,18);
+            em {
+                display: inline-block;
+                @include gothic(en);
+                letter-spacing: .08em;
+            }
+            span {
+                @include fsz(20,26);
+                padding-left: 1em;
+                opacity: .8;
+                letter-spacing: .05em;
+            }
+        }
+        .c-btn1 {
+            @include mq(pc_tab) {
+                max-width: 250px;                
+            }
+        }
+    }
+}

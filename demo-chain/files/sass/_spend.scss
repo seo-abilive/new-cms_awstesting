@@ -1,0 +1,716 @@
+@charset "utf-8";
+/* ===================================================================
+CSS information
+
+file name  : spend.css
+author     : Abilive
+style info : ホテルでの過ごし方
+=================================================================== */
+@import "settings";
+
+$gray: #efefef;
+
+// -----------------------------------------------------------
+//  con_intro
+// -----------------------------------------------------------
+.con_intro {
+  @extend %bw;
+  @include cV(margin-top, 80px, 10%);
+  text-align: center;
+  .txt {
+    @include cV(margin-top, 40px, 5%);
+    @include mq(sp) {text-align: left;}
+  }
+}
+
+// -----------------------------------------------------------
+//  con_spend
+// -----------------------------------------------------------
+.con_spend {
+  position: relative;
+  &:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 130px;
+    width: 100%;
+    height: 1px;
+    background-color: #c5c5c5;
+    z-index: -1;
+    @include mq(sp) {content: none;}
+  }
+  &:after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    @include transform(translateX(-50%));
+    width: 24px;
+    height: 100%;
+    background-color: $gray;
+    z-index: -2;
+    @include mq(sp) {content: none;}
+  }
+  .c-en_h2 {
+    position: relative;
+    margin: 0 auto;
+    width: 260px;
+    height: 260px;
+    background: #000;
+    color: #fff;
+    text-align: center;
+    z-index: -1;
+    @include mq(sp) {
+      width: 7em;
+      height: 7em;
+    }
+    em {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      @include transform(translate(-50%,-50%));
+      width: 100%;
+    }
+    span {
+      display: block;
+      @include fsz(18,32);
+    }
+  }
+  .box_spend {
+    @extend %bw;
+    max-width: 1440px;
+    @include mq(tab_s) {margin-top: 9em;}
+    @include mq(sp) {margin-top: 5em;}
+    &:nth-of-type(2) {
+      margin-top: -50px;
+      @include mq(sp) {margin-top: -4.5em;}
+    }
+    .box_time {
+      margin-bottom: 40px;
+      text-align: center;
+      @include mq(sp) {margin-top: 2em;}
+      .photo {
+        @include mq(sp) {
+          margin: auto;
+          width: 25%;
+        }
+      }
+      .c-en_st {
+        margin-top: 1em;
+        @include mq(sp) {margin-top: .8em;}
+      }
+    }
+    .st {
+      @extend %jp_h3;
+      position: relative;
+      margin-bottom: 1.5em;
+      z-index: 0;
+      @include mq(sp) {
+        margin-bottom: .8em;
+        &.check {padding: 2rem 0 0 7.5rem;}
+      }
+      .ic_check {
+        position: absolute;
+        left: -47px;
+        top: -70px;
+        z-index: -1;
+        @include mq(sp) {
+          left: 0;
+          top: 0;
+          width: 6.5rem;
+        }
+      }
+    }
+    .txt {
+      @extend %jp_b1;
+      margin-bottom: 1.8em;
+      @include mq(sp) {margin-bottom: .5em;}
+    }
+    .note {@extend %jp_b2;}
+  }
+}
+
+// -----------------------------------------------------------
+//  con_day1
+// -----------------------------------------------------------
+.con_day1 {
+  margin-top: 100px;
+  @include mq(sp) {
+    margin-top: 4em;
+  }
+  .box_spend {
+    div[class^="box_detail"] {
+      @include mq(pc_tab) {
+        @include display-flex();
+        @include justify-content(center);
+      }
+    }
+    &.box_spend1 {
+      .box_detail {
+        .box_txt {
+          @include mq(pc_tab) {
+            margin-left: wCon(43,1440);
+            width: wCon(331,1440);
+          }
+          @include mq(tab) {width: wCon(675,1440);}
+          @include mq(sp) {margin: 1em 1em 1.5em;}
+        }
+      }
+      .box_detail_2 {
+        @include flex-direction(row-reverse);
+        .box_photo {
+          position: relative;
+          @include mq(pc_tab) {
+            top: -80px;
+            width: wCon(604,1440);
+            min-height: 523px;
+          }
+          @include mq(tab) {width: wCon(876,1440);}
+          @include mq(tab_s) {
+            top: 20px;
+            width: wCon(604,1440);
+            min-height: 350px;
+          }
+          @include mq(sp) {min-height: 21vh;}
+          .photo {
+            position: absolute;
+            &:first-child {
+              right: 0;
+              top: 0;
+              @include mq(sp) {
+                right: auto;
+                left: 0;
+                width: 71%;
+              }
+            }
+            &:nth-child(2) {
+              left: 0;
+              bottom: 0;
+              @include mq(tab_s) {width: 56%;}
+              @include mq(sp) {
+                right: 0;
+                left: auto;
+                width: 42%;
+              }
+            }
+          }
+        }
+        .box_txt {
+          @include mq(pc_tab) {
+            margin: 130px wCon(43,1440) 0 0;
+            width: wCon(446,1440);
+          }
+          @include mq(tab_s) {width: wCon(691,1440);}
+        }
+      }
+    }
+    &.box_spend2 {
+      @include mq(tab_s) {width: 100%;}
+      @include mq(sp) {width: 100%;}
+      .box_detail {
+        &:nth-of-type(odd) {@include flex-direction(row-reverse);}
+        &:nth-of-type(3) {
+          padding-bottom: 40px;
+          background-color: $gray;
+          @include mq(sp) {
+            padding: 5% 5% 18%;
+            .txt {
+              margin: 0 auto 2.5em;
+              width: 90%;
+            }
+          }
+        }
+        .box_photo_l {
+          width: 100%;
+          .photo {
+            @include mq(sp) {
+              @include zoomImg(190%);
+              img {
+                margin-left: -45%;
+              }
+            }
+          }
+        }
+        .box_photo {
+          @include mq(pc_tab) {
+            margin-top: -30px;
+          }
+        }
+        .box_txt {
+          @include mq(pc_tab) {
+            margin: 100px wCon(35,1440) 0 wCon(115,1440);
+            width: wCon(446,1440);
+          }
+          @include mq(tab) {margin: 100px wCon(35,1440) 0;}
+          @include mq(tab_s) {width: wCon(864,1440);}
+        }
+      }
+    }
+    &.box_spend3 {
+      @include mq(pc) {margin-top: 100px;}
+      @include mq(tab_l) {margin-top: 100px;}
+      .box_detail {
+        @include flex-direction(row-reverse);
+        .box_txt {
+          @include mq(pc_tab) {
+            margin: 65px wCon(43,1440) 0 0;
+            width: wCon(288,1440);
+          }
+          @include mq(pc_s) {width: wCon(432,1440);}
+          @include mq(tab_l) {width: wCon(446,1440);}
+          @include mq(tab_s) {
+            margin-left: wCon(72,1440);
+            width: wCon(648,1440);
+          }
+          @include mq(sp) {margin: 1em 1em 1.5em;}
+        }
+      }
+      .box_detail_2 {
+        @include justify-content(flex-start !important);
+        @include box-sizing(border-box);
+        background-color: $gray;
+        @include mq(pc) {
+          margin: -80px auto 0;
+          padding: wCon(36,1440);
+          width: 731px;
+        }
+        @include mq(tab_l) {
+          margin: -80px auto 0;
+          padding: wCon(50,1440);
+          width: wCon(1123,1440);
+        }
+        @include mq(tab_s) {
+          margin: -37px auto 0;
+          padding: wCon(50,1440);
+          width: wCon(1195,1440);
+        }
+        @include mq(sp) {
+          @include display-flex();
+          padding: 1em;
+        }
+        .box_photo {
+          @include mq(sp) {width: 100%;}
+        }
+        .box_txt {
+          @include mq(pc_tab) {
+            margin: 90px 0 0 48px;
+          }
+          @include mq(sp) {margin-left: 1em;}
+          .txt {margin-bottom: .5em;}
+        }
+      }
+    }
+    &.box_spend4 {
+      @include mq(pc) {margin-top: 100px;}
+      @include mq(tab_l) {margin-top: 100px;}
+      .box_detail {
+        @include align-items(center);
+        .box_txt {
+          @include mq(pc_tab) {
+            margin-left: wCon(43,1440);
+            width: wCon(288,1440);
+          }
+          @include mq(tab) {width: wCon(576,1440);}
+          @include mq(sp) {margin: 1em 1em 1.5em;}
+        }
+      }
+    }
+    &.box_spend5 {
+      @include mq(pc) {margin-top: 100px;}
+      @include mq(tab_l) {margin-top: 100px;}
+      @include mq(tab_s) {width: 100%;}
+      @include mq(sp) {width: 100%;}
+      div[class^="box_detail"] {
+        background-color: $gray;
+        @include mq(sp) {
+          padding: 5% 5% 8%;
+        }
+      }
+      .box_detail {
+        position: relative;
+        padding: 0 !important;
+        .box_txt {
+          position: absolute;
+          left: wCon(154,1440);
+          bottom: -153px;
+          padding: wCon(78,1440);
+          @include box-sizing(border-box);
+          width: 506px;
+          height: 316px;
+          background-color: #fff;
+          @include mq(pc_s) {
+            left: wCon(53,1440);
+            padding: 4.5em 3em 3em;
+          }
+          @include mq(tab) {
+            left: wCon(39,1440);
+            bottom: -153px;
+            width: 47vw;
+            height: 28vw;
+          }
+          @include mq(tab_l) {width: 38vw;}
+          @include mq(sp) {
+            left: 1em;
+            bottom: -11em;
+            padding: 2em 1.5em;
+            width: 83%;
+            height: auto;
+          }
+        }
+      }
+      .box_detail_2 {
+        @include mq(pc) {padding: wCon(57,1440) 0 80px;}
+        @include mq(tab) {padding: wCon(57,1440) 0 wCon(82,1440);}
+        .box_photo {
+          z-index: 1;
+          @include mq(pc_tab) {margin: 65px 0 0 140px;}
+          @include mq(tab) {
+            margin: wCon(183,1440) 0 0 wCon(106,1440);
+          }
+          @include mq(tab_l) {margin-top: wCon(65,1440);}
+          @include mq(sp) {
+            position: relative;
+            margin: 7em 0 0 6em;
+          }
+        }
+        .box_txt {
+          @include mq(pc_tab) {
+            margin: 100px wCon(35,1440) 0 wCon(99,1440);
+            width: wCon(446,1440);
+          }
+          @include mq(tab) {
+            margin: wCon(106,1440) wCon(61,1440) 0;
+            width: wCon(728,1440);
+          }
+          @include mq(tab_l) {margin-left: wCon(100,1440);}
+          @include mq(sp) {
+            margin-top: 1em;
+            .txt {
+              margin: 0 auto .5em;
+              width: 90%;
+            }
+            .note {
+              margin: auto;
+              width: 90%;
+            }
+          }
+        }
+      }
+      .box_detail_3 {
+        @include flex-direction(row-reverse);
+        @include mq(pc) {padding-bottom: 110px;}
+        @include mq(tab) {padding-bottom: wCon(164,1440);}
+        .box_photo {
+          position: relative;
+          @include mq(pc_tab) {margin-right: 140px;}
+          @include mq(pc_s) {
+            margin-right: 0;
+            width: wCon(588,1440);
+          }
+          @include mq(tab) {
+            margin-right: wCon(106,1440);
+          }
+          @include mq(sp) {
+            margin-left: 6em;
+          }
+          .photo {
+            &:nth-child(2) {
+              position: absolute;
+              left: -85px;
+              bottom: -30px;
+              @include mq(tab) {
+                left: -47px;
+                bottom: -48px;
+                width: 68%;
+              }
+              @include mq(sp) {
+                left: -6.5rem;
+                bottom: -5.5rem;
+                width: 66%;
+              }
+            }
+          }
+        }
+        .box_txt {
+          @include mq(pc_tab) {
+            margin: wCon(49,1440) wCon(112,1440) 0 wCon(35,1440);
+            width: wCon(403,1440);
+          }
+          @include mq(pc_s) {
+            margin-right: wCon(149,1440);
+            width: wCon(488,1440);
+          }
+          @include mq(tab) {
+            margin: wCon(35,1440) wCon(112,1440) 0 wCon(61,1440);
+            width: wCon(728,1440);
+          }
+          @include mq(tab_l) {margin-left: wCon(100,1440);}
+          @include mq(sp) {
+            margin: 6em auto 0;
+            width: 90%;
+          }
+        }
+      }
+      .box_detail_4 {
+        @include mq(pc) {padding-bottom: 100px;}
+        @include mq(tab) {padding-bottom: wCon(228,1440);}
+        .box_photo {
+          position: relative;
+          @include mq(tab) {
+            margin-left: wCon(106,1440);
+          }
+          @include mq(sp) {
+            margin-right: 6em;
+          }
+          .photo {
+            &:nth-child(2) {
+              position: absolute;
+              right: -292px;
+              bottom: 0;
+              @include mq(tab) {
+                right: -70px;
+                bottom: -80px;
+                width: 68%;
+              }
+              @include mq(sp) {
+                right: -6.5rem;
+                bottom: -5.5rem;
+                width: 66%;
+              }
+            }
+          }
+        }
+        .box_txt {
+          @include mq(pc_tab) {
+            margin: wCon(35,1440) wCon(35,1440) 0 wCon(40,1440);
+            width: wCon(513,1440);
+            .st {
+              margin-bottom: .5em;
+            }
+          }
+          @include mq(tab) {
+            margin: 0 wCon(61,1440) 0 wCon(65,1440);
+            width: wCon(798,1440);
+          }
+          @include mq(tab_l) {margin-right: wCon(100,1440);}
+          @include mq(sp) {
+            margin: 6em auto 0;
+            width: 90%;
+          }
+        }
+      }
+      .box_detail_5 {
+        position: relative;
+        @include mq(pc) {padding: wCon(68,1440) 0 wCon(107,1440);}
+        @include mq(tab) {padding: wCon(68,1440) wCon(68,1440) wCon(107,1440);}
+        @include mq(sp) {padding: 5% 5% 18% !important;}
+        &:before {
+          content: '';
+          display: block;
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 0;
+          margin: auto;
+          max-width: 1200px;
+          width: 100%;
+          height: 1px;
+          background-color: #c5c5c5;
+          @include mq(sp) {content: none;}
+        }
+        .box_photo {
+          @include mq(pc) {width: wCon(336,1440);}
+          @include mq(tab) {width: wCon(532,1440);}
+        }
+        .box_txt {
+          @include mq(pc_tab) {
+            margin-left: wCon(40,1440);
+            width: wCon(818,1440);
+          }
+          @include mq(sp) {
+            margin: 1.5em auto 0;
+            width: 90%;
+          }
+        }
+      }
+    }
+    &.box_spend6 {
+      @include mq(pc) {margin-top: 100px;}
+      @include mq(tab_l) {margin-top: 100px;}
+      @include mq(sp) {
+        .st.check {
+          padding: 5.5rem 0 0 0;
+        }
+        .ic_check {
+          left: -1rem;
+        }
+      }
+      .box_detail {
+        @include flex-direction(row-reverse);
+        .box_txt {
+          @include mq(pc_tab) {
+            margin: 65px wCon(26,1440) 0 wCon(26,1440);
+            width: wCon(364,1440);
+          }
+          @include mq(pc_s) {width: wCon(432,1440);}
+          @include mq(tab_l) {width: wCon(490,1440);}
+          @include mq(tab_s) {
+            margin: wCon(81,1440) wCon(26,1440) 0 wCon(72,1440);
+            width: wCon(905,1440);
+          }
+          @include mq(sp) {margin: 1em 1em 2.5em;}
+        }
+      }
+      .box_detail_2 {
+        @include justify-content(flex-start !important);
+        @include box-sizing(border-box);
+        background-color: $gray;
+        @include mq(pc) {
+          margin: -115px auto 0;
+          padding: wCon(63,1440);
+          max-width: 1068px;
+        }
+        @include mq(tab) {
+          margin: -80px auto 0;
+          padding: wCon(50,1440);
+          width: wCon(1246,1440);
+        }
+        @include mq(tab_s) {margin: wCon(28,1440) auto 0;}
+        @include mq(sp) {
+          padding: 1em;
+        }
+        .box_photo {
+          @include mq(pc_tab) {width: wCon(840,1440);}
+          @include mq(tab_s) {width: 100%;}
+          @include mq(sp) {
+            margin: 0 auto 1.5em;
+            width: 77%;
+            .photo img {width: 100%;}
+          }
+        }
+        .box_txt {
+          @include mq(pc_tab) {margin: 100px 0 0 32px;}
+          @include mq(tab_s) {margin: 0 0 0 32px;}
+        }
+      }
+    }
+  }
+}
+
+// -----------------------------------------------------------
+//  con_day2
+// -----------------------------------------------------------
+.con_day2 {
+  margin-top: 160px;
+  @include mq(sp) {
+    margin-top: 8em;
+  }
+  .box_spend {
+    div[class^="box_detail"] {
+      @include mq(pc_tab) {
+        @include display-flex();
+        @include justify-content(center);
+      }
+    }
+    .box_detail {
+      .inner {
+        @include mq(pc_tab) {
+          width: wCon(408,1440);
+        }
+        @include mq(tab_s) {width: wCon(578,1440);}
+        &:nth-child(2) {
+          @include mq(pc_tab) {margin-left: wCon(97,1440);}
+          @include mq(sp) {margin-top: 3em;}
+        }
+        .box_txt {
+          margin-top: 1.5em;
+          @include mq(sp) {
+            margin: 1.5em auto 0;
+            width: 90%;
+          }
+        }
+      }
+    }
+    &.box_spend2 {
+      @include mq(pc) {margin-top: 100px;}
+      @include mq(tab_l) {margin-top: 100px;}
+      .box_detail {
+        @include flex-direction(row-reverse);
+        .box_photo {
+          @include mq(pc_tab) {
+            margin-right: wCon(98,1440);
+          }
+        }
+        .box_txt {
+          @include mq(pc_tab) {
+            margin: 95px wCon(40,1440) 0 wCon(26,1440);
+            width: wCon(392,1440);
+          }
+          @include mq(pc_s) {width: wCon(432,1440);}
+          @include mq(tab) {width: wCon(590,1440);}
+          @include mq(tab_s) {
+            margin: wCon(81,1440) wCon(26,1440) 0 wCon(72,1440);
+            width: wCon(905,1440);
+          }
+          @include mq(sp) {margin: 1em 1em 2.5em;}
+        }
+      }
+      .box_detail_2 {
+        @include justify-content(flex-start !important);
+        @include box-sizing(border-box);
+        background-color: $gray;
+        @include mq(pc) {
+          margin: -30px auto 0;
+          padding: wCon(63,1440);
+          max-width: 1200px;
+        }
+        @include mq(tab) {
+          margin: -15px auto 0;
+          padding: wCon(50,1440);
+        }
+        @include mq(tab_s) {margin: wCon(28,1440) auto 0;}
+        @include mq(sp) {
+          padding: 2em 1em;
+        }
+        .box_photo {
+          @include mq(pc) {width: wCon(720,1440);}
+          @include mq(tab) {width: 50%;}
+          @include mq(tab_l) {width: wCon(486,1440);}
+          @include mq(sp) {
+            margin: 0 auto 1.5em;
+          }
+        }
+        .box_txt {
+          @include mq(pc) {margin: 70px 0 0 32px;}
+          @include mq(pc_s) {margin: 70px 0 0 64px;}
+          @include mq(tab) {
+            margin: 70px 0 0 57px;
+            width: 50%;
+          }
+          .txt {
+            @include mq(sp) {
+              margin-bottom: 3.5em;
+            }
+          }
+        }
+        .btn {
+          @include mq(pc) {
+            margin: 0 0 0 auto;
+            width: 370px;
+          }
+          @include mq(tab) {width: 100%;}
+        }
+      }
+    }
+  }
+}
+
+// -----------------------------------------------------------
+//  link
+// -----------------------------------------------------------
+.txt.link {
+  @extend %bw;
+  @include cV(margin, 80px auto 120px, 10% auto);
+  text-align: center;
+  @include mq(sp) {text-align: left;}
+}

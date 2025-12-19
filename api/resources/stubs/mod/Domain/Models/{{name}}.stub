@@ -1,0 +1,21 @@
+<?php
+namespace App\Mod\{{name}}\Domain\Models;
+
+use App\Domain\Models\BaseModel;
+use App\Domain\Models\Traits\AuditObservable;
+
+/**
+ * @property int $id
+ * @property datetime $publish_at
+ * @property datetime $expires_at
+ * @property int $sort_num
+ * @property string $status
+ */
+class {{name}} extends BaseModel
+{
+    use AuditObservable;
+
+    protected $table = "cms_{{name_lower}}";
+    protected $fillable = ['title'];
+    protected $model_name = "{{name_lower}}";
+}

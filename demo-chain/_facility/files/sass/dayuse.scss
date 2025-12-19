@@ -1,0 +1,385 @@
+@charset "utf-8";
+/* ===================================================================
+CSS information
+
+file name  : dayuse.css
+author     : Abilive
+style info : デイユース（日帰りプラン）
+=================================================================== */
+@import "settings";
+@include slick();
+
+body {
+	background-color: #fff !important;
+}
+
+// -----------------------------------------------------------
+//  con_intro
+// -----------------------------------------------------------
+.con_intro {
+	@extend %bw;
+	@include cV(margin-top, 80px, 10%);
+	text-align: center;
+	.st { @extend %jp_h2; }
+	.txt {
+		@extend %jp_b1;
+		@include cV(margin-top, 40px, 5%);
+		@include mq(sp) { text-align: left; }
+	}
+}
+
+// -----------------------------------------------------------
+//  con_pnav
+// -----------------------------------------------------------
+.con_pnav {
+	@extend %bw;
+	@include cV(margin, 40px auto wCon(120,1920),40px auto wCon(155,1200),5% auto);
+	text-align: center;
+	li {
+		display: inline-block;
+		vertical-align: top;
+		letter-spacing: normal;
+		@include mq(pc) {
+			&:not(:first-child) {
+				margin-left: 1.5%;
+			}
+		}
+		@include mq(tab) {
+			&:not(:first-child) {
+				margin-left: 1%;
+			}
+		}
+		@include mq(sp) {
+			width: 90%;
+			margin-bottom: .5em;
+		}
+		a {
+			position: relative;
+			@include mq(sp) {
+				padding-bottom: .4em;
+			}
+			@include icon($下矢印,after) {
+				position: absolute;
+				right: .5em;
+				top: 50%;
+				@include transform(translateY(-50%));
+				color: #8c8c8c;
+				@include mq(tab) {
+					display: block;
+				}
+			}
+		}
+		&.c-btn1 {
+			a {
+				padding: 1.5em 2em;
+				@include mq(tab) {
+					padding: 1.5em 1em;
+					line-height: 1.2;
+				}
+			}
+		}
+		&:not(:nth-child(2)) {
+			a {
+				@include mq(tab) {
+					padding: 2.1em 1em;
+				}
+			}
+		}
+	}
+}
+
+// -----------------------------------------------------------
+//  con_plan
+// -----------------------------------------------------------
+.con_plan {
+	margin-top: wCon(125,1920);
+	padding: wCon(145,1920) 0;
+	background-color: #ebebeb;
+	@include mq(tab) {margin-top: wCon(125,1200);}
+	@include mq(sp) {
+		margin-top: 4em;
+		padding: 4em 0;
+	}
+	.box_img {
+		@extend %bw;
+		max-width: 1200px + 24px;
+		overflow: visible;
+		@include cV(margin-top,wCon(50,1920),wCon(60,1200),2.5em);
+		@include mq(sp) {
+			width: 85%;
+		}
+		#js-sliderPla {
+			.slick-list {
+				@include mq(sp) {
+					overflow: visible;
+				}
+			}
+			.slide {
+				max-width: 384px;
+				@include cV(margin,0 12px 1em,0 5px 1em,0 .5em 1em);
+				a {
+					display: block;
+					text-decoration: none;
+					background-color: #fff;
+					transition: background 400ms ease;
+					&:hover {
+						background: rgba(#fff,.3);
+						.wrp_txt {
+							.txt {
+								&:after {
+									right: 0em;
+								}
+							}
+						}
+					}
+					.wrp_img {
+						width: 100%;
+						height: 0;
+						padding-bottom: wCon(262,350);
+						background-size: cover;
+						background-position: center center;
+					}
+					.wrp_txt {
+						@include cV(padding,1.5em,1em 1em 1.5em,1em);
+						.txt {
+							@extend %jp_b1;
+							@include cV(line-height,2,1.8,1.7);
+							@include text-abr(3,1.7);
+							position: relative;
+						}
+					}
+				}
+			}
+		}
+		#js-arrows {
+			display: flex;
+			flex-direction: row;
+			justify-content: center;
+			align-items: center;
+			margin-top: wCon(15,1200);
+			.prev {order: 1;}
+			.next {order: 3;}
+			.slick-dots {
+				text-align: center;
+				letter-spacing: -.5em;
+				order: 2;
+				padding: 0 1em .5em;
+				@include mq(sp) {
+					padding: 0 .5em .5em;
+				}
+				li {
+					width: 7px;
+					height: 7px;
+					display: inline-block;
+					vertical-align: middle;
+					letter-spacing: 0;
+					background: #8c8c8c;
+					border-radius: 20px;
+					cursor: pointer;
+					transition: background 400ms ease,transform 400ms ease;
+					&:not(:first-child) {
+						margin-left: 17px;
+						@include mq(sp) {
+							margin-left: .5em;
+						}
+					}
+					&:first-child:last-child {display: none;}
+					&.slick-active {
+						background: #000;
+						transform: scale(1.2);
+					}
+				}
+			}
+			.prev,.next {
+				@extend %en_btn;
+				cursor: pointer;
+				position: relative;
+				z-index: 100;
+				@include mq(sp) {
+					@include fsz(13);
+					// letter-spacing: .05em;
+				}
+				i {
+					display: inline-block;
+					@include fsz(20,14);
+					line-height: 1;
+					vertical-align: -.15em;
+					padding: 0 .2em;
+					transition: transform 400ms ease;
+					@include mq(sp) {
+						padding: 0;
+					}
+				}
+			}
+			.prev {
+				margin-right: 1em;
+				&:hover {
+					i {
+						transform: translateX(-.2em);
+					}
+				}
+			}
+			.next {
+				margin-left: 1em;
+				&:hover {
+					i {
+						transform: translateX(.2em);
+					}
+				}
+			}
+		}
+	}
+	.btn {
+		margin: 2.5em auto 0;
+		width: 80%;
+		@include mq(pc_tab) {
+			max-width: 350px;
+		}
+		@include mq(sp) {
+			margin-top: 1em;
+		}
+	}
+}
+
+// -----------------------------------------------------------
+//  con_case
+// -----------------------------------------------------------
+.con_case {
+	@extend %bw;
+	padding-top: wCon(145,1920);
+	@include mq(sp) {
+		padding-top: 4em;
+	}
+	.box_case {
+		@include mq(pc_tab) {
+			@include display-flex();
+			@include align-items(center);
+			margin-top: wCon(80,1920);
+		}
+		@include mq(tab) {
+			@include align-items(stretch);
+		}
+		@include mq(tab_s) {
+			@include flex-direction(column);
+			margin-top: wCon(100,1920);
+		}
+		@include mq(sp) {
+			margin-top: 3em;
+		}
+		.photo {
+			@include mq(pc_tab) {
+				width: wCon(600,1200);
+			}
+			@include mq(tab_s) {
+				width: 100%;
+				img {width: 100%;}
+			}
+		}
+		.box_txt {
+			@include mq(pc_tab) {
+				margin-left: 40px;
+				max-width: 512px;
+				width: wCon(512,1200);
+			}
+			@include mq(tab_s) {
+				margin: 1em 0 0 0;
+				max-width: 100%;
+				width: 100%;
+			}
+			@include mq(sp) {margin-top: 1em;}
+			.st {
+				border-bottom: 1px solid #c5c5c5;
+				padding-bottom: .5em;
+				margin-bottom: .5em;
+			}
+		}
+		&:nth-of-type(even) {
+			@include mq(pc_tab) {
+				@include flex-direction(row-reverse);
+				.box_txt {
+					margin-left: 0;
+					margin-right: 40px;
+				}
+			}
+			@include mq(tab_s) {
+				@include flex-direction(column);
+				.box_txt {
+					margin-right: 0;
+				}
+			}
+		}
+	}
+}
+
+// -----------------------------------------------------------
+//  con_recommend
+// -----------------------------------------------------------
+.con_recommend {
+	@extend %bw;
+	padding-top: wCon(145,1920);
+	@include mq(sp) {
+		padding-top: 6em;
+	}
+	.box_rec {
+		@extend %cf;
+		@include cV(margin, wCon(80,1920) auto 0, 3em auto 0);
+		li {
+			@include mq(pc_tab) {
+				float: left;
+				width: wCon(384,1200);
+				&:nth-child(n+2) {margin-left: wCon(24,1200);}
+				&:nth-child(n+4) {margin-top: 40px;}
+				&:nth-child(3n+1) {
+					margin-left: 0;
+					clear: left;
+				}
+			}
+			@include mq(sp) {
+				&:not(:first-child) {margin-top: 1.5em;}
+			}
+			.photo {
+				position: relative;
+				z-index: 1;
+				em {
+					position: absolute;
+					z-index: 1;
+					top: 0;
+					left: 0;
+					background-color: $c-poc;
+					color: #fff;
+					padding: .8em 1em;
+					@include mq(sp) {padding: .3em .5em;}
+				}
+				img {
+					@include mq(sp) {width: 100%;}
+				}
+			}
+			.box_txt {
+				padding: .8em 0;
+				.st {
+					margin-bottom: .4em;
+				}
+			}
+		}
+	}
+	.note {
+		border-bottom: 1px solid #c5c5c5;
+		padding-bottom: 1em;
+		margin: wCon(50,1920) 0 wCon(145,1920);
+		text-align: right;
+		@include mq(sp) {
+			margin: 2em 0 4em;
+			text-align: left;
+		}
+	}
+	.btn {
+		margin: 2.5em auto 0;
+		@include mq(pc_tab) {
+			max-width: 350px;
+			width: 80%;
+		}
+		@include mq(sp) {
+			margin-top: 1em;
+		}
+	}
+}

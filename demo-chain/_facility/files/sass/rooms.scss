@@ -1,0 +1,753 @@
+@charset "utf-8";
+/* ===================================================================
+CSS information
+
+file name  : rooms.css
+author     : Abilive
+style info : 客室
+=================================================================== */
+@import "settings";
+
+// --------------
+//  con_int
+// --------------
+.con_int {
+	@extend %bw;
+	@include cV(margin-top, 80px, 10%);
+	@extend %cf;
+	.box_txt {
+		@include cV(float, left, none);
+		@include cV(width, wCon(740,1200), 60%, 100%);
+		h2 {
+			@include mq(sp) {text-align: center;}
+		}
+		p.txt {
+			@include cV(margin, 40px 0, 8% 0);
+		}
+		p.btn {
+			@include mq(pc_tab) {
+				max-width: 300px;
+				margin: 2.5em 0 0;
+			}
+			@include mq(sp) {
+				width: 70%;
+				margin: 8% auto 0;
+			}
+		}
+	}
+	p.photo {
+		@include cV(float, right, none);
+		@include cV(width, wCon(383,1200), 35%, 100%);
+		img {width: 100%;}
+	}
+}
+
+// --------------
+//  con_link
+// --------------
+ul.con_link {
+	@extend %bw;
+	@include cV(margin-top, 90px, 60px, 3em);
+	@include cV(margin-bottom, 90px, 60px, 3em);
+	@extend %cf;
+	display: flex!important;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+	li {
+        align-self: stretch;
+		@include cV(width, wCon(282,1200), 32%, 48%);
+		a {
+			@include cV(padding, 1.1em 0, 1.1em 0 1.5em);
+			position: relative;
+			display: flex;
+			flex-wrap: wrap;
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+			@include icon($下矢印,after) {
+				display: block;
+				position: absolute;
+				@extend %jp_b1;
+				text-align: center;
+				@include transition(bottom 500ms ease);
+				@include mq(pc_tab) {
+					right: 1em;
+					bottom: 50%;
+					@include transform(translateY(50%));
+					@include mq(tab) {right: .5em;}
+				}
+				@include mq(sp) {
+					bottom: .5em;
+					left: 0;
+					right: 0;
+					margin: auto;
+				}
+			}
+			span {
+				display: block;
+				font-weight: normal;
+				@include fsz(12,14);
+				padding-top: .8em;
+				width: 100%;
+				.facility_karasumagojo.lang_cn &,
+				.facility_karasumagojo.lang_tw & {
+					@include mq(tab) {
+						padding: .8em 1.5em 0;
+					}
+				}
+			}
+			&:hover {
+				&:after {
+					@include mq(pc_tab) {bottom: 45%;}
+					@include mq(sp) {bottom: .3em;}
+				}
+			}
+		}
+		&:nth-child(n+2) {
+			@include cV(margin-left, wCon(24,1200), 2%, 4%);
+		}
+		@include mq(pc) {
+			&:nth-child(4n+1) {
+				margin-left: 0;
+			}
+			&:nth-child(n+5) {margin-top: 30px;}
+		}
+		@include mq(tab) {
+			&:nth-child(3n+1) {
+				margin-left: 0;
+			}
+			&:nth-child(n+4) {margin-top: 1.5em;}
+		}
+		@include mq(sp) {
+			&:nth-child(odd) {
+				margin-left: 0;
+			}
+			&:nth-child(n+3) {margin-top: 1em;}
+		}
+	}
+}
+
+
+// --------------
+//  con_rooms
+// --------------
+.con_rooms {
+	width: 100%;
+	@include cV(padding, 100px 0, 10% 0);
+	border-bottom: solid 1px $color3;
+	&#link_r2, &#link_r3, &#link_r4, &#link_r5 {
+		.box_rooms {
+			.rooms_ame {
+				.wrp_inner {
+					display: block;
+				}
+			}
+		}
+	}
+	.facility_karasuma & {
+		&#link_r1 {
+			.box_rooms {
+				.rooms_ame {
+					.wrp_inner {
+						display: block;
+					}
+				}
+			}
+		}
+	}
+	.facility_karasumagojo & {
+		&#link_r6 {
+			.box_rooms {
+				.rooms_ame {
+					.wrp_inner {
+						display: block;
+					}
+				}
+			}
+		}
+	}
+	.facility_karasuma & {
+		&#link_r31, &#link_r32, &#link_r33, &#link_r34, &#link_r35 {
+			border-bottom: none;
+			.box_rooms {
+				ul.box_btn {
+					li {
+						&:first-child {
+							float: none;
+						}
+						@include mq(pc_tab) {
+							&:nth-child(even) {
+								margin-right: wCon(60,700);
+								clear: left;
+								@include mq(tab) {margin-right: 4%;}
+							}
+							&:nth-child(odd) {
+								margin-right: 0;
+								clear: unset;
+								@include mq(tab) {margin-right: 0;}
+							}
+							&:nth-child(n+2) {margin-top: 30px;}
+							// &:nth-child(n+3) {margin-top: 30px;}
+						}
+					}
+				}
+			}
+		}
+	}
+	.facility_karasumagojo & {
+		&#link_r27, &#link_r28, &#link_r29, &#link_r30, &#link_r31 {
+			border-bottom: none;
+		}
+		&#link_r31 {
+			.box_rooms {
+				ul.box_btn {
+					li {
+						p {
+							@include mq(pc) {
+								white-space: nowrap;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	&#link_bath {
+		.box_rooms {
+			.rooms_ame {
+				p.st {
+					cursor: unset;
+					&:before, &:after {
+						display: none;
+					}
+				}
+				.wrp_inner {
+					display: block;
+					ul {
+						li {
+							.lang_en & {
+								@include mq(pc_tab) {
+									width: 21%;
+									&:nth-child(2) {
+										width: 24%;
+										// i, em {
+										// 	vertical-align: top;
+										// }
+									}
+									&:nth-child(n+2) {
+										@include cV(margin-left, wCon(30,900), 3%, 4%);
+									}
+								}
+								@include mq(sp) {
+									width: 46%;
+									&:nth-child(2) {
+										width: 50%;
+										i, em {
+											vertical-align: top;
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	.box_rooms {
+		@extend %bw;
+		max-width: 1000px;
+		h2 {text-align: center;}
+		.box_st {
+			width: 100%;
+			max-width: 900px;
+			margin: 0 auto 2em;
+			@extend %cf;
+			h2 {
+				@include cV(float, left, none);
+				border-left: solid 5px #000;
+				padding: 0 .5em .3em;
+				text-align: left;
+			}
+			.box_smoke {
+				@include cV(float, right, none);
+				width: 100%;
+				max-width: 260px;
+				@include mq(pc_tab) {text-align: right;}
+				@include mq(sp) {margin-top: 1em;}
+				p {
+					@include cV(display, inline-block, block);
+					vertical-align: middle;
+					&:nth-child(n+2) {
+						@include mq(pc_tab) {margin-left: 1em;}
+						@include mq(sp) {margin-top: .1em;}
+					}
+					i, em {
+						display: inline-block;
+						vertical-align: middle;
+					}
+					i {
+						@include cV(width, 34px, 1.5em);
+						img {width: 100%;}
+					}
+					em {
+						@extend %jp_b2;
+						margin-left: .5em;
+					}
+				}
+			}
+		}
+		.box_slider {
+			width: 100%;
+			max-width: 900px;
+			margin: auto;
+			.box_img {
+				width: 100%;
+				@include mq(tab_sp) {
+					width: 90%;
+					margin: auto;
+					@include mq(tab) {width: 95%;}
+				}
+				position: relative;
+				z-index: 1;
+				.prev,.next {
+					@include fsz(28);
+		            cursor: pointer;
+		            position: absolute;
+		            top: 45%;
+		            @include transform(translateY(-50%));
+		            z-index: 100;
+		            @include mq(sp) {
+		                @include fsz(13);
+		            }
+		            i {
+		                display: inline-block;
+		                @include fsz(20,14);
+		                line-height: 1;
+		                vertical-align: -.15em;
+		                padding: 0 .2em;
+		                @include mq(sp) {padding: 0;}
+		            }
+		        }
+		        .prev {
+		        	// @include cV(left, -2em, -1em, -2em);
+		        	left: -2em;
+		        }
+		        .next {
+		        	// @include cV(right, -2em, -1em, -2em);
+		        	right: -2em;
+		        }
+		        .slick-dots {
+		        	@include cV(margin-top, 20px, 1em);
+		        }
+			}
+			.box_txt {
+				@include cV(margin-top, 30px, 1.5em);
+				@extend %cf;
+				p.txt {
+					@include cV(float, left, none);
+					@include cV(width, wCon(540,900), 100%);
+					@extend %jp_b1;
+				}
+				p.btn {
+					@include cV(float, right, none);
+					@include cV(width, wCon(300,900), 70%);
+					@include mq(sp) {margin: 2em auto 0;}
+					a {
+						position: relative;
+						z-index: 1;
+						&:after {
+							position: absolute;
+							z-index: 1;
+							top: 50%;
+							right: 1em;
+							content: "";
+							display: block;
+							width: 33px;
+							height: 20px;
+							@include transform(translateY(-50%));
+							background: url(../../rooms/images/ic_view.png) no-repeat center center;
+						}
+					}
+				}
+			}
+			.box_btn {
+				width: 90%;
+				max-width: 630px;
+				margin: auto;
+				@include cV(margin-top, 90px, 2em);
+				@extend %cf;
+				p.btn {
+					@include cV(float, left, none);
+					@include cV(width, wCon(300,630), 90%);
+					@include mq(sp) {margin:auto;}
+					&:nth-child(2) {
+						@include cV(float, right, none);
+						@include mq(sp) {margin-top: 1em;}
+					}
+					a {
+						position: relative;
+						z-index: 1;
+						&:after {
+							position: absolute;
+							z-index: 1;
+							top: 50%;
+							right: 1em;
+							content: "";
+							display: block;
+							width: 33px;
+							height: 20px;
+							@include transform(translateY(-50%));
+							background: url(../../rooms/images/ic_view.png) no-repeat center center;
+						}
+					}
+				}
+			}
+		}
+		.rooms_ame {
+			@include cV(margin-top, 50px, 2em);
+			border: solid 1px $color3;
+			padding: 1em 0;
+			p.st {
+				@extend %jp_h3;
+				text-align: center;
+				position: relative;
+				z-index: 1;
+				width: 95%;
+				max-width: 900px;
+				margin: auto;
+				cursor: pointer;
+				&:before, &:after {
+					position: absolute;
+					right: 0;
+					top: 50%;
+					z-index: 1;
+					width: 1em;
+					height: 2px;
+					background-color: #000;
+					content: "";
+				}
+				&:after {
+					@include transform(rotate(90deg));
+					@include transition(transform .5s);
+				}
+				&.active {
+					&:after {
+						@include transform(rotate(180deg));
+					}
+				}
+			}
+			.wrp_inner {
+				width: 100%;
+				display: none;
+				width: 95%;
+				max-width: 900px;
+				margin: 1em auto 0;
+				border-top: solid 1px $color3;
+				@include cV(padding-top, 30px, 1.5em);
+				ul {
+					width: 100%;
+					@extend %cf;
+					li {
+						float: left;
+						@include cV(width, wCon(177,900), 22%, 48%);
+						&:nth-child(n+2) {
+							@include cV(margin-left, wCon(64,900), 4%, 4%);
+						}
+						@include mq(pc_tab) {
+							&:nth-child(4n+1) {
+								margin-left: 0;
+								clear: left;
+							}
+							&:nth-child(n+5) {margin-top: 30px;}
+						}
+						@include mq(sp) {
+							&:nth-child(odd) {
+								margin-left: 0;
+								clear: left;
+							}
+							&:nth-child(n+3) {margin-top: 1em;}
+						}
+						i, em {
+							display: inline-block;
+							vertical-align: middle;
+						}
+						i {
+							@include cV(width, wCon(55,175), 2.5em, 2.5em);
+							// @include mq(tab_s) {width:  wCon(35,175);}
+							img {width: 100%;}
+						}
+						em {margin-left: 0.5em;}
+					}
+				}
+				.note {margin: 1em auto 0;}
+			}
+		}
+		.box_detail {
+			@include cV(margin-top, 45px, 1.5em);
+			@extend %cf;
+			p.romms_pop {
+				@include cV(float, right, none);
+				@include cV(width, wCon(250,1000), 30%, wCon(640,880));
+				@include mq(sp) {margin: 2em auto 0;}
+				border: solid 1px $color3;				
+				a {
+					display: block;
+					position: relative;
+					z-index: 1;
+					&:before {
+						content: "+";
+						background-color: #000;
+						color: #fff;
+						display: block;
+						width: 1.2em;
+						height: 1.2em;
+						position: absolute;
+						z-index: 2;
+						bottom: 0;
+						right: 0;
+						text-align: center;
+						line-height: 1;
+						@include fsz(30);
+						@include box-sizing(border-box);
+					}
+				}
+				img {width: 100%;}
+			}
+			.wrp_detail {
+				@include cV(float, left, none);
+				@include cV(width, wCon(725,1000), 65%, 100%);
+				table {
+					tr {
+						th {@include cV(width, 120px, 100%);}
+						// td {@include cV(width, wCon(880,1000), 100%);}
+					}
+				}
+			}
+		}
+		ul.box_btn {
+			width: 100%;
+			max-width: 750px;
+			.lang_en & {
+				max-width: 780px;
+			}
+			@include cV(margin-top, 30px, 3em);
+			@extend %cf;
+			@include mq(sp) {display: none;}
+			li {
+				@include cV(float, left, none);
+				@include cV(width, wCon(320,700), 48%, 100%);
+				@include mq(pc_tab) {
+					&:nth-child(odd) {
+						margin-right: wCon(60,700);
+						clear: left;
+						@include mq(tab) {margin-right: 4%;}
+					}
+					&:nth-child(n+3) {margin-top: 30px;}
+					.note {
+						padding-top: 8px;
+					}
+				}
+				p.smoke {
+					i, em {
+						display: inline-block;
+						vertical-align: middle;
+					}
+					i {
+						@include cV(width, 34px, 1.5em);
+						img {width: 100%;}
+					}
+					em {
+						@extend %jp_b2;
+						margin-left: .5em;
+					}
+					.lang_en & {
+						@include mq(tab) {
+							i, em {
+								display: block;
+							}
+							em {
+								margin-left: 0;
+								margin-top: .5em;
+							}
+						}
+					}
+					.facility_karasumagojo & {
+						.lang_ko & {
+							@include mq(tab) {
+								i, em {
+									display: block;
+								}
+								em {
+									margin-left: 0;
+									margin-top: .5em;
+								}
+							}
+						}
+					}
+				}
+				p.btn {margin-top: .5em;}
+				@include mq(sp) {
+					&:nth-child(n+2) {margin-top: 1em;}
+				}
+			}
+		}
+		.box_rooms_info {
+			@include cV(margin-top, 70px, 3em);
+			@extend %cf;
+			.rooms_info {
+				@include cV(float, left, none);
+				@include cV(width, wCon(320,1000), 100%);
+				background-color: #fff;
+				&:nth-child(n+2) {
+					@include mq(pc_tab) {margin-left: wCon(20,1000);}
+					@include mq(sp) {margin-top: 1.5em;}
+				}
+				p.photo {
+					width: 100%;
+					img {width: 100%;}
+				}
+				.box_txt {
+					@include box-sizing(border-box);
+					@include cV(padding, 2em 1em, 1.8em);
+					p.st {
+						@extend %jp_h3;
+						margin-bottom: 1em;
+					}
+					p.txt {
+						@extend %jp_b1;
+					}
+				}
+			}
+		}
+	}
+	&.bg {
+		background-color: $color4;
+		border-bottom: none;
+		.box_rooms {
+			h2 {margin-bottom: 2em;}
+			.rooms_ame {
+				background-color: #fff;
+				border: none;
+				padding: 1em 0;
+			}
+		}
+	}
+}
+
+// --------------
+//  con_info
+// --------------
+.con_info {
+	@extend %bw;
+	max-width: 1000px;
+	@include cV(margin-top, 60px, 5%);
+	h2 {text-align: center;}
+	table {
+		@include cV(margin-top, 40px, 1em);
+		tr {
+			th {
+				@include cV(width, wCon(255,1000), 40%, 100%);
+			}
+			td {
+				@include cV(width, wCon(745,1000), 60%, 100%);
+			}
+		}
+	}
+}
+
+// --------------
+//  con_room_view
+// --------------
+.con_room_view {
+	display: none;
+	width: 100% !important;
+	.box_view_pop {
+		width: 100% !important;
+		height: 100% !important;
+		iframe {
+			width: 90%;
+			max-width: 1200px;
+		}
+	}
+}
+
+.fancybox-container {
+	.fancybox-inner {
+		.fancybox-stage {
+			.fancybox-slide {
+				.box_view_pop {
+					width: 100% !important;
+					height: 100% !important;
+					max-width: 1300px;
+					max-height: 600px;
+					position: relative;
+					z-index: 1;
+					@include mq(tab) {
+						width: 82% !important;
+						height: 40% !important;
+					}
+					@include mq(sp) {
+						width: 300px !important;
+						height: 300px !important;
+					}
+					iframe {
+						position: absolute;
+						z-index: 1;
+						top: 0;
+						left: 0;
+						width: 100%;
+						height: 100%;
+					}
+				}
+			}
+		}
+	}
+}
+
+table.tbl_room {
+	width: 100%;
+	tr {
+		th, td {
+			@extend %jp_b1;
+			@include box-sizing(border-box);
+			@include cV(padding, 1em, 1em);
+			@include mq(sp) {display: block;}
+		}
+		th {
+			background-color: $color4;
+			border-bottom: 1px solid #fff;
+		}
+		td {
+			border-bottom: 1px solid $color3;
+		}
+		&:first-child td {border-top: 1px solid $color3;}
+	}
+	@include mq(sp) {
+		border-bottom: 1px solid $color3;
+    	tr {
+        	th, td {border-bottom: 0;}
+        	&:first-child td {border-top: 0;}
+    	}
+    }
+}
+
+//en用
+
+.facility_karasuma.lang_jp {
+	ul.con_link {
+		li {
+			&:not(:last-child) {
+				a {@include cV(padding, 1.6em 0, 1.6em 0 2em);}
+			}
+		}
+	}
+}
+
+.box_view_pop {
+	.fancybox-button {
+		display: none;
+	}
+}

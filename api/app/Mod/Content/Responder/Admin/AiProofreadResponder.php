@@ -1,0 +1,11 @@
+<?php
+
+namespace App\Mod\Content\Responder\Admin;
+
+use App\Http\Responder\BaseResponder;
+
+class AiProofreadResponder extends BaseResponder
+{
+    protected $statusCode = 200;
+}
+

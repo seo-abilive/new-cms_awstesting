@@ -1,0 +1,146 @@
+@charset "utf-8";
+/* ===================================================================
+CSS information
+
+file name  : informartion.css
+author     : Abilive
+style info : ホテル開発事業
+=================================================================== */
+@import "settings";
+
+// -----------------------------------------------------------
+//  con_info
+// -----------------------------------------------------------
+.con_info {
+	@extend %bw;
+    .st {
+        @extend %jp_h2;
+        text-align: left;
+        border-left: 5px solid #000;
+        padding-left: .5em;
+        @include cV(margin-bottom, 45px, 5%);
+    }
+	.box_intro {
+		@include cV(margin, 60px 0, 10% 0);
+		.txt {
+			@extend %jp_b1;
+		}
+	}
+	.tbl_info {
+        width: 100%;
+        @include cV(margin-top, 70px, 10%);
+        @include cV(margin-bottom, 125px, 15%);
+        tr {
+            th,td {
+                vertical-align: top;
+                @include cV(padding, 1em 1.5em, 1em);
+            }
+            th {
+                @extend %jp_b1;
+                @include cV(width, 287px, 210px, 100%);
+                @include box-sizing(border-box);
+                background: $color4;
+                border-bottom: 1px solid #fff;
+                span {
+                    display: inline-block;
+                    vertical-align: top;
+                    @include cV(width,85%,85%,90%);
+                    // @include mq(tab) {
+                    //     display: inline;
+                    //     br {
+                    //         display: none;
+                    //     }
+                    // }
+                    // .lang_en & {
+                    //     @include mq(sp) {
+                    //         display: inline;
+                    //         br {
+                    //             display: none;
+                    //         }
+                    //     }
+                    // }
+                    // .lang_cn &, .lang_tw &, .lang_ko & {
+                    //     @include mq(sp) {
+                    //         word-break: keep-all;
+                    //     }
+                    // }
+                    &.no {
+                        @include cV(width,15% !important,15% !important,10% !important);
+                    }
+                }
+            }
+            td {
+                border-bottom: 1px solid $color3;
+                padding-right: 1em;
+                .txt { @extend %jp_b1; }
+                .img {
+                    margin-top: 1em;
+                    p {
+                        @include cV(display,inline-block,block);
+                    }
+                }
+                .box_list {
+                	@extend %jp_b1;
+            		display: block;
+                    counter-reset: item;
+                    list-style-type: none;
+            		// @include cV(margin-bottom, 35px, 5%);
+                	li {
+                        position: relative;
+                        padding-left: 3em;
+                        &:before {
+                            counter-increment: item;
+                            content: '（'counter(item)'）';
+                            padding-right: .5em;
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            display: block;
+                        }
+                		.s_list {
+                			margin-left: 2em;
+                		}
+                	}
+                }
+                &.box_map {
+					overflow: hidden;
+                    vertical-align: middle;
+					.txt { float: left; }
+                    .btn {
+                    	float: right;
+                    	width: 154px;
+                    	a {
+                    		padding: .4em;
+                    		i { line-height: 1em; }
+                    	}
+                    }
+                    @include mq(min_max_w, 767px,1126px) {
+                    	.txt {
+                    		float: none;
+                    		margin-bottom: 1em;
+                    	}
+                    }
+                    @include mq(sp) {
+                    	.txt {
+                    		float: none;
+                    		margin-bottom: 1em;
+                    	}
+                    }
+                }
+            }
+            &:first-child td {border-top: 1px solid $color3;}
+        }
+        @include mq(sp) {
+    		border-bottom: 1px solid $color3;
+        	tr {
+            	th, td {
+            		width: 100%;
+            		display: block;
+            		border-bottom: 0;
+            	}
+            	&:first-child td { border-top: 0; }
+        	}
+        }
+    }
+}
+

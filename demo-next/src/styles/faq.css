@@ -1,0 +1,456 @@
+﻿.con_tab,
+.sort_txt,
+.con_faq {
+    width: 90%;
+    max-width: 1400px;
+    margin: auto;
+}
+.con_faq h2 {
+    font-size: 200%;
+    line-height: 1.4;
+    letter-spacing: 0;
+}
+@media only screen and (min-width: 768px) and (max-width: 1199px) {
+    .con_faq h2 {
+        font-size: 186%;
+    }
+}
+@media only screen and (max-width: 767px) {
+    .con_faq h2 {
+        font-size: 172%;
+    }
+}
+.con_faq h3,
+.con_faq .box_faq .faq_det .accordion span:before,
+.con_faq .box_faq .faq_det .inner:before {
+    font-size: 129%;
+    line-height: 1.4;
+    letter-spacing: 0.04em;
+}
+@media only screen and (min-width: 768px) and (max-width: 1199px) {
+    .con_faq h3,
+    .con_faq .box_faq .faq_det .accordion span:before,
+    .con_faq .box_faq .faq_det .inner:before {
+        font-size: 122%;
+    }
+}
+@media only screen and (max-width: 767px) {
+    .con_faq h3,
+    .con_faq .box_faq .faq_det .accordion span:before,
+    .con_faq .box_faq .faq_det .inner:before {
+        font-size: 115%;
+    }
+}
+.sort_txt,
+.con_faq .box_faq .faq_det {
+    font-size: 108%;
+    line-height: 1.6;
+    letter-spacing: 0;
+}
+@media only screen and (min-width: 768px) and (max-width: 1199px) {
+    .sort_txt,
+    .con_faq .box_faq .faq_det {
+        font-size: 108%;
+    }
+}
+@media only screen and (max-width: 767px) {
+    .sort_txt,
+    .con_faq .box_faq .faq_det {
+        font-size: 100%;
+    }
+}
+@media only screen and (min-width: 768px) and (max-width: 1199px) {
+    .sort_txt,
+    .con_faq .box_faq .faq_det {
+        line-height: 1.6;
+    }
+}
+@media only screen and (max-width: 767px) {
+    .sort_txt,
+    .con_faq .box_faq .faq_det {
+        line-height: 1.5;
+    }
+}
+.con_tab {
+    margin-top: 4.16667%;
+}
+.con_tab .area {
+    width: 100%;
+}
+.con_tab .area ul {
+    display: flex !important;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+@media only screen and (min-width: 768px) and (max-width: 1199px) {
+    .con_tab .area ul {
+        justify-content: flex-start;
+    }
+}
+@media only screen and (max-width: 767px) {
+    .con_tab .area ul {
+        justify-content: flex-start;
+    }
+}
+.con_tab .area ul li {
+    align-self: stretch;
+    width: 23.5%;
+}
+@media only screen and (min-width: 768px) and (max-width: 1199px) {
+    .con_tab .area ul li {
+        width: 32%;
+    }
+}
+@media only screen and (max-width: 767px) {
+    .con_tab .area ul li {
+        width: 48%;
+    }
+}
+@media only screen and (min-width: 768px) and (max-width: 1199px) {
+    .con_tab .area ul li:not(:nth-child(3n)) {
+        margin-right: 2%;
+    }
+}
+@media only screen and (max-width: 767px) {
+    .con_tab .area ul li:not(:nth-child(2n)) {
+        margin-right: 4%;
+    }
+}
+.con_tab .area ul li a {
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    padding: 1.6em 0;
+    position: relative;
+}
+@media only screen and (max-width: 767px) {
+    .con_tab .area ul li a {
+        padding: 1.1em 0.3em 1.5em;
+    }
+}
+@media only screen and (min-width: 1200px) {
+    .lang_en .con_tab .area ul li a {
+        padding: 1.6em 1.5em;
+    }
+}
+@media print {
+    .lang_en .con_tab .area ul li a {
+        padding: 1.6em 1.5em;
+    }
+}
+.con_tab .area ul li a:after {
+    font-family: 'icomoon' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    content: '';
+    display: inline-block;
+    margin-left: 0.5em;
+    display: block;
+    position: absolute;
+    text-align: center;
+    -moz-transition: bottom 500ms ease;
+    -o-transition: bottom 500ms ease;
+    -webkit-transition: bottom 500ms ease;
+    transition: bottom 500ms ease;
+}
+@media only screen and (min-width: 768px) {
+    .con_tab .area ul li a:after {
+        right: 1em;
+        bottom: 50%;
+        -moz-transform: translateY(50%);
+        -ms-transform: translateY(50%);
+        -webkit-transform: translateY(50%);
+        transform: translateY(50%);
+    }
+}
+@media only screen and (min-width: 768px) and (min-width: 768px) and (max-width: 1199px) {
+    .con_tab .area ul li a:after {
+        right: 0.5em;
+    }
+}
+@media only screen and (max-width: 767px) {
+    .con_tab .area ul li a:after {
+        bottom: 0.5em;
+        left: 0;
+        right: 0;
+        margin: auto;
+    }
+}
+.con_tab .area ul li a span {
+    display: block;
+    font-weight: normal;
+    font-size: 86%;
+    padding-top: 0.8em;
+}
+@media only screen and (min-width: 768px) {
+    .con_tab .area ul li a:hover:after {
+        bottom: 45%;
+    }
+}
+@media only screen and (max-width: 767px) {
+    .con_tab .area ul li a:hover:after {
+        bottom: 0.3em;
+    }
+}
+@media only screen and (min-width: 1200px) {
+    .con_tab .area ul li:nth-child(n + 5) {
+        margin-top: 30px;
+    }
+}
+@media print {
+    .con_tab .area ul li:nth-child(n + 5) {
+        margin-top: 30px;
+    }
+}
+@media only screen and (min-width: 768px) and (max-width: 1199px) {
+    .con_tab .area ul li:nth-child(n + 4) {
+        margin-top: 1.5em;
+    }
+}
+@media only screen and (max-width: 767px) {
+    .con_tab .area ul li:nth-child(n + 3) {
+        margin-top: 1em;
+    }
+}
+.sort_txt {
+    padding-top: 1em;
+}
+.sort_txt .bg {
+    display: block;
+    position: relative;
+    z-index: 1;
+    padding-left: 1em;
+}
+.sort_txt .bg:before {
+    position: absolute;
+    z-index: 1;
+    top: 0.8em;
+    left: 0;
+    content: '';
+    display: block;
+    width: 0.5em;
+    height: 0.5em;
+    background: #9f8e54;
+    -moz-border-radius: 100%;
+    -webkit-border-radius: 100%;
+    border-radius: 100%;
+}
+@media only screen and (min-width: 768px) and (max-width: 1199px) {
+    .sort_txt .bg:before {
+        top: 0.5em;
+    }
+}
+@media only screen and (max-width: 767px) {
+    .sort_txt .bg:before {
+        top: 0.8em;
+    }
+}
+.con_faq {
+    margin: 4.16667% auto 0;
+}
+@media only screen and (min-width: 768px) and (max-width: 983px) {
+    .con_faq {
+        margin: 6.25% auto 0;
+    }
+}
+@media only screen and (max-width: 767px) {
+    .con_faq {
+        margin: 4em auto 0;
+    }
+}
+.con_faq h2 {
+    text-align: center;
+    margin-bottom: 2em;
+}
+@media only screen and (max-width: 767px) {
+    .con_faq h2 {
+        margin-bottom: 1em;
+    }
+}
+.con_faq h3 {
+    position: relative;
+    margin-bottom: 2em;
+}
+@media only screen and (max-width: 767px) {
+    .con_faq h3 {
+        margin-bottom: 1em;
+    }
+}
+.con_faq h3 span {
+    background: #fff;
+    padding-right: 0.3em;
+}
+.con_faq .box_faq {
+    margin-bottom: 80px;
+}
+@media only screen and (max-width: 767px) {
+    .con_faq .box_faq {
+        margin-bottom: 16%;
+    }
+}
+.con_faq .box_faq .faq_det:last-child .accordion {
+    border-bottom: 1px solid #c5c5c5;
+}
+.con_faq .box_faq .faq_det .accordion {
+    position: relative;
+    cursor: pointer;
+    border-top: 1px solid #c5c5c5;
+    -moz-transition: background 400ms ease;
+    -o-transition: background 400ms ease;
+    -webkit-transition: background 400ms ease;
+    transition: background 400ms ease;
+}
+.con_faq .box_faq .faq_det .accordion:after {
+    font-family: 'icomoon' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    content: '';
+    display: inline-block;
+    margin-left: 0.5em;
+    position: absolute;
+    top: 50%;
+    right: 1em;
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    -moz-transition: all 400ms ease;
+    -o-transition: all 400ms ease;
+    -webkit-transition: all 400ms ease;
+    transition: all 400ms ease;
+    text-align: center;
+}
+.con_faq .box_faq .faq_det .accordion.active {
+    background: #ebebeb;
+}
+.con_faq .box_faq .faq_det .accordion.active:after {
+    top: 38%;
+    -moz-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
+.con_faq .box_faq .faq_det .accordion span {
+    display: block;
+    padding: 10px;
+}
+@media only screen and (max-width: 767px) {
+    .con_faq .box_faq .faq_det .accordion span {
+        padding: 1em;
+    }
+}
+.con_faq .box_faq .faq_det .accordion span em {
+    width: 80%;
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: -0.5em;
+}
+@media only screen and (max-width: 767px) {
+    .con_faq .box_faq .faq_det .accordion span em {
+        margin-top: 0;
+        width: 78%;
+    }
+}
+.con_faq .box_faq .faq_det .accordion span:before {
+    content: 'Q';
+    display: inline-block;
+    color: #9f8e54;
+    text-align: center;
+    margin-right: 0.5em;
+}
+.lang_jp .con_faq .box_faq .faq_det .accordion span:before {
+    font-family: 'Times New Roman', Garamond, Georgia, serif, 'Hiragino Sans', 'ヒラギノ角ゴ Pro',
+        'Hiragino Kaku Gothic Pro';
+}
+.lang_en .con_faq .box_faq .faq_det .accordion span:before {
+    font-family: linotype-didot, serif, 'Times New Roman', Garamond, Georgia, serif;
+}
+.lang_cn .con_faq .box_faq .faq_det .accordion span:before {
+    font-family: linotype-didot, serif, 'Noto Serif SC', 'Times New Roman', 'Times New Roman',
+        Garamond, Georgia, serif;
+}
+.lang_tw .con_faq .box_faq .faq_det .accordion span:before {
+    font-family: linotype-didot, serif, 'Noto Serif TC', 'Times New Roman', 'Times New Roman',
+        Garamond, Georgia, serif;
+}
+.lang_ko .con_faq .box_faq .faq_det .accordion span:before {
+    font-family: linotype-didot, serif, 'Noto Serif KR', 'Times New Roman', 'Times New Roman',
+        Garamond, Georgia, serif;
+}
+@media only screen and (max-width: 767px) {
+    .con_faq .box_faq .faq_det .accordion span:before {
+        vertical-align: top;
+        margin-right: 0.3em;
+    }
+}
+.con_faq .box_faq .faq_det .inner {
+    display: none;
+    padding: 10px 10px 2.5em 2.5em;
+}
+@media only screen and (max-width: 767px) {
+    .con_faq .box_faq .faq_det .inner {
+        padding: 0.5em 0.5em 2em 1.5em;
+    }
+}
+.con_faq .box_faq .faq_det .inner:before {
+    content: 'A';
+    display: inline-block;
+    vertical-align: top;
+    color: #9f8e54;
+    text-align: center;
+    margin-right: 0.5em;
+}
+.lang_jp .con_faq .box_faq .faq_det .inner:before {
+    font-family: 'Times New Roman', Garamond, Georgia, serif, 'Hiragino Sans', 'ヒラギノ角ゴ Pro',
+        'Hiragino Kaku Gothic Pro';
+}
+.lang_en .con_faq .box_faq .faq_det .inner:before {
+    font-family: linotype-didot, serif, 'Times New Roman', Garamond, Georgia, serif;
+}
+.lang_cn .con_faq .box_faq .faq_det .inner:before {
+    font-family: linotype-didot, serif, 'Noto Serif SC', 'Times New Roman', 'Times New Roman',
+        Garamond, Georgia, serif;
+}
+.lang_tw .con_faq .box_faq .faq_det .inner:before {
+    font-family: linotype-didot, serif, 'Noto Serif TC', 'Times New Roman', 'Times New Roman',
+        Garamond, Georgia, serif;
+}
+.lang_ko .con_faq .box_faq .faq_det .inner:before {
+    font-family: linotype-didot, serif, 'Noto Serif KR', 'Times New Roman', 'Times New Roman',
+        Garamond, Georgia, serif;
+}
+@media only screen and (max-width: 767px) {
+    .con_faq .box_faq .faq_det .inner:before {
+        margin-right: 0.3em;
+    }
+}
+.con_faq .box_faq .faq_det .inner .answer {
+    vertical-align: top;
+    display: inline-block;
+    width: calc(100% - 7em);
+}
+@media only screen and (max-width: 767px) {
+    .con_faq .box_faq .faq_det .inner .answer {
+        width: calc(100% - 4em);
+    }
+    .con_faq .box_faq .faq_det .inner .answer a:hover {
+        text-decoration: underline !important;
+    }
+}
+html {
+    scroll-behavior: smooth;
+}

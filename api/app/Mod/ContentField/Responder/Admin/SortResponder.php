@@ -1,0 +1,10 @@
+<?php
+
+namespace App\Mod\ContentField\Responder\Admin;
+
+use App\Http\Responder\BaseResponder;
+
+class SortResponder extends BaseResponder
+{
+    protected $statusCode = 204;
+}

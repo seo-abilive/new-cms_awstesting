@@ -1,0 +1,10 @@
+# index.php以外のアクセスを拒否
+<Files "*">
+    Order Deny,Allow
+    Deny from all
+</Files>
+
+<Files "index.php">
+    Order Allow,Deny
+    Allow from all
+</Files>

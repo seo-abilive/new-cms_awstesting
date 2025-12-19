@@ -1,0 +1,36 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "AllowListAllBuckets",
+            "Effect": "Allow",
+            "Action": [
+                "s3:ListAllMyBuckets",
+                "s3:GetBucketLocation"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "AllowAccessToBucketsStartingWithUserId",
+            "Effect": "Allow",
+            "Action": [
+                "s3:GetObject",
+                "s3:PutObject",
+                "s3:DeleteObject",
+                "s3:ListBucket",
+                "s3:GetBucketLocation",
+                "s3:GetBucketPolicy",
+                "s3:PutBucketPolicy",
+                "s3:DeleteBucket",
+                "s3:CreateBucket",
+                "s3:PutBucketPublicAccessBlock",
+                "s3:GetBucketPublicAccessBlock"
+            ],
+            "Resource": [
+                "arn:aws:s3:::993704921089-*",
+                "arn:aws:s3:::993704921089-*/*"
+            ]
+        }
+    ]
+}
+

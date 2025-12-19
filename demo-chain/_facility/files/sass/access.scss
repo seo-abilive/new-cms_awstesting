@@ -1,0 +1,609 @@
+@charset "utf-8";
+/* ===================================================================
+CSS information
+
+file name  : access.css
+author     : Abilive
+style info : アクセス
+=================================================================== */
+@import "settings";
+
+// -------------------
+//  con_map
+// -------------------
+.con_map {
+	width: 100%;
+	max-width: 1200px;
+	margin: auto;
+	@include cV(margin-top, 80px, 10%);
+	.box_map {
+		position: relative;
+		z-index: 1;
+		width: 100%;
+		height: 100%;
+		@include cV(min-height, 560px, 25em);
+		iframe {
+			position: absolute;
+			z-index: 1;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+		}
+	}
+	.box_detail {
+		width: 90%;
+		max-width: 900px;
+		margin: auto;
+		@include cV(margin-top, 50px, 2em);
+		.st {
+			@extend %jp_h3;
+			margin-bottom: 1em;
+			text-align: center;
+			.lang_en & {
+				@include mq(sp) {
+					width: 80%;
+					margin: 0 auto 1em;
+				}
+			}
+			.lang_ko & {
+				@include mq(sp) {
+					width: 65%;
+					margin: 0 auto 1em;
+				}
+			}
+		}
+		table {
+			tr {
+				th {
+					@include cV(width, wCon(150,900), 100%);
+				}
+				td {
+					@include cV(width, wCon(750,900), 100%);
+					// a, span {text-decoration: none;}
+					i {
+						a, span {text-decoration: none;}
+					}
+					&.box_s {
+						@extend %cf;
+						em {
+							display: block;
+							&.add {
+								@include cV(float, left, none);
+								@include cV(width, 70%, 100%);
+							}
+							&.btn {
+								@include cV(float, right, none);
+								width: 50%;
+								@include mq(pc_tab) {max-width: 150px;}
+								a {
+									padding: .5em 0;
+									position: relative;
+		                            @include icon($ピン,after) {
+		                                position: absolute;
+		                                top: 50%;
+		                                margin: 0;
+		                                transform: translateY(-50%);
+		                                left: .5em;
+		                                @include fsz(16);
+		                                color: #fff;
+		                                line-height: 104px;
+		                                transition: right 400ms ease,color 400ms ease;
+		                            }
+								}
+								@include mq(sp) {margin-left: auto;}
+							}
+						}
+					}
+					i {
+						// a {text-decoration: underline;}
+						&.bg {
+							display: block;
+							position: relative;
+							z-index: 1;
+							padding-left: 1em;
+							&:before {
+								position: absolute;
+								z-index: 1;
+								top: .8em;
+								left: 0;
+								content: "";
+								display: block;
+								width: .5em;
+								height: .5em;
+								background: $c1;
+								@include border-radius(100%);
+							}
+						}
+						&.line {
+                            @include mq(sp) {
+                                .lang_en &, .lang_cn &, .lang_tw &, .lang_ko & {
+                                    display: none;
+                                }
+                            }
+                        }
+					}
+					br {
+						@include mq(sp) {
+							.lang_jp & {
+								display: none;
+							}
+						}
+					}
+				}
+			}
+		}
+		ul.box_btn {
+			width: 80%;
+			max-width: 500px;
+			@include cV(margin, 45px auto 75px, 2em auto 4em);
+			@extend %cf;
+			li {
+				@include cV(float, left, none);
+				@include cV(width, wCon(240,500), 100%);
+				&:nth-child(n+2) {
+					@include mq(pc_tab) {margin-left: wCon(20,500);}
+					@include mq(sp) {margin-top: 2em;}
+				}
+				&:only-child {
+					float: none;
+					margin: auto;
+				}
+			}
+		}
+	}
+	p.photo {
+		width: 90%;
+		max-width: 740px;
+		margin: auto;
+		text-align: center;
+		@include over;
+		img, input {width: 100%;}
+	}
+}
+
+// -------------------
+//  con_route
+// -------------------
+.con_route {
+	width: 100%;
+	border-top: solid 1px $color3;
+	@include cV(padding-top, 80px, 5em);
+	@include cV(margin-top, 80px, 5em);
+	.box_route {
+		@extend %bw;
+		.box_link {
+			width: 100%;
+			max-width: 640px;
+			margin: auto;
+			@extend %cf;
+			li {
+				float: left;
+				@include cV(width, wCon(300,640), 49%);
+				&:nth-child(n+2) {
+					@include cV(margin-left, wCon(40,640), 2%);
+				}
+				a {
+					position: relative;
+					z-index: 1;
+					padding: 1.5em .8em;
+					@include mq(sp) {padding: 1.5em 1.2em;}
+					@include icon($下矢印,after) {
+						@extend %jp_b2;
+						display: block;
+						position: absolute;
+						text-align: center;
+						top: 50%;
+						@include transform(translateY(-50%));
+						right: .5em;
+					}
+				}
+			}
+		}
+		.wrp_route {
+			@include cV(margin-top, 70px, 4em);
+			.st {
+				@extend %jp_h2;
+				text-align: center;
+				@include cV(margin-bottom, 40px, 1em);
+			}
+			.sst {
+				@extend %jp_h3;
+				text-align: center;
+				margin-bottom: 1em;
+			}
+			.inner {
+				width: 100%;
+				@extend %cf;
+				ul.route {
+					@include cV(float, left, none);
+					@include cV(width, wCon(580,1200), 100%);
+					&:nth-child(n+2) {
+						@include mq(pc_tab) {margin-left: wCon(40,1200);}
+						@include mq(sp) {
+							li {
+								&:first-child {border-top: none;}
+							}
+						}
+					}
+					li {
+						@include box-sizing(border-box);
+						@extend %jp_b1;
+						@include cV(padding, .5em 2em, .5em 1em, .5em 1em);
+						border-bottom: solid 1px $color3;
+						&:nth-child(odd) {background-color: $color4;}
+						&:first-child {border-top: solid 1px $color3;}
+						em {
+							display: block;
+							position: relative;
+							z-index: 1;
+							padding-left: 1em;
+							&:before {
+								position: absolute;
+								z-index: 1;
+								@include cV(top, .8em, .7em);
+								left: 0;
+								content: "";
+								display: block;
+								width: .5em;
+								height: .5em;
+								background-color: $c1;
+								@include border-radius(100%);
+							}
+						}
+					}
+				}
+			}
+			.map_pop {
+				position: relative;
+				z-index: 1;
+				@extend %bw;
+				margin-bottom: 1.5em;
+				&:before {
+					content: "+";
+					background-color: #000;
+					color: #fff;
+					display: block;
+					width: 1.2em;
+					height: 1.2em;
+					position: absolute;
+					z-index: 2;
+					bottom: 0;
+					right: 0;
+					text-align: center;
+					line-height: 1;
+					@include fsz(30);
+					@include box-sizing(border-box);
+				}
+			}
+			p.note {margin-top: 1em;}
+			.box_note {
+				border: solid 1px $color3;
+				@include cV(padding, 40px 0, 2em 0);
+				@include cV(margin-top, 30px, 1.5em);
+				dl {
+					width: 90%;
+					max-width: 1060px;
+					margin: .5em auto;
+					display: table;
+					dt, dd {
+						display: table-cell;
+						vertical-align: top;
+						@include box-sizing(border-box);
+					}
+					dt {width: 1.5em;}
+					dd {
+						@include cV(width, 95%, 90%);
+						a {text-decoration: underline;}
+					}
+				}
+			}
+			p.btn_pop {
+				width: 80%;
+				max-width: 300px;
+				margin: 40px auto 0;
+			}
+			.box_sta {
+				@include cV(margin-top, 70px, 4em);
+				.st_sta {
+					@extend %jp_h2;
+					@include cV(margin-bottom, 50px, 1.5em);
+					@include cV(padding-left, 20px, .8em);
+					position: relative;
+					&:before {
+						content: '';
+						width: 5px;
+						height: 100%;
+						background: #000;
+						display: block;
+						position: absolute;
+						top: 3px;
+						left: 0;
+					}
+				}
+				.box_sta_inner {
+					border: solid 1px $color3;
+					@include cV(margin-bottom, 50px, 1.5em);
+					p.st {
+						@extend %jp_st;
+						text-align: left;
+						position: relative;
+						z-index: 1;
+						width: 95%;
+						max-width: 1130px;
+						@include cV(padding,1.5em 0,1em 1em 1em 0);
+						margin: auto;
+						cursor: pointer;
+						@include mq(sp) {width: 85%;}
+						&:before, &:after {
+							position: absolute;
+							right: -1%;
+							top: 50%;
+							z-index: 1;
+							width: 1em;
+							height: 2px;
+							background-color: #000;
+							content: "";
+						}
+						&:after {
+							@include transform(rotate(90deg));
+							@include transition(transform .5s);
+						}
+						&.active {
+							&:after {
+								@include transform(rotate(180deg));
+							}
+						}
+					}
+					ul.box_route_map {
+						display: none;
+						width: 95%;
+						max-width: 1130px;
+						margin: 0 auto 2em;
+						border-top: solid 1px $color3;
+						@include cV(padding-top, 30px, 1.5em);
+						@extend %cf;
+						&.active {
+							display: block;
+						}
+						@include mq(sp) {
+							width: 85%;
+						}
+						li {
+							@include cV(float, left, none);
+							@include cV(width, wCon(282,1200), 32%, 100%);
+							&:nth-child(n+2) {
+								@include mq(pc) {margin-left: wCon(24,1200);}
+								@include mq(tab) {margin-left: 2%;}
+								@include mq(sp) {margin-top: 2em;}
+							}
+							@include mq(pc) {
+								&:nth-child(4n+1) {
+									margin-left: 0;
+									clear: left;
+								}
+								&:nth-child(n+5) {margin-top: 40px;}
+							}
+							@include mq(tab) {
+								&:nth-child(3n+1) {
+									margin-left: 0;
+									clear: left;
+								}
+							}
+							.box_photo {
+								position: relative;
+								z-index: 1;
+								p.photo {
+									width: 100%;
+									img {width: 100%;}
+								}
+								.number {
+									position: absolute;
+									z-index: 2;
+									top: 0;
+									left: 0;
+									width: 2.5em;
+									height: 2.5em;
+									background-color: $c1;
+									text-align: center;
+									color: #fff;
+									@extend %en_st;
+									@include box-sizing(border-box);
+									padding: .8em 0;
+								}
+							}
+							p.txt {
+								@extend %jp_b1;
+								padding: .5em 0;
+							}
+						}
+					}
+					@include mq(sp) {
+						p.st {
+							&:after {
+								// @include transform(rotate(180deg));
+							}
+							&.active {
+								&:after {
+									// @include transform(rotate(90deg));
+								}
+							}
+						}
+						ul.box_route_map {
+							display: none;
+							&.active {display: none;}
+						}
+					}
+				}
+				ul.box_route_info {
+					width: 100%;
+					@extend %cf;
+					li {
+						@include cV(float, left, none);
+						@include cV(width, wCon(580,1200), 100%);
+						@include box-sizing(border-box);
+						border: solid 1px $color3;
+						@include cV(padding, 1.5em, 1em 1.5em, 1em 2.5em 1em 1em);
+						&:nth-child(n+2) {
+							@include mq(pc_tab) {margin-left: wCon(40,1200);}
+							@include mq(sp) {margin-top: 1.5em;}
+						}
+						@include mq(pc_tab) {
+							&:nth-child(n+3) {margin-top: 40px;}
+							&:nth-child(odd) {
+								margin-left: 0;
+								clear: left;
+							}
+						}
+						p.info_sst {
+							@extend %jp_st;
+							@include mq(sp) {
+								position: relative;
+								&:before, &:after {
+									position: absolute;
+									right: -6%;
+									top: 50%;
+									z-index: 1;
+									width: 1em;
+									height: 2px;
+									background-color: #000;
+									content: "";
+								}
+								&:after {
+									@include transform(rotate(90deg));
+									@include transition(transform .5s);
+								}
+								&.active {
+									&:after {
+										@include transform(rotate(180deg));
+									}
+								}
+							}
+						}
+						.inner {
+							@include mq(sp) {
+								display: none;
+								&.active {display: block;}
+							}
+						}
+						p.txt {
+							@extend %jp_b1;
+							margin: 1em 0;
+						}
+					}
+				}
+				// .box_btn_open {
+				// 	width: 80%;
+				// 	margin: 2em auto 0;
+				// 	position: relative;
+				// 	z-index: 1;
+				// 	p.btn_close {
+				// 		width: 100%;
+				// 		z-index: 1;
+				// 		top: 0;
+				// 		left: 0;
+				// 		position: absolute;
+				// 		a {
+				// 			position: relative;
+				// 			@include icon($上矢印,after) {
+				// 				display: block;
+				// 				position: absolute;
+				// 				@extend %jp_b1;
+				// 				text-align: center;
+				// 				@include transition(bottom 500ms ease);
+				// 				right: 1em;
+				// 				bottom: 50%;
+				// 				@include transform(translateY(50%));
+				// 			}
+				// 		}
+				// 	}
+				// 	p.btn_open {
+				// 		a {
+				// 			position: relative;
+				// 			@include icon($下矢印,after) {
+				// 				display: block;
+				// 				position: absolute;
+				// 				@extend %jp_b1;
+				// 				text-align: center;
+				// 				@include transition(bottom 500ms ease);
+				// 				right: 1em;
+				// 				bottom: 50%;
+				// 				@include transform(translateY(50%));
+				// 			}
+				// 		}
+				// 	}
+				// }
+				// @include mq(sp) {
+				// 	ul.box_route_map, ul.box_route_info {display: none;}
+				// 	p.btn_close {display: none;}
+				// 	&:nth-child(n+2) {padding-top: 2em;}
+				// }
+			}
+			@include mq(sp) {
+				#lnk_station {
+					.box_sta_inner {
+						&:nth-child(2) {
+							p.st {
+								&:after {
+									@include transform(rotate(180deg));
+								}
+								&.active {
+									&:after {
+										@include transform(rotate(90deg));
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+table.tbl_access {
+	width: 100%;
+	tr {
+		th,td {
+			@extend %jp_b1;
+			@include box-sizing(border-box);
+			@include cV(padding, 1em, 1em);
+			@include mq(sp) {display: block;}
+		}
+		th {
+			background-color: $color4;
+			border-top: 1px solid #fff;
+		}
+		td {
+			border-bottom: 1px solid $color3;
+		}
+		&:first-child {
+			th {border-top: none;}
+			td {border-top: 1px solid $color3;}
+		}
+	}
+	@include mq(sp) {
+		border-bottom: 1px solid $color3;
+    	tr {
+        	th, td {border-bottom: 0;}
+        	&:first-child td {border-top: 0;}
+    	}
+    }
+}
+
+//en用
+.lang_en {
+	.con_map {
+		.box_detail {
+			ul.box_btn {
+				max-width: 700px;
+				li {
+					@include cV(width, wCon(330,700), 100%);
+					&:nth-child(n+2) {
+						@include mq(pc_tab) {margin-left: wCon(40,700);}
+					}
+				}
+			}
+		}
+	}
+}

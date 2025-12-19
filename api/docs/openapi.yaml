@@ -1,0 +1,1630 @@
+openapi: 3.0.3
+info:
+  title: CMS API Documentation
+  description: CMS システムの API 仕様書
+  version: 1.0.0
+  contact:
+    name: CMS Development Team
+
+servers:
+  - url: http://localhost:8000/api
+    description: ローカル開発環境
+
+tags:
+  - name: User
+    description: ユーザー管理と認証に関する API
+  - name: Contract
+    description: 企業・施設管理に関する API
+  - name: Content
+    description: コンテンツ管理に関する API
+  - name: ContentModel
+    description: コンテンツモデル管理に関する API
+  - name: ContentField
+    description: コンテンツフィールド管理に関する API
+  - name: MediaLibrary
+    description: メディアライブラリ管理に関する API
+  - name: ContactSetting
+    description: お問い合わせ設定管理に関する API
+  - name: ActionLog
+    description: アクションログに関する API
+
+paths:
+  /admin/user/login:
+    post:
+      tags:
+        - User
+      summary: ログイン
+      description: ユーザーログイン
+      operationId: login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                  description: メールアドレス
+                password:
+                  type: string
+                  format: password
+                  description: パスワード
+      responses:
+        '200':
+          description: ログイン成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/SuccessResponse'
+                  - type: object
+                    properties:
+                      payload:
+                        type: object
+                        properties:
+                          user:
+                            $ref: '#/components/schemas/User'
+                          message:
+                            type: string
+                          requires_two_factor:
+                            type: boolean
+                            description: 2段階認証が必要な場合true
+        '400':
+          description: バリデーションエラー
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: 認証失敗
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /admin/user/logout:
+    post:
+      tags:
+        - User
+      summary: ログアウト
+      description: ユーザーログアウト
+      operationId: logout
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: ログアウト成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '401':
+          description: 認証されていない
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /admin/user/login/verify-code:
+    post:
+      tags:
+        - User
+      summary: 2段階認証コード検証
+      description: 2段階認証コードを検証してログインを完了
+      operationId: verifyTwoFactorCode
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+                - code
+              properties:
+                email:
+                  type: string
+                  format: email
+                  description: メールアドレス
+                password:
+                  type: string
+                  format: password
+                  description: パスワード
+                code:
+                  type: string
+                  minLength: 6
+                  maxLength: 6
+                  description: 6桁の認証コード
+      responses:
+        '200':
+          description: 認証成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/SuccessResponse'
+                  - type: object
+                    properties:
+                      payload:
+                        type: object
+                        properties:
+                          user:
+                            $ref: '#/components/schemas/User'
+                          message:
+                            type: string
+        '400':
+          description: バリデーションエラー
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: 認証失敗
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /admin/user/login/resend-code:
+    post:
+      tags:
+        - User
+      summary: 2段階認証コード再送信
+      description: 2段階認証コードを再送信（60秒以内の再送信は不可）
+      operationId: resendVerificationCode
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+              properties:
+                email:
+                  type: string
+                  format: email
+                  description: メールアドレス
+      responses:
+        '200':
+          description: 再送信成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/SuccessResponse'
+                  - type: object
+                    properties:
+                      payload:
+                        type: object
+                        properties:
+                          message:
+                            type: string
+        '400':
+          description: バリデーションエラーまたは再送信制限
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: 認証失敗
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /admin/me:
+    get:
+      tags:
+        - User
+      summary: 認証ユーザー取得
+      description: 現在認証されているユーザー情報を取得
+      operationId: getMe
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: 認証されていない
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /admin/user/{id}/two-factor/enabled:
+    put:
+      tags:
+        - User
+      summary: 2段階認証の有効/無効設定
+      description: ユーザーの2段階認証を有効化または無効化
+      operationId: setTwoFactorEnabled
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ユーザーID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - enabled
+              properties:
+                enabled:
+                  type: boolean
+                  description: 有効化する場合はtrue、無効化する場合はfalse
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/SuccessResponse'
+                  - type: object
+                    properties:
+                      payload:
+                        type: object
+                        properties:
+                          user:
+                            $ref: '#/components/schemas/User'
+                          message:
+                            type: string
+        '400':
+          description: バリデーションエラー
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: 認証されていない
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: ユーザーが見つからない
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /admin/user/{id}/two-factor/reset:
+    post:
+      tags:
+        - User
+      summary: 2段階認証の状態リセット
+      description: ユーザーの2段階認証の認証済み状態をリセット（次回ログイン時に認証コードが要求される）
+      operationId: resetTwoFactor
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ユーザーID
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/SuccessResponse'
+                  - type: object
+                    properties:
+                      payload:
+                        type: object
+                        properties:
+                          message:
+                            type: string
+        '401':
+          description: 認証されていない
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: ユーザーが見つからない
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /admin/user:
+    get:
+      tags:
+        - User
+      summary: ユーザー一覧取得
+      description: ユーザー一覧を取得
+      operationId: getUserList
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: current
+          in: query
+          schema:
+            type: integer
+          description: 現在のページ番号
+        - name: limit
+          in: query
+          schema:
+            type: integer
+          description: 1ページあたりの件数
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/SuccessResponse'
+                  - type: object
+                    properties:
+                      payload:
+                        $ref: '#/components/schemas/PaginationResponse'
+        '401':
+          description: 認証されていない
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /admin/contract/company:
+    get:
+      tags:
+        - Contract
+      summary: 企業一覧取得
+      description: 企業一覧を取得
+      operationId: getCompanyList
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: current
+          in: query
+          schema:
+            type: integer
+          description: 現在のページ番号
+        - name: limit
+          in: query
+          schema:
+            type: integer
+          description: 1ページあたりの件数
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/SuccessResponse'
+                  - type: object
+                    properties:
+                      payload:
+                        allOf:
+                          - $ref: '#/components/schemas/PaginationResponse'
+                          - type: object
+                            properties:
+                              data:
+                                type: array
+                                items:
+                                  $ref: '#/components/schemas/ContractCompany'
+        '401':
+          description: 認証されていない
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      tags:
+        - Contract
+      summary: 企業作成
+      description: 企業を作成
+      operationId: createCompany
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - company_name
+                - alias
+              properties:
+                company_name:
+                  type: string
+                  description: 企業名
+                alias:
+                  type: string
+                  description: エイリアス（ユニーク）
+                status:
+                  type: boolean
+                  description: ステータス
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/SuccessResponse'
+                  - type: object
+                    properties:
+                      payload:
+                        type: object
+                        properties:
+                          data:
+                            $ref: '#/components/schemas/ContractCompany'
+        '400':
+          description: バリデーションエラー
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: 認証されていない
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /admin/contract/company/{id}:
+    get:
+      tags:
+        - Contract
+      summary: 企業詳細取得
+      description: 企業詳細を取得
+      operationId: getCompanyDetail
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: 企業ID
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/SuccessResponse'
+                  - type: object
+                    properties:
+                      payload:
+                        type: object
+                        properties:
+                          data:
+                            $ref: '#/components/schemas/ContractCompany'
+        '401':
+          description: 認証されていない
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: 企業が見つからない
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    put:
+      tags:
+        - Contract
+      summary: 企業更新
+      description: 企業を更新
+      operationId: updateCompany
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: 企業ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - company_name
+                - alias
+              properties:
+                company_name:
+                  type: string
+                alias:
+                  type: string
+                status:
+                  type: boolean
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/SuccessResponse'
+                  - type: object
+                    properties:
+                      payload:
+                        type: object
+                        properties:
+                          data:
+                            $ref: '#/components/schemas/ContractCompany'
+        '400':
+          description: バリデーションエラー
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: 認証されていない
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: 企業が見つからない
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      tags:
+        - Contract
+      summary: 企業削除
+      description: 企業を削除
+      operationId: deleteCompany
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: 企業ID
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '401':
+          description: 認証されていない
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: 企業が見つからない
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /admin/{company_alias}/content_model:
+    get:
+      tags:
+        - ContentModel
+      summary: コンテンツモデル一覧取得
+      description: コンテンツモデル一覧を取得
+      operationId: getContentModelList
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: company_alias
+          in: path
+          required: true
+          schema:
+            type: string
+          description: 企業エイリアス
+        - name: current
+          in: query
+          schema:
+            type: integer
+          description: 現在のページ番号
+        - name: limit
+          in: query
+          schema:
+            type: integer
+          description: 1ページあたりの件数
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/SuccessResponse'
+                  - type: object
+                    properties:
+                      payload:
+                        allOf:
+                          - $ref: '#/components/schemas/PaginationResponse'
+                          - type: object
+                            properties:
+                              data:
+                                type: array
+                                items:
+                                  $ref: '#/components/schemas/ContentModel'
+        '401':
+          description: 認証されていない
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: 企業が見つからない
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      tags:
+        - ContentModel
+      summary: コンテンツモデル作成
+      description: コンテンツモデルを作成
+      operationId: createContentModel
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: company_alias
+          in: path
+          required: true
+          schema:
+            type: string
+          description: 企業エイリアス
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - title
+                - alias
+                - company_id
+              properties:
+                title:
+                  type: string
+                  description: コンテンツモデル名
+                alias:
+                  type: string
+                  description: エイリアス（企業内でユニーク）
+                company_id:
+                  type: integer
+                  description: 企業ID
+                webhook_url:
+                  type: string
+                  format: uri
+                  description: Webhook URL
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/SuccessResponse'
+                  - type: object
+                    properties:
+                      payload:
+                        type: object
+                        properties:
+                          data:
+                            $ref: '#/components/schemas/ContentModel'
+        '400':
+          description: バリデーションエラー
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: 認証されていない
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: 企業が見つからない
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /admin/{company_alias}/{facility_alias}/content/{model_name}:
+    get:
+      tags:
+        - Content
+      summary: コンテンツ一覧取得
+      description: コンテンツ一覧を取得
+      operationId: getContentList
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: company_alias
+          in: path
+          required: true
+          schema:
+            type: string
+          description: 企業エイリアス
+        - name: facility_alias
+          in: path
+          required: true
+          schema:
+            type: string
+          description: 施設エイリアス
+        - name: model_name
+          in: path
+          required: true
+          schema:
+            type: string
+          description: コンテンツモデル名（エイリアス）
+        - name: current
+          in: query
+          schema:
+            type: integer
+          description: 現在のページ番号
+        - name: limit
+          in: query
+          schema:
+            type: integer
+          description: 1ページあたりの件数
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/SuccessResponse'
+                  - type: object
+                    properties:
+                      payload:
+                        $ref: '#/components/schemas/PaginationResponse'
+        '401':
+          description: 認証されていない
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: 権限がない
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: 企業または施設が見つからない
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /admin/{company_alias}/{facility_alias}/media_library:
+    get:
+      tags:
+        - MediaLibrary
+      summary: メディアライブラリ一覧取得
+      description: メディアライブラリ一覧を取得
+      operationId: getMediaLibraryList
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: company_alias
+          in: path
+          required: true
+          schema:
+            type: string
+          description: 企業エイリアス
+        - name: facility_alias
+          in: path
+          required: true
+          schema:
+            type: string
+          description: 施設エイリアス
+        - name: current
+          in: query
+          schema:
+            type: integer
+          description: 現在のページ番号
+        - name: limit
+          in: query
+          schema:
+            type: integer
+          description: 1ページあたりの件数
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/SuccessResponse'
+                  - type: object
+                    properties:
+                      payload:
+                        allOf:
+                          - $ref: '#/components/schemas/PaginationResponse'
+                          - type: object
+                            properties:
+                              data:
+                                type: array
+                                items:
+                                  $ref: '#/components/schemas/MediaLibrary'
+        '401':
+          description: 認証されていない
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: 企業または施設が見つからない
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      tags:
+        - MediaLibrary
+      summary: メディアライブラリ作成
+      description: メディアファイルをアップロード
+      operationId: createMediaLibrary
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: company_alias
+          in: path
+          required: true
+          schema:
+            type: string
+          description: 企業エイリアス
+        - name: facility_alias
+          in: path
+          required: true
+          schema:
+            type: string
+          description: 施設エイリアス
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - file
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: アップロードファイル
+                file_name:
+                  type: string
+                  description: ファイル名
+                alt_text:
+                  type: string
+                  description: 代替テキスト
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/SuccessResponse'
+                  - type: object
+                    properties:
+                      payload:
+                        type: object
+                        properties:
+                          data:
+                            $ref: '#/components/schemas/MediaLibrary'
+        '400':
+          description: バリデーションエラー
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: 認証されていない
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: 企業または施設が見つからない
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /admin/{company_alias}/{facility_alias}/contact_setting:
+    get:
+      tags:
+        - ContactSetting
+      summary: お問い合わせ設定一覧取得
+      description: お問い合わせ設定一覧を取得
+      operationId: getContactSettingList
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: company_alias
+          in: path
+          required: true
+          schema:
+            type: string
+          description: 企業エイリアス
+        - name: facility_alias
+          in: path
+          required: true
+          schema:
+            type: string
+          description: 施設エイリアス
+        - name: current
+          in: query
+          schema:
+            type: integer
+          description: 現在のページ番号
+        - name: limit
+          in: query
+          schema:
+            type: integer
+          description: 1ページあたりの件数
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/SuccessResponse'
+                  - type: object
+                    properties:
+                      payload:
+                        allOf:
+                          - $ref: '#/components/schemas/PaginationResponse'
+                          - type: object
+                            properties:
+                              data:
+                                type: array
+                                items:
+                                  $ref: '#/components/schemas/ContactSetting'
+        '401':
+          description: 認証されていない
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: 権限がない
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: 企業または施設が見つからない
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /admin/action_log:
+    get:
+      tags:
+        - ActionLog
+      summary: アクションログ一覧取得
+      description: アクションログ一覧を取得
+      operationId: getActionLogList
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: current
+          in: query
+          schema:
+            type: integer
+          description: 現在のページ番号
+        - name: limit
+          in: query
+          schema:
+            type: integer
+          description: 1ページあたりの件数
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/SuccessResponse'
+                  - type: object
+                    properties:
+                      payload:
+                        allOf:
+                          - $ref: '#/components/schemas/PaginationResponse'
+                          - type: object
+                            properties:
+                              data:
+                                type: array
+                                items:
+                                  $ref: '#/components/schemas/ActionLog'
+        '401':
+          description: 認証されていない
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /admin/action_log/{id}:
+    get:
+      tags:
+        - ActionLog
+      summary: アクションログ詳細取得
+      description: アクションログ詳細を取得
+      operationId: getActionLogDetail
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: アクションログID
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/SuccessResponse'
+                  - type: object
+                    properties:
+                      payload:
+                        type: object
+                        properties:
+                          data:
+                            $ref: '#/components/schemas/ActionLog'
+        '401':
+          description: 認証されていない
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: アクションログが見つからない
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /admin/{company_alias}/content_field:
+    get:
+      tags:
+        - ContentField
+      summary: コンテンツフィールド一覧取得
+      description: コンテンツフィールド一覧を取得
+      operationId: getContentFieldList
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: company_alias
+          in: path
+          required: true
+          schema:
+            type: string
+          description: 企業エイリアス
+        - name: current
+          in: query
+          schema:
+            type: integer
+          description: 現在のページ番号
+        - name: limit
+          in: query
+          schema:
+            type: integer
+          description: 1ページあたりの件数
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/SuccessResponse'
+                  - type: object
+                    properties:
+                      payload:
+                        allOf:
+                          - $ref: '#/components/schemas/PaginationResponse'
+                          - type: object
+                            properties:
+                              data:
+                                type: array
+                                items:
+                                  $ref: '#/components/schemas/ContentField'
+        '401':
+          description: 認証されていない
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: 企業が見つからない
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Laravel Sanctum 認証トークン
+
+  schemas:
+    SuccessResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        timestamp:
+          type: integer
+          example: 1234567890
+        payload:
+          type: object
+
+    ErrorResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        message:
+          type: string
+        errors:
+          type: object
+
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        user_type:
+          type: string
+          enum:
+            - manage
+            - company
+            - facility
+        two_factor_enabled:
+          type: boolean
+          nullable: true
+          description: 2段階認証が有効かどうか
+        companies:
+          type: array
+          items:
+            type: object
+        facilities:
+          type: array
+          items:
+            type: object
+
+    PaginationResponse:
+      type: object
+      properties:
+        total:
+          type: integer
+        current:
+          type: integer
+        pages:
+          type: integer
+        limit:
+          type: integer
+        data:
+          type: array
+
+    ContractCompany:
+      type: object
+      properties:
+        id:
+          type: integer
+        company_name:
+          type: string
+          description: 企業名
+        alias:
+          type: string
+          description: エイリアス
+        zip_code:
+          type: string
+          nullable: true
+          description: 郵便番号
+        address:
+          type: string
+          nullable: true
+          description: 住所
+        phone:
+          type: string
+          nullable: true
+          description: 電話番号
+        website:
+          type: string
+          nullable: true
+          description: ウェブサイト
+        publish_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: 公開開始日時
+        expires_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: 公開終了日時
+        sort_num:
+          type: integer
+          nullable: true
+          description: 並び順
+        status:
+          type: string
+          nullable: true
+          description: ステータス
+        created_by:
+          type: integer
+          nullable: true
+          description: 作成者ID
+        updated_by:
+          type: integer
+          nullable: true
+          description: 更新者ID
+        free_search:
+          type: string
+          nullable: true
+          description: フリー検索用
+        created_at:
+          type: string
+          format: date-time
+          nullable: true
+        updated_at:
+          type: string
+          format: date-time
+          nullable: true
+
+    ContentModel:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+          nullable: true
+          description: コンテンツモデル名
+        alias:
+          type: string
+          nullable: true
+          description: エイリアス
+        description:
+          type: string
+          nullable: true
+          description: 説明
+        company_id:
+          type: integer
+          nullable: true
+          description: 企業ID
+        webhook_url:
+          type: string
+          format: uri
+          nullable: true
+          description: Webhook URL
+        created_at:
+          type: string
+          format: date-time
+          nullable: true
+        updated_at:
+          type: string
+          format: date-time
+          nullable: true
+
+    ContentField:
+      type: object
+      properties:
+        id:
+          type: integer
+        model_id:
+          type: integer
+          nullable: true
+          description: コンテンツモデルID
+        name:
+          type: string
+          nullable: true
+          description: フィールド名
+        field_id:
+          type: string
+          nullable: true
+          description: フィールドID
+        is_required:
+          type: boolean
+          nullable: true
+          default: false
+          description: 必須フラグ
+        is_list_heading:
+          type: boolean
+          nullable: true
+          default: false
+          description: 一覧見出しフラグ
+        field_type:
+          type: string
+          nullable: true
+          description: フィールドタイプ
+        publish_at:
+          type: string
+          format: date-time
+          nullable: true
+        expires_at:
+          type: string
+          format: date-time
+          nullable: true
+        sort_num:
+          type: integer
+          nullable: true
+        status:
+          type: string
+          nullable: true
+        created_by:
+          type: integer
+          nullable: true
+        updated_by:
+          type: integer
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          nullable: true
+        updated_at:
+          type: string
+          format: date-time
+          nullable: true
+
+    MediaLibrary:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: UUID
+        file_name:
+          type: string
+          nullable: true
+          description: ファイル名
+        file_path:
+          type: string
+          nullable: true
+          description: ファイルパス
+        file_url:
+          type: string
+          nullable: true
+          description: ファイルURL
+        mime_type:
+          type: string
+          nullable: true
+          description: MIMEタイプ
+        file_size:
+          type: integer
+          nullable: true
+          description: ファイルサイズ（バイト）
+        image_size:
+          type: string
+          nullable: true
+          description: 画像サイズ（幅x高さ）
+        alt_text:
+          type: string
+          nullable: true
+          description: 代替テキスト
+        publish_at:
+          type: string
+          format: date-time
+          nullable: true
+        expires_at:
+          type: string
+          format: date-time
+          nullable: true
+        sort_num:
+          type: integer
+          nullable: true
+        status:
+          type: string
+          nullable: true
+        created_by:
+          type: integer
+          nullable: true
+        updated_by:
+          type: integer
+          nullable: true
+        free_search:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          nullable: true
+        updated_at:
+          type: string
+          format: date-time
+          nullable: true
+
+    ContactSetting:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: UUID
+        title:
+          type: string
+          nullable: true
+          description: お問い合わせ設定名
+        token:
+          type: string
+          nullable: true
+          description: トークン
+        from_address:
+          type: string
+          nullable: true
+          description: 送信者アドレス
+        from_name:
+          type: string
+          nullable: true
+          description: 送信者名
+        to_address:
+          type: string
+          nullable: true
+          description: 送信先アドレス
+        subject:
+          type: string
+          nullable: true
+          description: 件名
+        body:
+          type: string
+          nullable: true
+          description: 本文
+        is_return:
+          type: boolean
+          nullable: true
+          default: false
+          description: 返信機能有効フラグ
+        return_field:
+          type: string
+          nullable: true
+          description: 返信フィールド
+        return_subject:
+          type: string
+          nullable: true
+          description: 返信件名
+        return_body:
+          type: string
+          nullable: true
+          description: 返信本文
+        fields:
+          type: object
+          nullable: true
+          description: フィールド設定（JSON）
+        publish_at:
+          type: string
+          format: date-time
+          nullable: true
+        expires_at:
+          type: string
+          format: date-time
+          nullable: true
+        sort_num:
+          type: integer
+          nullable: true
+        status:
+          type: string
+          nullable: true
+        created_by:
+          type: integer
+          nullable: true
+        updated_by:
+          type: integer
+          nullable: true
+        free_search:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          nullable: true
+        updated_at:
+          type: string
+          format: date-time
+          nullable: true
+
+    ActionLog:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: UUID
+        title:
+          type: string
+          nullable: true
+          description: タイトル
+        user_id:
+          type: integer
+          nullable: true
+          description: ユーザーID
+        action:
+          type: string
+          nullable: true
+          description: アクション（create, update, delete等）
+        model:
+          type: string
+          nullable: true
+          description: モデル名
+        model_id:
+          type: integer
+          nullable: true
+          description: モデルID
+        ip_address:
+          type: string
+          nullable: true
+          description: IPアドレス
+        user_agent:
+          type: string
+          nullable: true
+          description: ユーザーエージェント
+        request_data:
+          type: object
+          nullable: true
+          description: リクエストデータ（JSON）
+        response_data:
+          type: object
+          nullable: true
+          description: レスポンスデータ（JSON）
+        created_at:
+          type: string
+          format: date-time
+          nullable: true
+        updated_at:
+          type: string
+          format: date-time
+          nullable: true
+

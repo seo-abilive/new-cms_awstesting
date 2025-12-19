@@ -1,0 +1,14 @@
+# mod_rewriteを有効化
+RewriteEngine On
+
+# スラッシュの正規化（末尾スラッシュを削除）
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} (.+)/$
+RewriteRule ^ %1 [R=301,L]
+
+# 静的ファイル（画像、CSS、JS等）は除外
+RewriteCond %{REQUEST_URI} \.(jpg|jpeg|png|gif|ico|css|js|svg|woff|woff2|ttf|eot|pdf|json|xml|txt|csv|xls|xlsx|doc|docx|ppt|pptx|zip|rar|7z|tar|gz|bz2)$ [NC]
+RewriteRule .* - [L]
+
+# すべてのリクエストを_system/index.phpに転送
+RewriteRule ^(.*)$ _system/index.php [QSA,L]

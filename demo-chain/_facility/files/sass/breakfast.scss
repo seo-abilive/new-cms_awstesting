@@ -1,0 +1,584 @@
+@charset "utf-8";
+/* ===================================================================
+CSS information
+
+file name  : breakfast.css
+author     : Abilive
+style info : 朝食
+=================================================================== */
+@import "settings";
+
+// -----------------
+//  con_int
+// -----------------
+.con_int {
+	@extend %bw;
+	@include cV(margin-top, 80px, 10%);
+	h2 {
+		text-align: center;
+		@extend %jp_h2;
+		@include cV(margin-bottom, 45px, 2em);
+	}
+	p.txt {
+		@include cV(text-align, center, left);
+		@extend %jp_b1;
+	}
+	ul.box_link {
+		@include cV(margin-top, 70px, 50px, 2em);
+		display: flex;
+		justify-content: center;
+		flex-wrap: wrap;
+		li {
+			@include cV(width, wCon(290,1200), 33%, 48%);
+			@include cV(margin-right,26px,4%);
+			.lang_en & {
+				@include cV(width, wCon(330,1200), 40%, 48%);
+				@include mq(tab) {
+					&:nth-child(2n) {
+						margin-right: 0;
+					}
+					&:nth-child(n+3) {
+						margin-top: 4%;
+					}
+				}
+			}
+			@include mq(pc) {
+				&:nth-child(3n) {
+					margin-right: 0;
+				}
+				&:nth-child(n+4) {
+					margin-top: 26px;
+				}
+			}
+			@include mq(tab_sp) {
+				&:nth-child(2n) {
+					margin-right: 0;
+				}
+				&:nth-child(n+3) {
+					margin-top: 4%;
+				}
+			}
+			a {
+				@include cV(padding, 1.6em 0, 1.6em 0 2em);
+				position: relative;
+				display: flex;
+				align-items: center;
+				height: 100%;
+				justify-content: center;
+				@include icon($下矢印,after) {
+					display: block;
+					position: absolute;
+					@extend %jp_b1;
+					text-align: center;
+					@include transition(bottom 500ms ease);
+					@include mq(pc_tab) {
+						right: 1em;
+						bottom: 50%;
+						@include transform(translateY(50%));
+						@include mq(tab) {right: .5em;}
+					}
+					@include mq(sp) {
+						bottom: .5em;
+						left: 0;
+						right: 0;
+						margin: auto;
+					}
+				}
+				&:hover {
+					&:after {
+						@include mq(pc_tab) {bottom: 45%;}
+						@include mq(sp) {bottom: .3em;}
+					}
+				}
+			}
+			&:last-child {
+				margin-right: 0;
+			}
+		}
+	}
+}
+
+// -----------------
+//  con_break
+// -----------------
+.con_break {
+	@extend %bw;
+	@include cV(padding-top,100px,2em);
+	p.logo {
+		width: 40%;
+		max-width: 220px;
+		margin: auto;
+		text-align: center;
+	}
+	h2 {
+		text-align: center;
+		@extend %jp_h2;
+		@include cV(margin-bottom, 20px, .5em);
+		.lang_en &, .lang_cn &, .lang_tw &, .lang_ko & {
+			@include cV(margin-top, 10px, .25em);
+		}
+	}
+	.box_slider {
+		width: 100%;
+		max-width: 905px;
+		margin: auto;
+		.box_img {
+			width: 100%;
+			@include mq(tab_sp) {
+				width: 90%;
+				margin: auto;
+				@include mq(tab) {width: 95%;}
+			}
+			position: relative;
+			z-index: 1;
+			.slick-slide {
+				img {
+					margin: auto;
+				}
+			}
+			.prev,.next {
+				@include fsz(28);
+				cursor: pointer;
+				position: absolute;
+				top: 45%;
+				@include transform(translateY(-50%));
+				z-index: 100;
+				@include mq(sp) {
+					@include fsz(13);
+				}
+				i {
+					display: inline-block;
+					@include fsz(20,14);
+					line-height: 1;
+					vertical-align: -.15em;
+					padding: 0 .2em;
+					@include mq(sp) {padding: 0;}
+				}
+			}
+			.prev {
+				// @include cV(left, -2em, -1em, -2em);
+				left: -2em;
+			}
+			.next {
+				// @include cV(right, -2em, -1em, -2em);
+				right: -2em;
+			}
+			.slick-dots {
+				@include cV(margin-top, 20px, 1em);
+			}
+		}
+		.box_txt {
+			@include cV(margin-top, 30px, 1.5em);
+			@extend %cf;
+			p.txt {
+				@extend %jp_b1;
+				@include mq(pc_tab){
+					text-align: center;
+				}
+				a {
+					color: $c1;
+				}
+			}
+		}
+	}
+	.box_detail {
+		@include cV(margin-top, 45px, 1.5em);
+		@extend %cf;
+		.wrp_detail {
+			@include cV(width, wCon(725,905), 100%, 100%);
+			margin: auto;
+			table {
+				tr {
+					th {
+						@include cV(width, 150px, 100%);
+						text-align: center;
+					}
+					// td {@include cV(width, wCon(880,1000), 100%);}
+				}
+			}
+		}
+		.txt_att {
+			display: block;
+			@include cV(margin-top, 50px, 1.5em);
+			@include cV(padding,20px 50px,1em);
+			border: 1px solid $c1;
+			@extend %jp_b2;
+		}
+	}
+	.box_family {
+		@include cV(margin-bottom,120px,2.5em);
+		@include box-sizing(border-box);
+		border: 1px solid $color3;
+		display: flex;
+		flex-wrap: wrap;
+		.photo {
+			@include cV(width, wCon(384,1200), 100%);
+			img {
+				width: 100%;
+			}
+		}
+		.box_txt {
+			@include cV(padding,wCon(30,1200) wCon(65,1200) 0,1em);
+			@include cV(width, wCon(816,1200), 100%);
+			p.txt {
+				@extend %jp_b1;
+			}
+			.wrp_detail {
+				width: 100%;
+				@include cV(margin-top,25px,1em);
+				table {
+					tr {
+						th {@include cV(width, 150px, 100%);}
+						// td {@include cV(width, wCon(880,1000), 100%);}
+					}
+				}
+			}
+		}
+	}
+}
+
+// -----------------
+//  con_menu_break
+// -----------------
+.con_menu_break {
+	@include cV(padding-top, 100px, 10%);
+	@include cV(padding-bottom, 100px, 10%);
+	border-bottom: 1px solid $color3;
+	.box_menu_break {
+		@extend %bw;
+		h2 {
+			text-align: center;
+			@extend %jp_h2;
+		}
+		ul.menu_list {
+			@include cV(margin, 45px auto 0, 1.5em auto 0);
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			&.layout_2_cols {
+				@include cV(width, wCon(792,1200), 100%);
+				li {
+					@include cV(width, wCon(384,792), 100%);
+					@include mq(pc_tab) {
+						margin-left: wCon(24,792);
+						&:nth-child(n+3) {
+							margin-top: wCon(48,1200);
+						}
+						&:nth-child(2n+1) {
+							margin-left: 0;
+						}
+					}
+				}
+			}
+			&.layout_3_cols {
+				@include cV(width, wCon(1200,1200), 100%);
+				li {
+					@include cV(width, wCon(384,1200), 100%);
+					@include mq(pc_tab) {
+						margin-left: wCon(24,1200);
+						&:nth-child(n+4) {
+							margin-top: wCon(48,1200);
+						}
+						&:nth-child(3n+1) {
+							margin-left: 0;
+						}
+					}
+				}
+			}
+			li {
+				&:nth-child(n+2) {
+					@include mq(sp) {margin-top: 1.5em;}
+				}
+				p.photo {
+					img {width: 100%;}
+				}
+				.box_photo {
+					width: 100%;
+					position: relative;
+					z-index: 1;
+					.box_cate {
+						width: 100%;
+						position: absolute;
+						z-index: 2;
+						top: 0;
+						left: 0;
+						.cate {
+							color: #fff;
+							@extend %jp_b1;
+							background-color: $c1;
+							padding: 0 1em;
+							text-align: center;
+							display: inline-block;
+							vertical-align: top;
+							margin-right: .5em;
+						}
+					}
+					p.photo {
+						width: 100%;
+						img {width: 100%;}
+					}
+				}
+				.box_txt {
+					padding: 1em;
+					background-color: #fff;
+					h3.sst {
+						@extend %jp_st;
+						text-align: center;
+					}
+				}
+				a {
+					text-decoration: none;
+					@include over;
+				}
+			}
+		}
+		p.note_menu {
+			text-align: right;
+			@extend %jp_b1;
+			color: #8c8c8c;
+		}
+		table {
+			@include cV(margin-top, 45px, 2em);
+			tr {
+				th {
+					@include cV(width, wCon(200,1200), 25%, 100%);
+				}
+				td {
+					@include cV(width, wCon(1000,1200), 75%, 100%);
+					em {
+						display: block;
+						&.menu {
+							margin-bottom: .5em;
+							@extend %cf;
+							i {
+								@include cV(display, inline-block, block);
+								margin-right: 1em;
+								&:before {
+									margin-right: .5em;
+									content: "";
+									display: inline-block;
+									vertical-align: middle;
+									width: .5em;
+									height: .5em;
+									background-color: $c1;
+									@include border-radius(100%);
+								}
+								@include mq(sp) {
+									float: left;
+									width: 49%;
+									margin-right: 0;
+									&:nth-child(odd) {
+										margin-right: 2%;
+										clear: left;
+									}
+								}
+							}
+						}
+					}
+				}
+				.facility_jimbocho & {
+					th{
+						display: none;
+					}
+					td {
+						text-align: center;
+						.note {
+							display: inline-block;
+							text-align: left;
+						}
+					}
+				}
+			}
+		}
+		p.btn {
+			max-width: 300px;
+			margin: auto;
+			@include cV(margin-top, 40px, 2em);
+			@include mq(sp) {
+				display: none;
+			}
+		}
+	}
+	&.bg {
+		background-color: $color4;
+		.box_menu_break {
+			ul.menu_list {
+				li {
+					.box_txt {
+						h3 {
+							text-align: left;
+							@include mq(pc) {
+								@include text_abr(2,1.7);
+							}
+							@include mq(tab_sp) {
+								@include text_abr(1,1.7);
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	&.plan {
+		@include cV(padding, 100px 0, 10% 0);
+		@include cV(margin-top, 100px, 10%);
+		.box_menu_break {
+			#js-sliderPla {
+				@include cV(margin-top, 45px, 1.5em);
+				.slick-list {
+					@include mq(sp) {
+						overflow: visible;
+					}
+				}
+				.slide {
+					max-width: 384px;
+					@include cV(margin,0 12px 1em,0 5px 1em,0 .5em 1em);
+					a {
+						display: block;
+						text-decoration: none;
+						background-color: #fff;
+						transition: background 400ms ease;
+						&:hover {
+							background: rgba(#fff,.3);
+							.wrp_txt {
+								.txt {
+									&:after {
+										right: 0em;
+									}
+								}
+							}
+						}
+						.wrp_img {
+							width: 100%;
+							height: 0;
+							padding-bottom: wCon(262,350);
+							background-size: cover;
+							background-position: center center;
+						}
+						.wrp_txt {
+							@include cV(padding,1.5em,1em 1em 1.5em,1em);
+							.txt {
+								@extend %jp_b1;
+								@include cV(line-height,2,1.8,1.7);
+								@include text-abr(3,1.7);
+								position: relative;
+								@include text_abr(2,1.7);
+							}
+						}
+					}
+				}
+			}
+			#js-arrows {
+				display: flex;
+				flex-direction: row;
+				justify-content: center;
+				align-items: center;
+				margin-top: wCon(15,1200);
+				.prev {order: 1;}
+				.next {order: 3;}
+				.slick-dots {
+					text-align: center;
+					letter-spacing: -.5em;
+					order: 2;
+					padding: 0 1em .5em;
+					@include mq(sp) {
+						padding: 0 .5em .5em;
+					}
+					li {
+						width: 7px;
+						height: 7px;
+						display: inline-block;
+						vertical-align: middle;
+						letter-spacing: 0;
+						background: #8c8c8c;
+						border-radius: 20px;
+						cursor: pointer;
+						transition: background 400ms ease,transform 400ms ease;
+						&:not(:first-child) {
+							margin-left: 17px;
+							@include mq(sp) {
+								margin-left: .5em;
+							}
+						}
+						&:first-child:last-child {display: none;}
+						&.slick-active {
+							background: #000;
+							transform: scale(1.2);
+						}
+					}
+				}
+				.prev,.next {
+					@extend %en_btn;
+					cursor: pointer;
+					position: relative;
+					z-index: 100;
+					@include mq(sp) {
+						@include fsz(13);
+						// letter-spacing: .05em;
+					}
+					i {
+						display: inline-block;
+						@include fsz(20,14);
+						line-height: 1;
+						vertical-align: -.15em;
+						padding: 0 .2em;
+						transition: transform 400ms ease;
+						@include mq(sp) {
+							padding: 0;
+						}
+					}
+				}
+				.prev {
+					margin-right: 1em;
+					&:hover {
+						i {
+							transform: translateX(-.2em);
+						}
+					}
+				}
+				.next {
+					margin-left: 1em;
+					&:hover {
+						i {
+							transform: translateX(.2em);
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+table.tbl_break {
+	width: 100%;
+	tr {
+		border-bottom: 1px solid $color3;
+		&:first-child {border-top: 1px solid $color3;}
+		th, td {
+			@extend %jp_b1;
+			@include box-sizing(border-box);
+			@include cV(vertical-align, middle, top);
+			padding: 1em;
+			@include mq(sp) {display: block;}
+		}
+		th {
+			background-color: $color4;
+		}
+		td {
+		}
+	}
+}
+//ko用
+.lang_ko {
+	.con_map {
+		ul.box_store {
+			table {
+				tr {
+					th {
+						@include cV(width, wCon(200,580), 25%, 100%);
+					}
+				}
+			}
+		}
+	}
+}

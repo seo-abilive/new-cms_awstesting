@@ -1,0 +1,132 @@
+@charset "utf-8";
+/* ===================================================================
+CSS information
+
+file name  : agree.css
+author     : Abilive
+style info : サイトポリシー
+=================================================================== */
+@import "settings";
+
+//  con_agree
+.con_agree {
+    @extend %bw;
+    max-width: 998px;
+    @include cV(margin-top,wCon(50,1200),2em);
+    .txt_lead {
+        @extend %jp_b1;
+    }
+    .box_txt {
+        @include cV(margin-top,4em,3em,2.5em);
+        .center {
+            text-align: center;
+        }
+        h2 {
+            @extend %jp_h2;
+            border-bottom: 1px solid #000;
+            padding-bottom: .5em;
+            margin-bottom: 2em;
+            span {
+                font-size: 80%;
+            }
+        }
+        h3 {@extend %jp_h3;}
+        ul {
+            display: block;
+            counter-reset: item;
+            list-style-type: none;
+            li {
+                position: relative;
+                padding-left: 1.5em;
+                &:before {
+                    counter-increment: item;
+                    content: counter(item)'.';
+                    padding-right: .5em;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    display: block;
+                }
+            }
+        }
+        ol {
+            display: block;
+            counter-reset: item;
+            list-style-type: none;
+            li {
+                position: relative;
+                padding-left: 3em;
+                &:before {
+                    counter-increment: item;
+                    content: '（'counter(item)'）';
+                    padding-right: .5em;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    display: block;
+                }
+            }
+        }
+        >div {
+            @extend %jp_b1;
+        }
+        // p {
+        //     margin-bottom: 1em;
+        // }
+        .st_table {
+            margin-bottom: 1em;
+        }
+        table {
+            width: 100%;
+            border: none;
+            box-shadow: none;
+            @include mq(sp) {
+                border-top: 1px solid #c5c5c5;
+            }
+            tr {
+                th,td {
+                    padding: 1em;
+                    border-bottom: 1px solid #c5c5c5;
+                    .lang_en & {
+                        word-break: break-word;
+                    }
+                    &.top {
+                        text-align: center;
+                    }
+                    &.bg {
+                        background: $color4;
+                    }
+                }
+                th {
+                    width: 25%;
+                    @include box-sizing(border-box);
+                    font-weight: normal;
+                    background: none;
+                    vertical-align: middle;
+                    @include mq(sp) {
+                        border-right: 1px solid #c5c5c5;
+                        border-left: 1px solid #c5c5c5;
+                        .lang_en & {
+                            padding: 1em .5em;
+                        }
+                    }
+                }
+                td {
+                    padding-right: 1em;
+                    vertical-align: top;
+                    @include mq(sp) {
+                        vertical-align: middle;
+                        border-right: 1px solid #c5c5c5;
+                    }
+                    .lang_en & {
+                        &:first-child {
+                            @include mq(sp) {
+                                width: 30%;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,229 @@
+@charset "utf-8";
+/* ===================================================================
+CSS information
+
+file name  : faq.css
+author     : Abilive
+style info : よくあるご質問
+=================================================================== */
+@import "settings";
+
+// -----------------------------------------------------------
+//  con_tab
+// -----------------------------------------------------------
+.con_tab {
+  @extend %bw;
+  margin-top: wCon(80,1920);
+  .area {
+    width: 100%;
+    ul {
+      display: flex!important;
+      flex-direction: row;
+      @include cV(justify-content,space-between,flex-start,flex-start);
+      flex-wrap: wrap;
+      li {
+        align-self: stretch;
+        @include cV(width, wCon(282,1200), 32%, 48%);
+        @include mq(tab) {
+          &:not(:nth-child(3n)) {
+            margin-right: 2%;
+          }
+        }
+        @include mq(sp) {
+          &:not(:nth-child(2n)) {
+            margin-right: 4%;
+          }
+        }
+        a {
+          display: flex;
+          height: 100%;
+          justify-content: center;
+          align-items: center;
+          @include cV(padding, 1.6em 0, 1.1em .3em 1.5em);
+          position: relative;
+          @include mq(pc) {
+            .lang_en & {
+              padding: 1.6em 1.5em;
+            }
+          }
+          @include icon($下矢印,after) {
+            display: block;
+            position: absolute;
+            // @extend %jp_b1;
+            text-align: center;
+            @include transition(bottom 500ms ease);
+            @include mq(pc_tab) {
+              right: 1em;
+              bottom: 50%;
+              @include transform(translateY(50%));
+              @include mq(tab) {right: .5em;}
+            }
+            @include mq(sp) {
+              bottom: .5em;
+              left: 0;
+              right: 0;
+              margin: auto;
+            }
+          }
+          span {
+            display: block;
+            font-weight: normal;
+            @include fsz(12,14);
+            padding-top: .8em;
+          }
+          &:hover {
+            &:after {
+              @include mq(pc_tab) {bottom: 45%;}
+              @include mq(sp) {bottom: .3em;}
+            }
+          }
+        }
+        @include mq(pc) {
+          &:nth-child(n+5) {margin-top: 30px;}
+        }
+        @include mq(tab) {
+          &:nth-child(n+4) {margin-top: 1.5em;}
+        }
+        @include mq(sp) {
+          &:nth-child(n+3) {margin-top: 1em;}
+        }
+      }
+    }
+  }
+}
+
+// -----------------------------------------------------------
+//  con_sort
+// -----------------------------------------------------------
+.sort_txt {
+  @extend %bw;
+  @extend %jp_b1;
+  padding-top: 1em;
+  .bg {
+    display: block;
+    position: relative;
+    z-index: 1;
+    padding-left: 1em;
+    &:before {
+      position: absolute;
+      z-index: 1;
+      @include cV(top,.8em,.5em,.8em);
+      left: 0;
+      content: "";
+      display: block;
+      width: .5em;
+      height: .5em;
+      background: $color1;
+      @include border-radius(100%);
+    }
+  }
+}
+
+// -----------------------------------------------------------
+//  con_faq
+// -----------------------------------------------------------
+.con_faq {
+  @extend %bw;
+  margin: wCon(80,1920) auto 0;
+  @include mq(tab_s) {margin: wCon(120,1920) auto 0;}
+  @include mq(sp) {margin: 4em auto 0;}
+  h2 {
+    @extend %jp_h2;
+    text-align: center;
+    margin-bottom: 2em;
+    @include mq(sp) {margin-bottom: 1em;}
+  }
+  h3 {
+    @extend %jp_h3;
+    position: relative;
+    margin-bottom: 2em;
+    @include mq(sp) {margin-bottom: 1em;}
+    span {
+      background: #fff;
+      padding-right: .3em;
+    }
+  }
+  .box_faq {
+    @include cV(margin-bottom, 80px, 16%);
+    .faq_det {
+      @extend %jp_b1;
+      &:last-child .accordion {border-bottom: 1px solid $color3;}
+      .accordion {
+        position: relative;
+        cursor: pointer;
+        border-top: 1px solid $color3;
+        @include transition(background 400ms ease);
+        @include icon($下矢印,after) {
+          position: absolute;
+          top: 50%;
+          right: 1em;
+          @include transform(translateY(-50%));
+          @include transition(all 400ms ease);
+          text-align: center;
+        }
+        &.active {
+          background: $color4;
+          &:after {
+            top: 38%;
+            @include transform(rotate(180deg));
+          }
+        }
+        span {
+          display: block;
+          @include cV(padding,10px,1em);
+          em {
+            width: 80%;
+            display: inline-block;
+            vertical-align: middle;
+            margin-top: -.5em;
+            @include mq(sp) {
+              margin-top: 0;
+              width: 78%;
+            }
+          }
+          &:before {
+            @extend %jp_h3;
+            @include serif(en);
+            content: 'Q';
+            display: inline-block;
+            color: #9f8e54;
+            text-align: center;
+            margin-right: .5em;
+            @include mq(sp) {
+              vertical-align: top;
+              margin-right: .3em;
+            }
+          }
+        }
+      }
+      .inner {
+        display: none;
+        @include cV(padding,10px 10px 2.5em 2.5em,.5em .5em 2em 1.5em);
+        &:before {
+          @extend %jp_h3;
+          @include serif(en);
+          content: 'A';
+          display: inline-block;
+          vertical-align: top;
+          color: #9f8e54;
+          text-align: center;
+          margin-right: .5em;
+          @include mq(sp) {margin-right: .3em;}
+        }
+        .answer {
+          vertical-align: top;
+          display: inline-block;
+          width: calc(100% - 7em);
+          @include mq(sp) {
+            width: calc(100% - 4em);
+            a {
+              &:hover {
+                text-decoration: underline !important;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

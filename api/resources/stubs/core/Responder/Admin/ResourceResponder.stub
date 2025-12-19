@@ -1,0 +1,9 @@
+<?php
+namespace App\Core\{{name}}\Responder\Admin;
+
+use App\Http\Responder\BaseResponder;
+
+class ResourceResponder extends BaseResponder
+{
+    protected $statusCode = 200;
+}

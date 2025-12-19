@@ -1,0 +1,225 @@
+@charset "utf-8";
+/* ===================================================================
+CSS information
+
+ file name  :reserves.css
+ author     :Ability Consultant
+style info  :予約プロ画面　レイアウト調整用
+=================================================================== */
+
+/*----------------------------------------------------
+	予約PRO dt3 リセット　2016/07/20
+----------------------------------------------------*/
+/*	フォームパーツのフォント指定	*/
+pre,
+input,
+select,
+textarea {
+	font-family: Arial, Verdana, "ヒラギノ角ゴPro W3", "Hiragino Kaku Gothic Pro", Osaka, "メイリオ", Meiryo,
+		"ＭＳ Ｐゴシック", sans-serif !important;
+}
+
+/*	予約PRO新版の幅設定	*/
+#ypro_search,
+#ypro_planname,
+#ypro_planlist,
+#ypro_error_con,
+#ypro_body #ypro_planlist div.ypro_detailes {
+	width: 950px !important;
+}
+
+/*	予約PRO dt3 幅設定	*/
+#ypro_body #ypro_wrapper,
+#ypro_body #y_planlist,
+#ypro_body #ypro_wrapper .plan_box {
+	width: 950px !important;
+}
+
+#ypro_body #ypro_wrapper .plan_box .left_box .box_l {
+	padding-left: 20px !important;
+}
+
+#ypro_body #ypro_under_search {
+	padding: 10px;
+	background: #fff;
+	border: 1px solid #cdcdcd;
+}
+
+#ypro_body a.menu {
+	border-bottom: none !important;
+}
+
+html #cal_r_box {
+	width: 200px;
+	border: 1px solid #ccc;
+	margin-left: 0;
+	position: relative;
+	z-index: 500px;
+	float: left;
+	zoom: 1;
+}
+
+/* プラン一覧リスト部分 */
+#ypro_body #y_planlist p {
+	padding: 7px 10px;
+}
+
+/* PAGE TOPボタン */
+#ypro_body #ypro_botton {
+	width: 950px !important;
+}
+
+/* アンカーリンクボタン */
+#ypro_body .nv_anchor {
+	font-size: 100% !important;
+}
+
+/* 検索窓の調整 */
+#ypro_body #ypro_wrapper #search_box #ypro_search table th {
+	background-color: #e9e9e9;
+	font-size: 90%;
+	font-weight: normal;
+	padding: 5px 0 5px 10px;
+	width: 35%;
+}
+
+/* 各プランのテーブル */
+/*	予約PRO dt3 テーブル調整  */
+#ypro_body #ypro_wrapper .plan_box .left_box .box_l_u {
+	padding-left: 20px !important;
+}
+
+#ypro_body #ypro_wrapper .plan_box .left_box .box_l_u .glap_table {
+	margin-top: 20px;
+	width: 560px !important;
+	font-size: 100% !important;
+}
+
+#ypro_body #ypro_wrapper .plan_box .left_box .box_l_u .glap_table th,
+td {
+	padding: 5px !important;
+	font-size: 100% !important;
+}
+
+#ypro_body #ypro_wrapper .plan_box .left_box .box_l_u .glap_table th {
+	width: 30% !important;
+}
+
+#ypro_body #ypro_wrapper #search_box #ypro_search table th,
+#ypro_body #ypro_wrapper #search_box #ypro_search table td {
+	font-size: 100% !important;
+}
+
+#ypro_body #ypro_wrapper .plan_box .left_box .box_l_u .glap_table td {
+	padding-left: 10px !important;
+}
+
+/*	予約PRO dt3 プラン詳細の調整  */
+#ypro_body th.cal-week {
+	text-align: center;
+}
+
+#ypro_body .ypro_cal {
+	width: 97% !important;
+}
+
+#ypro_body .ypro_cal table th.cal-week {
+	border: 1px solid #242424;
+	text-align: center;
+}
+
+#ypro_body .ypro_cal table th.ypro_plan_day {
+	border: 1px solid #242424;
+	text-align: center;
+}
+
+#ypro_body .detail_info table th,
+#ypro_body .detail_info table td {
+	font-size: 100% !important;
+}
+
+#ypro_body #ypro_wrapper h3 {
+	font-size: 110% !important;
+}
+
+#ypro_body #ypro_wrapper .plan_box h3 {
+	font-size: 120% !important;
+	margin-bottom: 10px !important;
+	padding-left: 20px !important;
+}
+#ypro_body a.menu {
+	padding: 6px 0 !important;
+}
+
+#ypro_body .detail_info table th,
+#ypro_body #ypro_wrapper #search_box #ypro_search table th {
+	padding-left: 10px;
+}
+
+#ypro_body #ypro_wrapper .plan_box .left_box .box_l {
+	font-size: 100% !important;
+	margin: 10px 360px 0 0;
+	padding-left: 15px;
+	width: 570px;
+}
+
+#ypro_body #ypro_wrapper .plan_box .right_box {
+	margin-right: 20px !important;
+}
+
+/*サムネイル画像を大きくする記述*/
+#ypro_body #ypro_wrapper .plan_box .right_box .photo_s_box {
+	margin: 0 auto;
+	overflow: hidden;
+	padding: 0;
+	width: 320px;
+}
+
+#ypro_body #ypro_wrapper .plan_box .right_box .photo_s_box .photo_s_style01 {
+	float: left;
+	margin: 5px 0 0;
+	padding: 0;
+	width: 76px;
+}
+
+#ypro_body #ypro_wrapper .plan_box .right_box .photo_s_box .photo_s_style01 img {
+	width: 76px !important;
+	height: 51px;
+	cursor: pointer;
+}
+
+#ypro_body #ypro_wrapper .plan_box .right_box .photo_s_box .photo_s_style02 {
+	float: left;
+	margin: 5px 0 0 5px;
+	padding: 0;
+	width: 76px;
+}
+
+#ypro_body #ypro_wrapper .plan_box .right_box .photo_s_box .photo_s_style02 img {
+	width: 76px !important;
+	height: 51px;
+	cursor: pointer;
+}
+
+/* 画像切り替えの説明文字サイズ調整 */
+#ypro_body #ypro_wrapper .plan_box .right_box .txt_style_box {
+	font-size: 100% !important;
+}
+
+/* カレンダー表示画面　部屋、プラン名調整 */
+#cal_r_box table {
+	font-size: 100% !important;
+}
+
+/* カレンダー表示画面　カレンダー内数字サイズ調整 */
+#cal_box table th.ypro_plan_day {
+	font-size: 100% !important;
+}
+
+/* 料金表示ボタン、HOMEボタン等調整 */
+#ypro_wrapper .under_button span {
+	font-size: 100% !important;
+	font-size: 100% !important;
+	margin-left: 10px !important;
+	padding: 5px 10px !important;
+}

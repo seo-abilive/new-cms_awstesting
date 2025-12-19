@@ -1,0 +1,19 @@
+<?php
+use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\ActionLogMiddleware;
+
+Route::middleware(['web', 'auth:sanctum', ActionLogMiddleware::class])->prefix('api')->name('api.')->group(function () {
+    Route::prefix('admin')->name('admin.')->group(function () {
+        Route::prefix('{{name_lower}}')->name('{{name_lower}}.')->group(function () {
+            Route::get('/', [App\Mod\{{name}}\Actions\Admin\ListAction::class, '__invoke'])->name('list');
+            Route::post('/store', [App\Mod\{{name}}\Actions\Admin\StoreAction::class, '__invoke'])->name('store');
+            Route::post('/sort', [App\Mod\{{name}}\Actions\Admin\SortAction::class, '__invoke'])->name('sort');
+            Route::get('/resource', [App\Mod\{{name}}\Actions\Admin\ResourceAction::class, '__invoke'])->name('resource')->withoutMiddleware(ActionLogMiddleware::class);
+            Route::get('/find', [App\Mod\{{name}}\Actions\Admin\FindAction::class, '__invoke'])->name('find')->withoutMiddleware(ActionLogMiddleware::class);
+            Route::get('/{id}', [App\Mod\{{name}}\Actions\Admin\DetailAction::class, '__invoke'])->name('detail');
+            Route::put('/{id}', [App\Mod\{{name}}\Actions\Admin\UpdateAction::class, '__invoke'])->name('update');
+            Route::delete('/{id}', [App\Mod\{{name}}\Actions\Admin\DeleteAction::class, '__invoke'])->name('delete');
+        });
+    });
+
+});

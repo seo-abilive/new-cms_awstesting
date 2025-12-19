@@ -1,0 +1,38 @@
+/* control部分（inputの枠部分） */
+.rs__control {
+    @apply block w-full border border-gray-300 bg-gray-50 text-gray-900 placeholder-gray-500 text-sm rounded-lg;
+    @apply focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500;
+    @apply disabled:cursor-not-allowed disabled:opacity-50;
+    display: flex; /* react-selectの仕様 */
+    min-height: 40px; /* 高さ調整 */
+    align-items: center;
+}
+
+/* placeholder文字の色はReactSelect内で調整されるため特に不要 */
+
+/* option部分 */
+.rs__option {
+    @apply cursor-pointer text-gray-900 dark:text-white;
+}
+
+/* optionがフォーカスされた時 */
+.rs__option--is-focused {
+    @apply bg-primary-100; /* primary-100が無ければ似た色に調整 */
+}
+
+/* optionが選択された時 */
+.rs__option--is-selected {
+    @apply bg-primary-500 text-white;
+}
+
+/* メニューの背景 */
+.rs__menu {
+    @apply bg-white dark:bg-gray-700 rounded-lg shadow-lg mt-1;
+}
+
+/* singleValue（選択された値のテキスト） */
+.rs__single-value {
+    @apply text-gray-900 dark:text-white;
+}
+
+/* multiValueなど必要なら追加 */

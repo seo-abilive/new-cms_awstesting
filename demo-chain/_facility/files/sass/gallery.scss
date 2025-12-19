@@ -1,0 +1,195 @@
+@charset "utf-8";
+/* ===================================================================
+CSS information
+
+file name  : gallery.css
+author     : Abilive
+style info : フォトギャラリー
+=================================================================== */
+@import "settings";
+
+body:not(.sub) #contents .con_title {
+	.box_img {
+		@include mq(pc) {
+			min-height: 225px;
+			padding-bottom: 0;
+		}
+	}
+	.box_txt {
+		color: #222;
+		h1 {text-shadow: none;}
+	}
+}
+// body {
+// 	&.mfp-zoom-out-cur {
+// 		overflow-y: hidden;
+// 		height: 100%;
+// 	}
+// }
+@include mq(pc_tab) {
+	.fancybox-caption, 
+	.fancybox-infobar, 
+	.fancybox-navigation .fancybox-button, 
+	.fancybox-toolbar {
+		opacity: 1 !important;
+		visibility: visible !important;
+	}
+}
+@include mq(tab) {
+	.fancybox-image {
+		width: 80% !important;
+		object-fit: contain;
+		left: 50% !important;
+		transform: translateX(-50%);
+	}
+}
+
+// .fancybox-content {
+// 	@include cV(width,60% !important, 70% !important,100% !important);
+// 	max-width: 800px !important;
+// 	@include mq(pc_tab) {
+// 		top: 50% !important;
+// 		left: 50% !important;
+// 		transform: translate(-50%,-50%) !important;
+// 		img {
+// 			width: 100% !important;
+// 			object-fit: contain;
+// 		}
+// 	}
+// }
+
+// -----------------------------------------------------------
+//  .con_gal
+// -----------------------------------------------------------
+.con_gal {
+	@extend %bw;
+	@include cV(margin-top, wCon(50,1100), 3em);
+	#tab_gal {
+		@include display-flex();
+		@include flex-direction(row);
+		@include mq(sp) {
+			@include flex-wrap(wrap);
+		}
+		li {
+			cursor: pointer;
+			text-align: center;
+			@include mq(pc_tab) {
+				width: wCon(236,1200);
+				&:not(:first-child) {
+					margin-left: 10px;
+				}
+			}
+			@include mq(sp) {
+				margin-bottom: .5em;
+				width: wCon(584,1200);
+				&:not(:nth-child(2n+1)) {
+					margin-left: .5em;
+				}
+			}
+			a {
+				text-decoration: none;
+			}
+			span {
+				display: flex;
+		        height: 100%;
+		        justify-content: center;
+		        align-items: center;
+				letter-spacing: .12em;
+				@include fsz(14);
+				line-height: 1.8;
+				@include gothic();
+				border: 1px solid #000;
+				background: #FFF;
+				padding: .8em 2em;
+				text-align: center;
+				// display: block;
+				text-decoration: none;
+				border-radius: .5em;
+				font-weight: bold;
+				transition: background 400ms ease,color 400ms ease;
+				@include mq(tab_sp) {
+					padding: .8em 1em;
+				}
+				@include mq(sp) {
+					@include box-sizing(border-box);
+					border-radius: .3em;
+				}
+				&:hover {
+					background: rgba(#000,.5);
+					color: #FFF;
+				}
+			}
+			&.active {
+				span {
+					background: #000;
+					color: #FFF;
+				}
+			}
+		}
+	}
+
+	#panel_gal {
+		@include cV(margin-top, wCon(60,1100), 3em);
+		.memo {
+			@extend %jp_b2;
+			margin-bottom: 1em;
+		}
+		.box_gal {
+			display: none;
+			&:first-child { display: list-item; }
+			.list_photo {
+				@include display-flex();
+				@include flex-wrap(wrap);
+				.box_photo {
+					width: wCon(288,1200);
+					margin-left: wCon(15,1200);
+					margin-bottom: wCon(15,1200);
+					position: relative;
+					@include over;
+					@include mq(tab) {
+						width: wCon(390,1200);
+					}
+					@include mq(sp) {
+						width: wCon(592,1200);
+					}
+					@include mq(pc) {
+						&:nth-child(4n+1) {
+							margin-left: 0;
+						}
+					}
+					@include mq(tab) {
+						&:nth-child(3n+1) {
+							margin-left: 0;
+						}
+					}
+					@include mq(sp) {
+						&:nth-child(2n+1) {
+							margin-left: 0;
+						}
+					}
+					a {
+						display: block;
+						text-decoration: none;
+					}
+					.txt {@extend %jp_b2;}
+				}
+			}
+			.btn {
+				margin-top: wCon(30,1100);
+				text-align: center;
+				@include mq(sp) {
+					width: 90%;
+					margin: 2em auto 0;
+				}
+				a {
+					display: inline-block;
+					padding: 1em 7em;
+					@include mq(sp) {
+						display: block;
+						padding: 1em ;
+					}
+				}
+			}
+		}
+	}
+}

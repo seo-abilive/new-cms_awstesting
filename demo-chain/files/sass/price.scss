@@ -1,0 +1,217 @@
+@charset "utf-8";
+/* ===================================================================
+CSS information
+
+file name  : develop.css
+author     : Abilive
+style info : ホテル開発事業
+=================================================================== */
+@import "settings";
+
+// -----------------------------------------------------------
+//  con_price
+// -----------------------------------------------------------
+.con_price {
+	@extend %bw;
+    .st {
+        @extend %jp_h2;
+        text-align: left;
+        border-left: 5px solid #000;
+        padding-left: .5em;
+        @include cV(margin-bottom, 45px, 5%);
+    }
+	.box_intro {
+		@include cV(margin-top, 60px, 10%);
+        text-align: center;
+        .box_best {
+            @include cV(margin-top,wCon(45,1920),wCon(45,1200),2em);
+            text-align: center;
+            border-top: 2px solid $color1;
+            border-bottom: 2px solid $color1;
+            display: inline-block;
+            position: relative;
+            @include cV(padding, .8em 2em, .8em 0 1em);
+            margin: 0 auto;
+            @include cV(margin-top, 13px, 1em);
+            @include mq(tab_s) {margin-left: 4em;}
+            @include mq(sp) {padding-left: 20%;}
+            .ic {
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                @include mq(pc_tab) {
+                    right: 98%;
+                    width: 90px;
+                    height: 90px;
+                }
+                @include mq(sp) {
+                    width: 16%;
+                    left: 0;
+                }
+            }
+            .sst {
+                @extend %jp_st;
+                color: $color1;
+            }
+            .txt {
+                @extend %jp_b2;
+                margin-top: .3em;
+                @include mq(sp) {
+                    width: 97%;
+                    margin: .3em auto 0;
+                }
+                a {
+                    color: $color1;
+                    &:hover {text-decoration: none;}
+                }
+            }
+        }
+		.note {
+			@include cV(margin-top, 40px, 5%);
+			@extend %jp_b1;
+            text-align: left;
+		}
+		@include mq(sp) { text-align: left; }
+	}
+	.tbl_info {
+        width: 100%;
+        @include cV(margin-top, 70px, 10%);
+        @include cV(margin-bottom, 125px, 15%);
+        tr {
+            th,td {
+                vertical-align: top;
+                @include cV(padding, 1em 1.5em, 1em);
+            }
+            th {
+                @extend %jp_b1;
+                @include cV(width, 287px, 210px, 100%);
+                @include box-sizing(border-box);
+                background: $color4;
+                border-bottom: 1px solid #fff;
+            }
+            td {
+                border-bottom: 1px solid $color3;
+                padding-right: 1em;
+                .txt { @extend %jp_b1; }
+                .img {
+                    margin-top: 1em;
+                    max-width: 500px;
+                    p {
+                        // @include cV(display,inline-block,block);
+                        display: inline-block;
+                        vertical-align: middle;
+                        @include cV(width, 100%, 48%);
+                        max-width: 218px;
+                        img {width: 100%;}
+                    }
+                }
+                .box_list {
+                	@extend %jp_b1;
+					padding-left: 1em;
+            		display: block;
+            		// @include cV(margin-bottom, 35px, 5%);
+                	.f_ic {
+						position: relative;
+						// @include cV(margin-bottom, 10px, .5em);
+                		&:before {
+							content: '';
+							position: absolute;
+							@include cV(top, 1em, .8em);
+							left: -1em;
+							transform: translateY(-50%);
+							width: 8px;
+							height: 8px;
+							background: $color1;
+							border-radius: 50%;
+						}
+                	}
+                	li {
+                		.s_list {
+                			margin-left: 2em;
+                		}
+                	}
+                }
+                &.box_map {
+					overflow: hidden;
+                    vertical-align: middle;
+					.txt { float: left; }
+                    .btn {
+                    	float: right;
+                    	width: 154px;
+                    	a {
+                    		padding: .4em;
+                    		i { line-height: 1em; }
+                    	}
+                    }
+                    @include mq(min_max_w, 767px,1126px) {
+                    	.txt {
+                    		float: none;
+                    		margin-bottom: 1em;
+                    	}
+                    }
+                    @include mq(sp) {
+                    	.txt {
+                    		float: none;
+                    		margin-bottom: 1em;
+                    	}
+                    }
+                }
+                .box_card {
+                    display: flex;
+                    align-items: center;
+                    // flex-wrap: wrap;
+                    justify-content: space-between;
+                    margin-top: .5em;
+                    @include mq(pc_tab) {
+                        max-width: 505px;
+                    }
+                    li {
+                        display: flex;
+                        align-items: center;
+                        @include mq(sp) {
+                            &:not(:first-child) {
+                                margin-left: .2em;
+                            }
+                        }
+                    }
+                }
+            }
+            &:first-child td {border-top: 1px solid $color3;}
+        }
+        @include mq(sp) {
+    		border-bottom: 1px solid $color3;
+        	tr {
+            	th, td {
+            		width: 100%;
+            		display: block;
+            		border-bottom: 0;
+            	}
+            	&:first-child td { border-top: 0; }
+        	}
+        }
+    }
+    .box_faq {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        @include cV(padding, 2em 4em, 2em, 1.5em);
+        background: $color4;
+        @include mq(sp) {flex-wrap: wrap;}
+        .txt {
+            @extend %jp_b1;
+            @include mq(pc) {width: 75%;}
+            @include mq(tab) {width: 65%;}
+            @include mq(sp) {
+                width: 100%;
+                margin-bottom: 1em;
+            }
+        }
+        .btn {
+            width: 203px;
+            @include mq(sp) {
+                margin: 0 auto;
+            }
+        }
+    }
+}
+

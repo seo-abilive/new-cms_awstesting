@@ -1,0 +1,6 @@
+mkdocs>=1.5.0
+mkdocs-material>=9.0.0
+pymdown-extensions>=10.0.0
+markdown-include>=0.8.1
+plantuml-markdown>=3.9.0
+

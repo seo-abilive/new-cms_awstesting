@@ -1,0 +1,133 @@
+services:
+    api:
+        build:
+            context: ./api
+            dockerfile: Dockerfile
+        container_name: new-cms-api
+        ports:
+            - '8000:80'
+        volumes:
+            - ./api:/var/www/html
+        working_dir: /var/www/html
+        environment:
+            DB_CONNECTION: mysql
+            DB_HOST: db
+            DB_PORT: 3306
+            DB_DATABASE: new_cms_db
+            DB_USERNAME: user
+            DB_PASSWORD: password
+        depends_on:
+            - db
+
+    console:
+        build:
+            context: ./console
+            dockerfile: Dockerfile
+        container_name: new-cms-console
+        ports:
+            - '5173:5173'
+        volumes:
+            - ./console:/app
+            - /app/node_modules
+        command: sh -c "npm install --force && npm run dev -- --host"
+
+    db:
+        image: mysql:8.0
+        container_name: new-cms-db
+        ports:
+            - '3306:3306'
+        environment:
+            MYSQL_DATABASE: new_cms_db
+            MYSQL_USER: user
+            MYSQL_PASSWORD: password
+            MYSQL_ROOT_PASSWORD: rootpassword
+        volumes:
+            - mysql-data:/var/lib/mysql
+
+    docs:
+        image: nginx:alpine
+        container_name: new-cms-docs
+        ports:
+            - '8081:80'
+        volumes:
+            - ./api/docs/site:/usr/share/nginx/html:ro
+
+    redoc:
+        image: nginx:alpine
+        container_name: new-cms-redoc
+        ports:
+            - '8084:80'
+        volumes:
+            - ./api/docs:/usr/share/nginx/html:ro
+
+    demo:
+        build:
+            context: ./demo
+            dockerfile: Dockerfile
+        container_name: new-cms-demo
+        ports:
+            - '8082:80'
+        volumes:
+            - ./demo:/var/www/html
+        working_dir: /var/www/html
+    demo-chain:
+        build:
+            context: ./demo-chain
+            dockerfile: Dockerfile
+        container_name: new-cms-demo-chain
+        ports:
+            - '8083:80'
+        volumes:
+            - ./demo-chain:/var/www/html
+    demo-next:
+        build:
+            context: ./demo-next
+            dockerfile: Dockerfile
+        container_name: new-cms-demo-next
+        ports:
+            - '5174:5174'
+        volumes:
+            - ./demo-next:/app
+            - /app/node_modules
+
+    mailhog:
+        image: mailhog/mailhog:latest
+        container_name: new-cms-mailhog
+        ports:
+            - '1025:1025'
+            - '8025:8025'
+
+    localstack:
+        image: localstack/localstack:latest
+        container_name: new-cms-localstack
+        ports:
+            - '4566:4566'
+            - '4510-4559:4510-4559'
+        environment:
+            - SERVICES=s3,sqs,sns,dynamodb,lambda,apigateway,cloudformation,iam,sts,secretsmanager
+            - DEBUG=1
+            - DATA_DIR=/var/lib/localstack
+            - PERSISTENCE=1
+            - DOCKER_HOST=unix:///var/run/docker.sock
+        volumes:
+            - localstack-data:/var/lib/localstack
+            - /var/run/docker.sock:/var/run/docker.sock
+        healthcheck:
+            test: ["CMD", "curl", "-f", "http://localhost:4566/_localstack/health"]
+            interval: 30s
+            timeout: 10s
+            retries: 5
+    aws_s3_sample:
+        build:
+            context: ./aws_s3_sample
+            dockerfile: Dockerfile
+        container_name: new-cms-aws-s3-sample
+        ports:
+            - '8085:80'
+        volumes:
+            - ./aws_s3_sample:/var/www/html
+        working_dir: /var/www/html
+
+volumes:
+    mysql-data:
+    localstack-data:
