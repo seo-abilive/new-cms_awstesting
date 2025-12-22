@@ -1,4 +1,4 @@
-FROM php:8.2-apache
+FROM public.ecr.aws/docker/library/php:8.2-apache
 
 # システムの更新（upgradeは削除して容量を節約）
 RUN apt-get update
@@ -7,6 +7,7 @@ RUN apt-get update
 RUN apt-get install -y \
     git \
     unzip \
+    curl \
     libzip-dev \
     libpng-dev \
     libjpeg-dev \
@@ -31,7 +32,11 @@ RUN a2enmod rewrite
 COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
 
 # Install Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+# Composer をインストール（Docker Hub の composer イメージには依存しない）
+# curl を使用してタイムアウトを回避（リトライとタイムアウト設定）
+RUN curl -sS --max-time 60 --retry 3 --retry-delay 5 https://getcomposer.org/installer -o composer-setup.php \
+    && php composer-setup.php --install-dir=/usr/bin --filename=composer \
+    && rm composer-setup.php
 
 # Set working directory
 WORKDIR /var/www/html
@@ -42,9 +47,17 @@ COPY . /var/www/html
 # Install dependencies
 RUN composer install
 
-RUN mkdir -p /var/www/html/storage /var/www/html/bootstrap/cache
+# Create necessary directories for Laravel
+RUN mkdir -p /var/www/html/storage/app \
+    /var/www/html/storage/framework/sessions \
+    /var/www/html/storage/framework/views \
+    /var/www/html/storage/framework/cache/data \
+    /var/www/html/storage/logs \
+    /var/www/html/bootstrap/cache
+
 # Fix permissions
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache \
+    && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
 # Xdebugインストール
 RUN pecl install xdebug \
