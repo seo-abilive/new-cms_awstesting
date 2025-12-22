@@ -1,5 +1,8 @@
+// 環境変数からAPI URLを取得（Terraformで設定される）
+const apiOrigin = import.meta.env.VITE_API_ORIGIN || 'http://new-cms-main-alb-1834578746.ap-northeast-1.elb.amazonaws.com/api/'
+
 export default {
-    endpointUrl: 'https://abitestxsrv.xbiz.jp/new-cms/api/public/api/admin/',
-    frontEndpointUrl: 'https://abitestxsrv.xbiz.jp/new-cms/api/public/api/v1/',
-    basename: '/new-cms/console/dist/',
+    endpointUrl: `${apiOrigin}admin/`,
+    frontEndpointUrl: `${apiOrigin}v1/`,
+    basename: '/console/dist/',
 }

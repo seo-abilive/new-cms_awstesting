@@ -23,6 +23,7 @@ return [
     'allowed_origins' => [
         'http://localhost:5173',
         'http://localhost:8000',
+        'http://new-cms-main-alb-1834578746.ap-northeast-1.elb.amazonaws.com',
     ],
 
     'allowed_origins_patterns' => [],
