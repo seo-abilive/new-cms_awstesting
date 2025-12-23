@@ -62,7 +62,7 @@ resource "aws_rds_cluster" "main" {
 
 # Aurora MySQLインスタンス作成（高可用性のため2つのインスタンスを異なるAZに配置）
 resource "aws_rds_cluster_instance" "main" {
-  count              = 2 # 2つのインスタンスを作成（異なるAZに自動配置）
+  count              = var.high_availability ? 2 : 1 # 高可用性の場合は2つ、そうでない場合は1つ
   identifier         = "${var.name_prefix}aurora-instance-${count.index + 1}"
   cluster_identifier = aws_rds_cluster.main.id
   instance_class     = "db.t3.medium"

@@ -68,6 +68,8 @@ module "rds" {
 
   auto_minor_version_upgrade = var.auto_minor_version_upgrade
 
+  high_availability = var.high_availability
+
   security_group_ids = [
     module.security_groups.rds_sg_id
   ]
@@ -287,14 +289,14 @@ module "ecs" {
   # Service設定
   api_service = {
     name            = "${local.name_prefix}api-service"
-    desired_count   = 2 # 高可用性のため2つのタスクを実行（異なるAZに分散）
+    desired_count   = var.high_availability ? 2 : 1 # 高可用性の場合は2つ、そうでない場合は1つ
     security_groups = [module.security_groups.ecs_api_sg_id]
     subnets         = module.vpc.public_subnet_ids
   }
 
   console_service = {
     name            = "${local.name_prefix}console-service"
-    desired_count   = 2 # 高可用性のため2つのタスクを実行（異なるAZに分散）
+    desired_count   = var.high_availability ? 2 : 1 # 高可用性の場合は2つ、そうでない場合は1つ
     security_groups = [module.security_groups.ecs_console_sg_id]
     subnets         = module.vpc.public_subnet_ids
   }

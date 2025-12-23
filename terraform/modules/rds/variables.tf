@@ -64,6 +64,12 @@ variable "auto_minor_version_upgrade" {
   default     = false
 }
 
+variable "high_availability" {
+  description = "高可用性を有効にするかどうか（true: 2インスタンス、false: 1インスタンス）"
+  type        = bool
+  default     = true
+}
+
 variable "tags" {
   description = "リソースに付与するタグ"
   type        = map(string)

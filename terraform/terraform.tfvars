@@ -12,6 +12,9 @@ deletion_protection        = false # 誤削除防止:開発中はfalseで時間�
 skip_final_snapshot        = false # スナップショット作成:開発中はfalseで削除時にスナップショット作成しない、本番環境ではtrueで作成する
 auto_minor_version_upgrade = false # 自動マイナーバージョンアップグレード: falseで無効化（選択的メンテナンスを最小化）、trueで有効化
 
+# 高可用性設定
+high_availability = false # 開発中はfalseで、単一インスタンス、本番環境では高可用性（RDS 2インスタンス、ECS 2タスク）
+
 # アプリケーション設定
 app_key       = "base64:izUY16xZiwXcLFItN0g8iKG9T+YDG93QNCsYZ9Auzoo="
 mail_password = "W^}5GLWEcQsT"

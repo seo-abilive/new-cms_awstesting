@@ -99,6 +99,12 @@ variable "auto_minor_version_upgrade" {
   default     = false
 }
 
+variable "high_availability" {
+  description = "高可用性を有効にするかどうか（true: 高可用性、false: 単一インスタンス）"
+  type        = bool
+  default     = true
+}
+
 # アプリケーション設定
 variable "app_key" {
   description = "Laravel APP_KEY"
