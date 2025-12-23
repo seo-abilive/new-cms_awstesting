@@ -38,6 +38,7 @@ AWS CodePipeline
 Source ステップで "Edit" クリック
 接続　ー　 GitHub に接続する　クリック
 接続名　ー　"new-cms_awstesting"
+「アプリインストール - オプショナル」設定すること。しないと次回接続されない。
 で接続する（CodePipeline - 接続 に登録される）
 
 そのあと、
