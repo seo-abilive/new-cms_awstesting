@@ -15,6 +15,12 @@ variable "cloudwatch_log_group_arns" {
   default     = []
 }
 
+variable "codestar_connection_arn" {
+  description = "CodeStar Connection ARN（GitHub接続用、空文字の場合は全リソースに許可）"
+  type        = string
+  default     = ""
+}
+
 variable "tags" {
   description = "リソースに付与するタグ"
   type        = map(string)

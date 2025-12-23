@@ -37,6 +37,19 @@ resource "aws_s3_bucket_public_access_block" "artifacts" {
   restrict_public_buckets = true
 }
 
+# CodeStar Connection（GitHub接続用）
+resource "aws_codestarconnections_connection" "github" {
+  name          = "${var.name_prefix}github-connection"
+  provider_type = "GitHub"
+
+  tags = merge(
+    var.tags,
+    {
+      Name = "${var.name_prefix}github-connection"
+    }
+  )
+}
+
 # CodePipeline
 resource "aws_codepipeline" "main" {
   name     = "${var.name_prefix}pipeline"
@@ -53,17 +66,16 @@ resource "aws_codepipeline" "main" {
     action {
       name             = "Source"
       category         = "Source"
-      owner            = "ThirdParty"
-      provider         = "GitHub"
+      owner            = "AWS"
+      provider         = "CodeStarSourceConnection"
       version          = "1"
       output_artifacts = ["source_output"]
 
       configuration = {
-        Owner                = split("/", split("github.com/", var.github_repository_url)[1])[0]
-        Repo                 = replace(split("/", split("github.com/", var.github_repository_url)[1])[1], ".git", "")
-        Branch               = var.github_branch
-        OAuthToken           = var.github_token
-        PollForSourceChanges = "true"
+        ConnectionArn        = aws_codestarconnections_connection.github.arn
+        FullRepositoryId     = replace(replace(var.github_repository_url, "https://github.com/", ""), ".git", "")
+        BranchName           = var.github_branch
+        OutputArtifactFormat = "CODE_ZIP"
       }
     }
   }

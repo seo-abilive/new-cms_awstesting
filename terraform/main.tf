@@ -60,6 +60,14 @@ module "rds" {
 
   enable_backup = var.enable_backup
 
+  skip_final_snapshot = var.skip_final_snapshot
+
+  deletion_protection = var.deletion_protection
+
+  preferred_maintenance_window = var.preferred_maintenance_window
+
+  auto_minor_version_upgrade = var.auto_minor_version_upgrade
+
   security_group_ids = [
     module.security_groups.rds_sg_id
   ]
@@ -111,6 +119,11 @@ module "iam" {
     module.cloudwatch.log_group_arns["${local.name_prefix}api"],
     module.cloudwatch.log_group_arns["${local.name_prefix}console"]
   ]
+
+  # CodeStar Connection ARN（CodePipelineモジュールが作成される前に空文字、後で更新可能）
+  # 注意: 初回作成時は空文字で、CodePipelineモジュール作成後に更新が必要
+  # 順序の問題を避けるため、IAMポリシーでは"*"で許可し、後で特定のConnection ARNに制限可能
+  codestar_connection_arn = ""
 
   tags = var.tags
 }
@@ -274,14 +287,14 @@ module "ecs" {
   # Service設定
   api_service = {
     name            = "${local.name_prefix}api-service"
-    desired_count   = 1
+    desired_count   = 2 # 高可用性のため2つのタスクを実行（異なるAZに分散）
     security_groups = [module.security_groups.ecs_api_sg_id]
     subnets         = module.vpc.public_subnet_ids
   }
 
   console_service = {
     name            = "${local.name_prefix}console-service"
-    desired_count   = 1
+    desired_count   = 2 # 高可用性のため2つのタスクを実行（異なるAZに分散）
     security_groups = [module.security_groups.ecs_console_sg_id]
     subnets         = module.vpc.public_subnet_ids
   }
@@ -307,7 +320,6 @@ module "codebuild" {
     build_context    = "./api"
     dockerfile_path  = "api/Dockerfile"
     service_role_arn = module.iam.codebuild_role_arn
-    github_token     = var.github_token
   }
 
   # Console CodeBuild
@@ -318,7 +330,6 @@ module "codebuild" {
     build_context    = "./console"
     dockerfile_path  = "console/Dockerfile"
     service_role_arn = module.iam.codebuild_role_arn
-    github_token     = var.github_token
   }
 
   # API URL（CodeBuildのVITE_API_ORIGIN環境変数として使用）
@@ -341,7 +352,6 @@ module "codepipeline" {
 
   github_repository_url = var.github_repository_url
   github_branch         = var.github_branch
-  github_token          = var.github_token
 
   api_build_project_name       = module.codebuild.api_build_project_name
   console_build_project_name   = module.codebuild.console_build_project_name

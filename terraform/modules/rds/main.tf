@@ -29,7 +29,7 @@ resource "aws_rds_cluster" "main" {
   cluster_identifier = "${var.name_prefix}aurora-cluster"
 
   engine         = "aurora-mysql"
-  engine_version = "8.0.mysql_aurora.3.04.0"  # 안정적인 버전 사용
+  engine_version = "8.0.mysql_aurora.3.04.0" # 안정적인 버전 사용
 
   database_name   = var.db_name
   master_username = var.db_username
@@ -40,13 +40,13 @@ resource "aws_rds_cluster" "main" {
 
   # バックアップ設定（enable_backupがtrueの場合は7日、falseの場合は最小の1日）
   # Aurora MySQLはbackup_retention_periodを0に設定できないため、最小値の1を使用
-  backup_retention_period = var.enable_backup ? 7 : 1
-  preferred_backup_window = var.enable_backup ? "03:00-04:00" : null
-  preferred_maintenance_window = "mon:04:00-mon:05:00"
+  backup_retention_period      = var.enable_backup ? 7 : 1
+  preferred_backup_window      = "17:00-18:00"         # 夜中 2:00-3:00 (JST)
+  preferred_maintenance_window = var.preferred_maintenance_window # デフォルト: 夜中 4:00-5:00 (JST)
 
-  skip_final_snapshot       = false
-  final_snapshot_identifier = "${var.name_prefix}aurora-final-snapshot-${formatdate("YYYY-MM-DD-hhmm", timestamp())}"
-  deletion_protection        = false
+  skip_final_snapshot       = !var.skip_final_snapshot # false: スナップショット作成しない、true: 作成する（通常の動作と逆）
+  final_snapshot_identifier = var.skip_final_snapshot ? "${var.name_prefix}aurora-final-snapshot-${formatdate("YYYY-MM-DD-hhmm", timestamp())}" : null
+  deletion_protection       = var.deletion_protection
 
   enabled_cloudwatch_logs_exports = ["error", "general", "slowquery"]
 
@@ -60,18 +60,22 @@ resource "aws_rds_cluster" "main" {
   )
 }
 
-# Aurora MySQLインスタンス作成
+# Aurora MySQLインスタンス作成（高可用性のため2つのインスタンスを異なるAZに配置）
 resource "aws_rds_cluster_instance" "main" {
-  identifier         = "${var.name_prefix}aurora-instance"
+  count              = 2 # 2つのインスタンスを作成（異なるAZに自動配置）
+  identifier         = "${var.name_prefix}aurora-instance-${count.index + 1}"
   cluster_identifier = aws_rds_cluster.main.id
   instance_class     = "db.t3.medium"
   engine             = aws_rds_cluster.main.engine
   engine_version     = aws_rds_cluster.main.engine_version
 
+  # 自動マイナーバージョンアップグレードを無効化（選択的メンテナンスを最小化）
+  auto_minor_version_upgrade = var.auto_minor_version_upgrade
+
   tags = merge(
     var.tags,
     {
-      Name = "${var.name_prefix}aurora-instance"
+      Name = "${var.name_prefix}aurora-instance-${count.index + 1}"
     }
   )
 }

@@ -12,7 +12,6 @@ variable "api_build" {
     build_context    = string
     dockerfile_path  = string
     service_role_arn = string
-    github_token     = string
   })
 }
 
@@ -25,7 +24,6 @@ variable "console_build" {
     build_context    = string
     dockerfile_path  = string
     service_role_arn = string
-    github_token     = string
   })
 }
 

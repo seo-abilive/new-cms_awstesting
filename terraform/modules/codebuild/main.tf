@@ -397,12 +397,8 @@ resource "aws_codebuild_project" "migration" {
   )
 }
 
-# GitHub認証用Source Credential
-resource "aws_codebuild_source_credential" "github" {
-  auth_type   = "PERSONAL_ACCESS_TOKEN"
-  server_type = "GITHUB"
-  token       = var.api_build.github_token
-}
+# GitHub認証用Source Credential（CodePipeline経由で実行される場合は不要）
+# CodePipelineがソースを取得してCodeBuildに渡すため、CodeBuildのsource credentialは使用されない
 
 # 現在のリージョン取得
 data "aws_region" "current" {}

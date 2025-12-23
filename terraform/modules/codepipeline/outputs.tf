@@ -18,3 +18,8 @@ output "artifacts_bucket_arn" {
   value       = aws_s3_bucket.artifacts.arn
 }
 
+output "codestar_connection_arn" {
+  description = "CodeStar Connection ARN"
+  value       = aws_codestarconnections_connection.github.arn
+}
+

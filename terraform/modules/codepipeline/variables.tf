@@ -13,12 +13,6 @@ variable "github_branch" {
   type        = string
 }
 
-variable "github_token" {
-  description = "GitHub Personal Access Token"
-  type        = string
-  sensitive   = true
-}
-
 variable "api_build_project_name" {
   description = "API CodeBuild Project名"
   type        = string
