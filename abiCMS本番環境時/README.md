@@ -28,12 +28,31 @@ admin:repo_hook
 
 5。
 terraform/terraform.tfvars
+で、本番時の設定を確認
+terraform init 実行
+terraform plan 実行
+terraform apply 実行
+
+6。
+AWS CodePipeline
+Source ステップで "Edit" クリック
+接続　ー　 GitHub に接続する　クリック
+接続名　ー　"new-cms_awstesting"
+で接続する（CodePipeline - 接続 に登録される）
+
+そのあと、
+「リポジトリ名」
+「ブランチ名」
+を指定し、「完了」
+
+7。
+terraform/terraform.tfvars
 api_url = ""
 に、"http://" + alb_dns_name + "/api"を設定
 api_url = "new-cms-main-alb-1834578746.ap-northeast-1.elb.amazonaws.com/api"
 terraform apply 実行
 
-6。
+8。
 ドメイン/console/dist/login
 ログインして、
 企業、施設をつくって
@@ -51,11 +70,11 @@ case 'production':
 に設定する！
 必要なものだけを追加すればいい。
 
-7。
+9。
 cd /Applications/MAMP/htdocs/new-cms_awstesting/demo/\_system
 composer install
 composer インストールしたこの demo/ をサーバーにアップロードする。
 
-8。
+10。
 demo/ だと、中のファイルのコードで、フィールド ID を
 console/ で作ったフィールド ID と合わせる作業が必要
