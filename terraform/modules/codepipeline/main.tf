@@ -2,6 +2,8 @@
 resource "aws_s3_bucket" "artifacts" {
   bucket = "${var.name_prefix}codepipeline-artifacts"
 
+  force_destroy = true
+
   tags = merge(
     var.tags,
     {
