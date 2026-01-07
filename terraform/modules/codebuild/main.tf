@@ -6,7 +6,7 @@ resource "aws_codebuild_project" "api" {
   service_role  = var.api_build.service_role_arn
 
   artifacts {
-    type = "NO_ARTIFACTS"
+    type = "CODEPIPELINE"
   }
 
   environment {
@@ -38,13 +38,7 @@ resource "aws_codebuild_project" "api" {
   }
 
   source {
-    type            = "GITHUB"
-    location        = var.api_build.repository_url
-    git_clone_depth = 1
-
-    git_submodules_config {
-      fetch_submodules = false
-    }
+    type = "CODEPIPELINE"
 
     buildspec = <<-BUILDSPEC
       version: 0.2
@@ -131,7 +125,7 @@ resource "aws_codebuild_project" "console" {
   service_role  = var.console_build.service_role_arn
 
   artifacts {
-    type = "NO_ARTIFACTS"
+    type = "CODEPIPELINE"
   }
 
   environment {
@@ -171,13 +165,7 @@ resource "aws_codebuild_project" "console" {
   }
 
   source {
-    type            = "GITHUB"
-    location        = var.console_build.repository_url
-    git_clone_depth = 1
-
-    git_submodules_config {
-      fetch_submodules = false
-    }
+    type = "CODEPIPELINE"
 
     buildspec = <<-BUILDSPEC
 version: 0.2
@@ -229,6 +217,8 @@ phases:
       - |
         # PATHを確実に設定（buildフェーズでも有効にするため）
         export PATH=/usr/bin:$PATH
+        # BASE_IMAGE_REPOを再設定（buildフェーズでも使用可能にするため）
+        BASE_IMAGE_REPO=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/${var.name_prefix}base-images
       - echo Build started on `date`
       - echo Building the application...
       - cd ${var.console_build.build_context}
@@ -252,7 +242,15 @@ phases:
           exit 1
         fi
         echo "Building the Docker image..."
-        docker build -t $REPOSITORY_URI:latest -t $REPOSITORY_URI:$IMAGE_TAG -f Dockerfile .
+        # ECR base-imagesを使用（存在しない場合はDocker Hubから取得を試行）
+        if aws ecr describe-images --repository-name ${var.name_prefix}base-images --image-ids imageTag=node-20 --region $AWS_DEFAULT_REGION 2>/dev/null; then
+          BASE_IMAGE_URI=$BASE_IMAGE_REPO:node-20
+          echo "ECR base-imagesを使用: $BASE_IMAGE_URI"
+        else
+          BASE_IMAGE_URI=node:20
+          echo "ECR base-imagesが存在しないため、Docker Hubから取得を試行: $BASE_IMAGE_URI"
+        fi
+        docker build --build-arg BASE_IMAGE=$BASE_IMAGE_URI -t $REPOSITORY_URI:latest -t $REPOSITORY_URI:$IMAGE_TAG -f Dockerfile .
       - cd $CODEBUILD_SRC_DIR
   post_build:
     commands:
@@ -298,7 +296,7 @@ resource "aws_codebuild_project" "migration" {
   service_role  = var.api_build.service_role_arn
 
   artifacts {
-    type = "NO_ARTIFACTS"
+    type = "CODEPIPELINE"
   }
 
   environment {
@@ -335,7 +333,8 @@ resource "aws_codebuild_project" "migration" {
   }
 
   source {
-    type      = "NO_SOURCE"
+    type = "CODEPIPELINE"
+
     buildspec = <<-BUILDSPEC
       version: 0.2
       phases:

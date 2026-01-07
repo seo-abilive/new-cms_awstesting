@@ -21,6 +21,10 @@ variable "api_task_definition" {
     cpu                      = number
     memory                   = number
     environment_variables    = map(string)
+    secrets                  = optional(list(object({
+      name      = string
+      valueFrom = string
+    })), [])
   })
 }
 

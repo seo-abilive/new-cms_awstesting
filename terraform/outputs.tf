@@ -1,7 +1,7 @@
 # APIエンドポイントURL（demo/で使用）
 output "api_endpoint_url" {
   description = "APIエンドポイントURL（demo/で使用）"
-  value       = var.api_url != "" ? "${var.api_url}/api/v1/" : "http://${module.alb.dns_name}/api/api/v1/"
+  value       = var.api_url != "" ? "${var.api_url}v1/" : "http://${module.alb.dns_name}/api/v1/"
 }
 
 # ALB DNS名

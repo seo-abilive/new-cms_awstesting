@@ -52,6 +52,9 @@ resource "aws_rds_cluster" "main" {
 
   db_cluster_parameter_group_name = aws_rds_cluster_parameter_group.main.name
 
+  # ストレージ暗号化を有効化（AWS管理キーを使用）
+  storage_encrypted = true
+
   tags = merge(
     var.tags,
     {

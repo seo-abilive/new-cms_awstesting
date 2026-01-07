@@ -1,3 +1,6 @@
+# 現在のリージョン取得
+data "aws_region" "current" {}
+
 # ECS Task Execution Role（コンテナイメージの取得、CloudWatch Logsへの書き込み用）
 resource "aws_iam_role" "ecs_task_execution" {
   name = "${var.name_prefix}ecs-task-execution-role"

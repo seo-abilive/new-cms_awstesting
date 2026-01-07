@@ -20,7 +20,7 @@ app_key       = "base64:izUY16xZiwXcLFItN0g8iKG9T+YDG93QNCsYZ9Auzoo="
 mail_password = "W^}5GLWEcQsT"
 
 # API/Console設定（ALB DNS名を使用する場合は空文字のまま、後で設定可能）
-api_url = "http://new-cms-main-alb-1834578746.ap-northeast-1.elb.amazonaws.com/api/" # プロトコルを含めて設定（HTTP使用、/apiを含める）
+api_url = "http://new-cms-main-alb-782639561.ap-northeast-1.elb.amazonaws.com/api/" # プロトコルを含めて設定（HTTP使用、/apiを含める）
 # console_allowed_hosts = ""  # 空文字の場合はALB DNS名が自動的に使用されます
 
 # GitHub設定

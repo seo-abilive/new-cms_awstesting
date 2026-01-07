@@ -192,7 +192,7 @@ module "ecs" {
         # アプリケーション基本設定（.envから参照）
         APP_NAME               = "Laravel"
         APP_ENV                = "production"
-        APP_KEY                = var.app_key
+        APP_KEY                 = var.app_key
         APP_DEBUG              = "false"
         APP_LOCALE             = "en"
         APP_FALLBACK_LOCALE    = "en"
@@ -246,6 +246,7 @@ module "ecs" {
         MAIL_USERNAME     = "info@abitestxsrv.xbiz.jp"
         MAIL_FROM_ADDRESS = "info@abitestxsrv.xbiz.jp"
         MAIL_FROM_NAME    = "Laravel"
+        MAIL_PASSWORD     = var.mail_password != "" ? var.mail_password : ""
 
         # AWS設定（.envから参照、必要に応じて設定）
         AWS_DEFAULT_REGION = "ap-northeast-1"
@@ -261,8 +262,7 @@ module "ecs" {
         LOGIN_MAX_ATTEMPTS     = var.login_max_attempts != "" ? var.login_max_attempts : "5"
         LOGIN_LOCKOUT_DURATION = var.login_lockout_duration != "" ? var.login_lockout_duration : "15"
       },
-      var.api_url != "" ? { APP_URL = var.api_url } : {},
-      var.mail_password != "" ? { MAIL_PASSWORD = var.mail_password } : {}
+      var.api_url != "" ? { APP_URL = var.api_url } : {}
     )
   }
 

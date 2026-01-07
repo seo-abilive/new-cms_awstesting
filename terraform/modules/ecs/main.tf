@@ -45,6 +45,8 @@ resource "aws_ecs_task_definition" "api" {
         }
       ]
 
+      secrets = var.api_task_definition.secrets != null ? var.api_task_definition.secrets : []
+
       logConfiguration = {
         logDriver = "awslogs"
         options = {
