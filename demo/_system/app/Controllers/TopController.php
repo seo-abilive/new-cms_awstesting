@@ -13,8 +13,12 @@ class TopController extends AbstractController
             ->enableCache(60)
             ->params(['limit' => 3])
             ->setToken(API_NEWS_TOKEN)
-            ->addFacility('demo')
+            // ->addFacility('demo')
             ->getList();
+        // echo '<pre>';
+        // var_dump($newsList['contents']);
+        // echo '</pre>';
+        // exit;
 
         // TOPバナーを取得
         $bannerList = (new ApiService('top_banner'))

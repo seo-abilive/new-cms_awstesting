@@ -25,6 +25,8 @@ if (
     $environment = 'staging';
 }
 
+$environment = 'production';
+
 // 環境定数を定義
 define('ENVIRONMENT', $environment);
 define('IS_DEVELOPMENT', $environment === 'development');
@@ -58,12 +60,12 @@ switch ($environment) {
     case 'production':
         // 本番環境
         define('DEBUG_MODE', false);
-        define('BASE_ENDPOINT', 'https://abilive:test@abitestxsrv.xbiz.jp/new-cms/api/public/api/v1/');
+        define('BASE_ENDPOINT', 'http://new-cms-main-alb-1834578746.ap-northeast-1.elb.amazonaws.com/api/v1/');
         define('LOG_LEVEL', 'error');
-        define('API_NEWS_TOKEN', '3425ca12d78e8ecf9e49942f9e7aebedfe2bfd4bf2a12a41c056c8d07eb386c2');
-        define('API_FAQ_TOKEN', '7cafa5c47d2c81e6e2afbd2e38b4d84044afe262d207c0808822cfdaa915ed27');
-        define('API_TOP_BANNER_TOKEN', '0c71bf24489aa806ef9075e296ec6653bd7a8ad385cbf0da282c2909fe7e5bcd');
-        define('CONTACT_WIDGET_CODE', '<iframe src="https://abitestxsrv.xbiz.jp/new-cms/console/dist/widget/contact/f13cffd6-4023-48af-8ea4-87c4214717d1" style="border: none; width: 100%; height: 600px"></iframe>');
+        define('API_NEWS_TOKEN', '2c49db8e5b1eaf9349ff8b640b76ec8947f81b09ce29cde1c2eedfe5a4bd8bf9');
+        define('API_FAQ_TOKEN', '');
+        define('API_TOP_BANNER_TOKEN', '');
+        define('CONTACT_WIDGET_CODE', '');
         break;
 }
 
