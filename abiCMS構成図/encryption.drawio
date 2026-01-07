@@ -1,0 +1,105 @@
+<mxfile host="65bd71144e">
+    <diagram id="encryption_diagram" name="암호화 설계도">
+        <mxGraphModel dx="2400" dy="1600" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="2000" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                
+                <!-- 제목 -->
+                <mxCell id="title" value="암호화 처리 설계도 (Encryption Architecture)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;fontStyle=1" vertex="1" parent="1">
+                    <mxGeometry x="400" y="20" width="600" height="40" as="geometry"/>
+                </mxCell>
+                
+                <!-- 애플리케이션 레벨 암호화 영역 -->
+                <mxCell id="app_area" value="1. 애플리케이션 레벨 암호화 (Application Level)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1F5FE;strokeColor=#01579B;fontSize=16;fontStyle=1;verticalAlign=top;align=left;spacingLeft=10" vertex="1" parent="1">
+                    <mxGeometry x="50" y="100" width="1300" height="400" as="geometry"/>
+                </mxCell>
+                
+                <!-- Laravel APP_KEY -->
+                <mxCell id="app_key_box" value="Laravel APP_KEY&lt;br&gt;&lt;font size=&quot;2&quot;&gt;암호화 방식: AES-256-CBC&lt;/font&gt;&lt;br&gt;&lt;font size=&quot;2&quot;&gt;저장 위치: AWS Secrets Manager&lt;/font&gt;&lt;br&gt;&lt;font size=&quot;2&quot;&gt;용도: Laravel 암호화 서비스&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#BBDEFB;strokeColor=#1976D2;fontSize=12;align=left;verticalAlign=top;spacingLeft=5;spacingTop=5" vertex="1" parent="1">
+                    <mxGeometry x="100" y="160" width="280" height="120" as="geometry"/>
+                </mxCell>
+                
+                <!-- Encrypted Cast -->
+                <mxCell id="encrypted_cast_box" value="데이터베이스 필드 암호화&lt;br&gt;&lt;font size=&quot;2&quot;&gt;방식: Encrypted Cast&lt;/font&gt;&lt;br&gt;&lt;font size=&quot;2&quot;&gt;사용 필드:&lt;/font&gt;&lt;br&gt;&lt;font size=&quot;2&quot;&gt;• recaptcha_site_key&lt;/font&gt;&lt;br&gt;&lt;font size=&quot;2&quot;&gt;• recaptcha_secret_key&lt;/font&gt;&lt;br&gt;&lt;font size=&quot;2&quot;&gt;• ai_api_key&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#BBDEFB;strokeColor=#1976D2;fontSize=12;align=left;verticalAlign=top;spacingLeft=5;spacingTop=5" vertex="1" parent="1">
+                    <mxGeometry x="420" y="160" width="280" height="160" as="geometry"/>
+                </mxCell>
+                
+                <!-- 비밀번호 해싱 -->
+                <mxCell id="password_hash_box" value="비밀번호 해싱&lt;br&gt;&lt;font size=&quot;2&quot;&gt;방식: Bcrypt&lt;/font&gt;&lt;br&gt;&lt;font size=&quot;2&quot;&gt;라운드: 12&lt;/font&gt;&lt;br&gt;&lt;font size=&quot;2&quot;&gt;용도: 사용자 비밀번호 저장&lt;/font&gt;&lt;br&gt;&lt;font size=&quot;2&quot;&gt;위치: UserService.php&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#BBDEFB;strokeColor=#1976D2;fontSize=12;align=left;verticalAlign=top;spacingLeft=5;spacingTop=5" vertex="1" parent="1">
+                    <mxGeometry x="740" y="160" width="280" height="140" as="geometry"/>
+                </mxCell>
+                
+                <!-- 쿠키 암호화 -->
+                <mxCell id="cookie_encrypt_box" value="쿠키 암호화&lt;br&gt;&lt;font size=&quot;2&quot;&gt;미들웨어: EncryptCookies&lt;/font&gt;&lt;br&gt;&lt;font size=&quot;2&quot;&gt;위치: config/sanctum.php&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#BBDEFB;strokeColor=#1976D2;fontSize=12;align=left;verticalAlign=top;spacingLeft=5;spacingTop=5" vertex="1" parent="1">
+                    <mxGeometry x="1060" y="160" width="250" height="100" as="geometry"/>
+                </mxCell>
+                
+                <!-- 세션 암호화 -->
+                <mxCell id="session_encrypt_box" value="세션 암호화&lt;br&gt;&lt;font size=&quot;2&quot;&gt;현재 상태: 비활성화&lt;/font&gt;&lt;br&gt;&lt;font size=&quot;2&quot;&gt;설정: SESSION_ENCRYPT=false&lt;/font&gt;&lt;br&gt;&lt;font size=&quot;2&quot;&gt;위치: config/session.php&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE0B2;strokeColor=#E65100;fontSize=12;align=left;verticalAlign=top;spacingLeft=5;spacingTop=5" vertex="1" parent="1">
+                    <mxGeometry x="100" y="320" width="280" height="120" as="geometry"/>
+                </mxCell>
+                
+                <!-- AWS 인프라 레벨 암호화 영역 -->
+                <mxCell id="infra_area" value="2. AWS 인프라 레벨 암호화 (Infrastructure Level)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#4A148C;fontSize=16;fontStyle=1;verticalAlign=top;align=left;spacingLeft=10" vertex="1" parent="1">
+                    <mxGeometry x="50" y="550" width="1300" height="500" as="geometry"/>
+                </mxCell>
+                
+                <!-- RDS 암호화 -->
+                <mxCell id="rds_encrypt_box" value="RDS 스토리지 암호화&lt;br&gt;&lt;font size=&quot;2&quot;&gt;암호화: 활성화&lt;/font&gt;&lt;br&gt;&lt;font size=&quot;2&quot;&gt;키: AWS 관리 키&lt;/font&gt;&lt;br&gt;&lt;font size=&quot;2&quot;&gt;위치: terraform/modules/rds/main.tf&lt;/font&gt;&lt;br&gt;&lt;font size=&quot;2&quot;&gt;설정: storage_encrypted = true&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1BEE7;strokeColor=#6A1B9A;fontSize=12;align=left;verticalAlign=top;spacingLeft=5;spacingTop=5" vertex="1" parent="1">
+                    <mxGeometry x="100" y="610" width="280" height="140" as="geometry"/>
+                </mxCell>
+                
+                <!-- ECR 암호화 -->
+                <mxCell id="ecr_encrypt_box" value="ECR 이미지 암호화&lt;br&gt;&lt;font size=&quot;2&quot;&gt;암호화 방식: AES256&lt;/font&gt;&lt;br&gt;&lt;font size=&quot;2&quot;&gt;위치: terraform/modules/ecr/main.tf&lt;/font&gt;&lt;br&gt;&lt;font size=&quot;2&quot;&gt;설정: encryption_type = &quot;AES256&quot;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1BEE7;strokeColor=#6A1B9A;fontSize=12;align=left;verticalAlign=top;spacingLeft=5;spacingTop=5" vertex="1" parent="1">
+                    <mxGeometry x="420" y="610" width="280" height="130" as="geometry"/>
+                </mxCell>
+                
+                <!-- S3 암호화 -->
+                <mxCell id="s3_encrypt_box" value="S3 버킷 암호화&lt;br&gt;&lt;font size=&quot;2&quot;&gt;암호화 방식: AES256&lt;/font&gt;&lt;br&gt;&lt;font size=&quot;2&quot;&gt;용도: CodePipeline 아티팩트&lt;/font&gt;&lt;br&gt;&lt;font size=&quot;2&quot;&gt;위치: terraform/modules/codepipeline/main.tf&lt;/font&gt;&lt;br&gt;&lt;font size=&quot;2&quot;&gt;설정: sse_algorithm = &quot;AES256&quot;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1BEE7;strokeColor=#6A1B9A;fontSize=12;align=left;verticalAlign=top;spacingLeft=5;spacingTop=5" vertex="1" parent="1">
+                    <mxGeometry x="740" y="610" width="280" height="150" as="geometry"/>
+                </mxCell>
+                
+                <!-- Secrets Manager -->
+                <mxCell id="secrets_box" value="AWS Secrets Manager&lt;br&gt;&lt;font size=&quot;2&quot;&gt;저장 항목:&lt;/font&gt;&lt;br&gt;&lt;font size=&quot;2&quot;&gt;• DB 인증정보 (username, password)&lt;/font&gt;&lt;br&gt;&lt;font size=&quot;2&quot;&gt;• APP_KEY (Laravel 키)&lt;/font&gt;&lt;br&gt;&lt;font size=&quot;2&quot;&gt;• MAIL_PASSWORD&lt;/font&gt;&lt;br&gt;&lt;font size=&quot;2&quot;&gt;위치: terraform/modules/secrets/main.tf&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1BEE7;strokeColor=#6A1B9A;fontSize=12;align=left;verticalAlign=top;spacingLeft=5;spacingTop=5" vertex="1" parent="1">
+                    <mxGeometry x="1060" y="610" width="250" height="160" as="geometry"/>
+                </mxCell>
+                
+                <!-- KMS -->
+                <mxCell id="kms_box" value="KMS 복호화 권한&lt;br&gt;&lt;font size=&quot;2&quot;&gt;용도: Secrets Manager 접근&lt;/font&gt;&lt;br&gt;&lt;font size=&quot;2&quot;&gt;권한: kms:Decrypt&lt;/font&gt;&lt;br&gt;&lt;font size=&quot;2&quot;&gt;위치: terraform/modules/iam/main.tf&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1BEE7;strokeColor=#6A1B9A;fontSize=12;align=left;verticalAlign=top;spacingLeft=5;spacingTop=5" vertex="1" parent="1">
+                    <mxGeometry x="100" y="790" width="280" height="120" as="geometry"/>
+                </mxCell>
+                
+                <!-- 네트워크 레벨 암호화 영역 -->
+                <mxCell id="network_area" value="3. 네트워크 레벨 암호화 (Network Level)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#1B5E20;fontSize=16;fontStyle=1;verticalAlign=top;align=left;spacingLeft=10" vertex="1" parent="1">
+                    <mxGeometry x="50" y="1100" width="1300" height="200" as="geometry"/>
+                </mxCell>
+                
+                <!-- 메일 TLS -->
+                <mxCell id="mail_tls_box" value="메일 전송 암호화 (TLS)&lt;br&gt;&lt;font size=&quot;2&quot;&gt;암호화 방식: TLS&lt;/font&gt;&lt;br&gt;&lt;font size=&quot;2&quot;&gt;설정: MAIL_ENCRYPTION = &quot;tls&quot;&lt;/font&gt;&lt;br&gt;&lt;font size=&quot;2&quot;&gt;위치: terraform/main.tf&lt;/font&gt;&lt;br&gt;&lt;font size=&quot;2&quot;&gt;포트: 587&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C8E6C9;strokeColor=#2E7D32;fontSize=12;align=left;verticalAlign=top;spacingLeft=5;spacingTop=5" vertex="1" parent="1">
+                    <mxGeometry x="100" y="1160" width="280" height="120" as="geometry"/>
+                </mxCell>
+                
+                <!-- 요약 영역 -->
+                <mxCell id="summary_area" value="4. 암호화 요약 (Summary)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#E65100;fontSize=16;fontStyle=1;verticalAlign=top;align=left;spacingLeft=10" vertex="1" parent="1">
+                    <mxGeometry x="50" y="1350" width="1300" height="300" as="geometry"/>
+                </mxCell>
+                
+                <mxCell id="summary_text" value="&lt;font size=&quot;3&quot;&gt;&lt;b&gt;총 11개 영역에서 암호화 적용&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;br&gt;&lt;font size=&quot;2&quot;&gt;1. Laravel APP_KEY (AES-256-CBC)&lt;/font&gt;&lt;br&gt;&lt;font size=&quot;2&quot;&gt;2. 데이터베이스 필드 암호화 (Encrypted Cast) - 3개 필드&lt;/font&gt;&lt;br&gt;&lt;font size=&quot;2&quot;&gt;3. 비밀번호 해싱 (Bcrypt)&lt;/font&gt;&lt;br&gt;&lt;font size=&quot;2&quot;&gt;4. 쿠키 암호화 미들웨어&lt;/font&gt;&lt;br&gt;&lt;font size=&quot;2&quot;&gt;5. RDS 스토리지 암호화&lt;/font&gt;&lt;br&gt;&lt;font size=&quot;2&quot;&gt;6. ECR 이미지 암호화 (AES256)&lt;/font&gt;&lt;br&gt;&lt;font size=&quot;2&quot;&gt;7. S3 버킷 암호화 (AES256)&lt;/font&gt;&lt;br&gt;&lt;font size=&quot;2&quot;&gt;8. AWS Secrets Manager (3개 시크릿)&lt;/font&gt;&lt;br&gt;&lt;font size=&quot;2&quot;&gt;9. KMS 복호화 권한&lt;/font&gt;&lt;br&gt;&lt;font size=&quot;2&quot;&gt;10. 메일 전송 암호화 (TLS)&lt;/font&gt;&lt;br&gt;&lt;font size=&quot;2&quot;&gt;11. 세션 암호화 설정 (현재 비활성화)&lt;/font&gt;&lt;br&gt;&lt;br&gt;&lt;font size=&quot;2&quot; color=&quot;#FF0000&quot;&gt;※ 참고: 세션 암호화는 현재 비활성화되어 있습니다. 필요시 SESSION_ENCRYPT=true로 변경하세요.&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE0B2;strokeColor=#E65100;fontSize=12;align=left;verticalAlign=top;spacingLeft=10;spacingTop=10" vertex="1" parent="1">
+                    <mxGeometry x="100" y="1410" width="1200" height="200" as="geometry"/>
+                </mxCell>
+                
+                <!-- 연결선: APP_KEY에서 Secrets Manager로 -->
+                <mxCell id="edge1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#1976D2;strokeWidth=2;dashed=1" edge="1" parent="1" source="app_key_box" target="secrets_box">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                
+                <!-- 연결선: Secrets Manager에서 KMS로 -->
+                <mxCell id="edge2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#6A1B9A;strokeWidth=2;dashed=1" edge="1" parent="1" source="secrets_box" target="kms_box">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
