@@ -74,6 +74,24 @@ variable "console_target_group_arn" {
   type        = string
 }
 
+variable "enable_autoscaling" {
+  description = "Auto Scalingを有効にするかどうか"
+  type        = bool
+  default     = false
+}
+
+variable "autoscaling_min_capacity" {
+  description = "Auto Scalingの最小タスク数"
+  type        = number
+  default     = 1
+}
+
+variable "autoscaling_max_capacity" {
+  description = "Auto Scalingの最大タスク数"
+  type        = number
+  default     = 10
+}
+
 variable "tags" {
   description = "リソースに付与するタグ"
   type        = map(string)

@@ -65,9 +65,21 @@ variable "auto_minor_version_upgrade" {
 }
 
 variable "high_availability" {
-  description = "高可用性を有効にするかどうか（true: 2インスタンス、false: 1インスタンス）"
+  description = "高可用性を有効にするかどうか（true: Aurora Serverless v2 + Auto Scaling、false: Provisioned 1インスタンス）"
   type        = bool
   default     = true
+}
+
+variable "serverless_min_capacity" {
+  description = "Aurora Serverless v2の最小容量（ACU単位、0.5〜128）"
+  type        = number
+  default     = 0.5
+}
+
+variable "serverless_max_capacity" {
+  description = "Aurora Serverless v2の最大容量（ACU単位、0.5〜128）"
+  type        = number
+  default     = 16
 }
 
 variable "tags" {

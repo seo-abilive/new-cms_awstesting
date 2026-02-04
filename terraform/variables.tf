@@ -100,9 +100,33 @@ variable "auto_minor_version_upgrade" {
 }
 
 variable "high_availability" {
-  description = "高可用性を有効にするかどうか（true: 高可用性、false: 単一インスタンス）"
+  description = "高可用性を有効にするかどうか（true: Aurora Serverless v2 + ECS Auto Scaling、false: Provisioned + 固定タスク）"
   type        = bool
   default     = true
+}
+
+variable "serverless_min_capacity" {
+  description = "Aurora Serverless v2の最小容量（ACU単位、0.5〜128）"
+  type        = number
+  default     = 0.5
+}
+
+variable "serverless_max_capacity" {
+  description = "Aurora Serverless v2の最大容量（ACU単位、0.5〜128）"
+  type        = number
+  default     = 16
+}
+
+variable "ecs_autoscaling_min_capacity" {
+  description = "ECS Auto Scalingの最小タスク数"
+  type        = number
+  default     = 1
+}
+
+variable "ecs_autoscaling_max_capacity" {
+  description = "ECS Auto Scalingの最大タスク数"
+  type        = number
+  default     = 10
 }
 
 # アプリケーション設定

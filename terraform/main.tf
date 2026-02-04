@@ -70,6 +70,9 @@ module "rds" {
 
   high_availability = var.high_availability
 
+  serverless_min_capacity = var.serverless_min_capacity
+  serverless_max_capacity = var.serverless_max_capacity
+
   security_group_ids = [
     module.security_groups.rds_sg_id
   ]
@@ -287,19 +290,25 @@ module "ecs" {
   }
 
   # Service設定
+  # high_availability=trueの場合も1つから開始し、Auto Scalingで増減
   api_service = {
     name            = "${local.name_prefix}api-service"
-    desired_count   = var.high_availability ? 2 : 1 # 高可用性の場合は2つ、そうでない場合は1つ
+    desired_count   = 1 # Auto Scalingで自動調整
     security_groups = [module.security_groups.ecs_api_sg_id]
     subnets         = module.vpc.public_subnet_ids
   }
 
   console_service = {
     name            = "${local.name_prefix}console-service"
-    desired_count   = var.high_availability ? 2 : 1 # 高可用性の場合は2つ、そうでない場合は1つ
+    desired_count   = 1 # Auto Scalingで自動調整
     security_groups = [module.security_groups.ecs_console_sg_id]
     subnets         = module.vpc.public_subnet_ids
   }
+
+  # Auto Scaling設定
+  enable_autoscaling = var.high_availability # high_availability=trueの場合のみAuto Scaling有効
+  autoscaling_min_capacity = var.ecs_autoscaling_min_capacity
+  autoscaling_max_capacity = var.ecs_autoscaling_max_capacity
 
   # Target Group ARNs
   api_target_group_arn     = module.alb.api_target_group_arn

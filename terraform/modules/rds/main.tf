@@ -55,6 +55,21 @@ resource "aws_rds_cluster" "main" {
   # ストレージ暗号化を有効化（AWS管理キーを使用）
   storage_encrypted = true
 
+  # Aurora Serverless v2設定（high_availability=trueの場合のみ）
+  dynamic "serverlessv2_scaling_configuration" {
+    for_each = var.high_availability ? [1] : []
+    content {
+      max_capacity = var.serverless_max_capacity
+      min_capacity = var.serverless_min_capacity
+    }
+  }
+
+  # Serverless v2 ↔ Provisioned 변경時はクラスターを再作成
+  lifecycle {
+    # serverlessv2_scaling_configurationの有無が変更될 때 강제로 재생성
+    create_before_destroy = false
+  }
+
   tags = merge(
     var.tags,
     {
@@ -63,22 +78,30 @@ resource "aws_rds_cluster" "main" {
   )
 }
 
-# Aurora MySQLインスタンス作成（高可用性のため2つのインスタンスを異なるAZに配置）
+# Aurora MySQLインスタンス作成
+# high_availability=trueの場合はAurora Serverless v2（1インスタンス、Auto Scaling）
+# high_availability=falseの場合はProvisioned（1インスタンス、固定）
 resource "aws_rds_cluster_instance" "main" {
-  count              = var.high_availability ? 2 : 1 # 高可用性の場合は2つ、そうでない場合は1つ
-  identifier         = "${var.name_prefix}aurora-instance-${count.index + 1}"
+  count              = 1 # 常に1インスタンス（Serverless v2はAuto Scalingで容量調整）
+  identifier         = "${var.name_prefix}aurora-instance-1"
   cluster_identifier = aws_rds_cluster.main.id
-  instance_class     = "db.t3.medium"
+  # high_availability=trueの場合はServerless v2、falseの場合はProvisioned
+  instance_class     = var.high_availability ? "db.serverless" : "db.t3.medium"
   engine             = aws_rds_cluster.main.engine
   engine_version     = aws_rds_cluster.main.engine_version
 
   # 自動マイナーバージョンアップグレードを無効化（選択的メンテナンスを最小化）
   auto_minor_version_upgrade = var.auto_minor_version_upgrade
 
+  # ProvisionedからServerless v2への変更時は既存インスタンスを削除하고 새로 생성
+  lifecycle {
+    create_before_destroy = false # 既存インスタンスを 먼저 삭제
+  }
+
   tags = merge(
     var.tags,
     {
-      Name = "${var.name_prefix}aurora-instance-${count.index + 1}"
+      Name = "${var.name_prefix}aurora-instance-1"
     }
   )
 }

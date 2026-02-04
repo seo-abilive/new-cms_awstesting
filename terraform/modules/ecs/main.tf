@@ -209,3 +209,65 @@ resource "aws_ecs_service" "console" {
 # 現在のリージョン取得
 data "aws_region" "current" {}
 
+# API Service Auto Scaling Target
+resource "aws_appautoscaling_target" "api" {
+  count              = var.enable_autoscaling ? 1 : 0
+  max_capacity       = var.autoscaling_max_capacity
+  min_capacity       = var.autoscaling_min_capacity
+  resource_id        = "service/${var.cluster_name}/${aws_ecs_service.api.name}"
+  scalable_dimension = "ecs:service:DesiredCount"
+  service_namespace  = "ecs"
+}
+
+# API Service Auto Scaling Policy (CPU使用率ベース)
+resource "aws_appautoscaling_policy" "api_cpu" {
+  count              = var.enable_autoscaling ? 1 : 0
+  name               = "${var.name_prefix}api-cpu-autoscaling"
+  policy_type        = "TargetTrackingScaling"
+  resource_id        = aws_appautoscaling_target.api[0].resource_id
+  scalable_dimension = aws_appautoscaling_target.api[0].scalable_dimension
+  service_namespace  = aws_appautoscaling_target.api[0].service_namespace
+
+  target_tracking_scaling_policy_configuration {
+    target_value = 70.0 # CPU使用率70%を目標
+
+    predefined_metric_specification {
+      predefined_metric_type = "ECSServiceAverageCPUUtilization"
+    }
+
+    scale_in_cooldown  = 300  # スケールインクールダウン（5分）
+    scale_out_cooldown = 60   # スケールアウトクールダウン（1分）
+  }
+}
+
+# Console Service Auto Scaling Target
+resource "aws_appautoscaling_target" "console" {
+  count              = var.enable_autoscaling ? 1 : 0
+  max_capacity       = var.autoscaling_max_capacity
+  min_capacity       = var.autoscaling_min_capacity
+  resource_id        = "service/${var.cluster_name}/${aws_ecs_service.console.name}"
+  scalable_dimension = "ecs:service:DesiredCount"
+  service_namespace  = "ecs"
+}
+
+# Console Service Auto Scaling Policy (CPU使用率ベース)
+resource "aws_appautoscaling_policy" "console_cpu" {
+  count              = var.enable_autoscaling ? 1 : 0
+  name               = "${var.name_prefix}console-cpu-autoscaling"
+  policy_type        = "TargetTrackingScaling"
+  resource_id        = aws_appautoscaling_target.console[0].resource_id
+  scalable_dimension = aws_appautoscaling_target.console[0].scalable_dimension
+  service_namespace  = aws_appautoscaling_target.console[0].service_namespace
+
+  target_tracking_scaling_policy_configuration {
+    target_value = 70.0 # CPU使用率70%を目標
+
+    predefined_metric_specification {
+      predefined_metric_type = "ECSServiceAverageCPUUtilization"
+    }
+
+    scale_in_cooldown  = 300  # スケールインクールダウン（5分）
+    scale_out_cooldown = 60   # スケールアウトクールダウン（1分）
+  }
+}
+

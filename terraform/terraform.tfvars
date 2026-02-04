@@ -13,7 +13,15 @@ skip_final_snapshot        = false # スナップショット作成:開発中は
 auto_minor_version_upgrade = false # 自動マイナーバージョンアップグレード: falseで無効化（選択的メンテナンスを最小化）、trueで有効化
 
 # 高可用性設定
-high_availability = false # 開発中はfalseで、単一インスタンス、本番環境では高可用性（RDS 2インスタンス、ECS 2タスク）
+high_availability = false # 開発中はfalseで、単一インスタンス、本番環境では高可用性（Aurora Serverless v2 + ECS Auto Scaling）
+
+# Aurora Serverless v2設定（high_availability=trueの場合のみ有効）
+serverless_min_capacity = 0.5 # 最小容量（ACU単位、0.5〜128）
+serverless_max_capacity = 16  # 最大容量（ACU単位、0.5〜128）
+
+# ECS Auto Scaling設定（high_availability=trueの場合のみ有効）
+ecs_autoscaling_min_capacity = 1  # 最小タスク数
+ecs_autoscaling_max_capacity = 10 # 最大タスク数
 
 # アプリケーション設定
 app_key       = "base64:izUY16xZiwXcLFItN0g8iKG9T+YDG93QNCsYZ9Auzoo="
