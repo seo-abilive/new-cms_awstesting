@@ -33,8 +33,9 @@ export default defineConfig(({ mode }) => {
             // ECS Fargate 上で npm run preview を起動するための設定
             host: '0.0.0.0',
             port: 4173, // 実際のポートは Dockerfile の CMD 引数(--port 80)で上書きされる
-            // ALB 経由のアクセスを許可（東京リージョンのELBドメインをワイルドカードで許可）
-            allowedHosts: ['.ap-northeast-1.elb.amazonaws.com'],
+            // ALB 経由・CloudFront VPC Origin 経由のアクセスを許可
+            // （VPC Origin 時は Host が origin の domain_name になる）
+            allowedHosts: ['.ap-northeast-1.elb.amazonaws.com', 'vpc-origin.cloudfront.net', '.cloudfront.net'],
             strictPort: false,
             cors: true,
         },
