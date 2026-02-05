@@ -18,6 +18,9 @@ provider "aws" {
 # ローカル値: name_prefixをaws_prefixとgithub_branchから動的に生成
 locals {
   name_prefix = var.name_prefix != "" ? var.name_prefix : "${var.aws_prefix}-${var.github_branch}-"
+  # CloudFront 経由をデフォルトとする（api_url 未設定時）
+  effective_api_url     = var.api_url != "" ? var.api_url : "${module.cloudfront.url_http}/api/"
+  effective_frontend_url = var.frontend_url != "" ? var.frontend_url : (var.api_url != "" ? replace(var.api_url, "/api", "") : module.cloudfront.url_http)
 }
 
 # VPCモジュール
@@ -140,7 +143,7 @@ module "alb" {
   name_prefix = local.name_prefix
   vpc_id      = module.vpc.vpc_id
 
-  subnets = module.vpc.public_subnet_ids
+  subnets = module.vpc.private_subnet_ids
 
   security_group_id = module.security_groups.alb_sg_id
 
@@ -167,6 +170,16 @@ module "alb" {
 
   # ACM証明書ARN（オプション）
   certificate_arn = var.certificate_arn
+
+  tags = var.tags
+}
+
+# CloudFront モジュール（VPC Origin = Private ALB、単一の入口として公開）
+module "cloudfront" {
+  source = "./modules/cloudfront"
+
+  name_prefix = local.name_prefix
+  alb_arn     = module.alb.arn
 
   tags = var.tags
 }
@@ -255,8 +268,8 @@ module "ecs" {
         AWS_DEFAULT_REGION = "ap-northeast-1"
 
         # フロントエンドURL設定（パスワードリセットなどで使用）
-        # api_urlが http://alb-url/api の場合、frontend_urlは http://alb-url になる
-        FRONTEND_URL = var.frontend_url != "" ? var.frontend_url : (var.api_url != "" ? replace(var.api_url, "/api", "") : "")
+        # api_url 未設定時は CloudFront URL を使用
+        FRONTEND_URL = local.effective_frontend_url
 
         # Gemini API設定（.envから参照）
         GEMINI_API_ENDPOINT = var.gemini_api_endpoint != "" ? var.gemini_api_endpoint : "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent"
@@ -265,7 +278,7 @@ module "ecs" {
         LOGIN_MAX_ATTEMPTS     = var.login_max_attempts != "" ? var.login_max_attempts : "5"
         LOGIN_LOCKOUT_DURATION = var.login_lockout_duration != "" ? var.login_lockout_duration : "15"
       },
-      var.api_url != "" ? { APP_URL = var.api_url } : {}
+      { APP_URL = local.effective_api_url }
     )
   }
 
@@ -284,7 +297,7 @@ module "ecs" {
       {
         VITE_APP_ENV = "production"
       },
-      var.api_url != "" ? { VITE_API_ORIGIN = var.api_url } : {},
+      { VITE_API_ORIGIN = local.effective_api_url },
       var.console_allowed_hosts != "" ? { VITE_ALLOWED_HOSTS = var.console_allowed_hosts } : {}
     )
   }
@@ -343,8 +356,8 @@ module "codebuild" {
     service_role_arn = module.iam.codebuild_role_arn
   }
 
-  # API URL（CodeBuildのVITE_API_ORIGIN環境変数として使用）
-  api_url = var.api_url
+  # API URL（CodeBuildのVITE_API_ORIGIN環境変数として使用、未設定時は CloudFront URL）
+  api_url = local.effective_api_url
 
   # マイグレーション用設定
   cluster_name               = module.ecs.cluster_name

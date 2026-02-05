@@ -1,26 +1,17 @@
-# ALB用セキュリティグループ
+# CloudFront マネージドプレフィックスリスト（VPC Origin 経由のトラフィックのみ ALB へ許可）
+data "aws_ec2_managed_prefix_list" "cloudfront_origin" {
+  filter {
+    name   = "prefix-list-name"
+    values = ["com.amazonaws.global.cloudfront.origin-facing"]
+  }
+}
+
+# ALB用セキュリティグループ（Private ALB: CloudFront VPC Origin からのみ受信）
+# ingress は aws_security_group_rule で管理（SG のルール数上限に当たらないよう、追加のみ）
 resource "aws_security_group" "alb" {
   name        = "${var.name_prefix}alb-sg"
   description = "Security group for ALB"
   vpc_id      = var.vpc_id
-
-  # HTTP
-  ingress {
-    description = "HTTP"
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  # HTTPS
-  ingress {
-    description = "HTTPS"
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
 
   egress {
     description = "Allow all outbound traffic"
@@ -36,6 +27,17 @@ resource "aws_security_group" "alb" {
       Name = "${var.name_prefix}alb-sg"
     }
   )
+}
+
+# ALB SG: HTTP/HTTPS（CloudFront VPC Origin からのみ・1 ルールで 80/443 を許可し SG 上限 60 件対策）
+resource "aws_security_group_rule" "alb_http_https" {
+  type              = "ingress"
+  description       = "HTTP/HTTPS from CloudFront VPC Origin"
+  from_port         = 80
+  to_port           = 443
+  protocol          = "tcp"
+  security_group_id = aws_security_group.alb.id
+  prefix_list_ids   = [data.aws_ec2_managed_prefix_list.cloudfront_origin.id]
 }
 
 # API ECS用セキュリティグループ

@@ -1,0 +1,109 @@
+<mxfile host="65bd71144e">
+  <diagram id="private-alb-cf" name="Private ALB + CloudFront VPC Origins">
+    <mxGraphModel dx="900" dy="600" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <!-- タイトル -->
+        <mxCell id="title" value="Private ALB + CloudFront VPC Origins 構成" style="text;html=1;fontSize=16;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="380" y="20" width="400" height="30" as="geometry"/>
+        </mxCell>
+        <!-- Internet -->
+        <mxCell id="internet" value="Internet&#xa;(ユーザー)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;strokeColor=#232F3E;fillColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.internet;" vertex="1" parent="1">
+          <mxGeometry x="540" y="80" width="90" height="90" as="geometry"/>
+        </mxCell>
+        <!-- CloudFront -->
+        <mxCell id="cloudfront" value="CloudFront&#xa;Distribution&#xa;(単一の入口)" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=#232F3E;fillColor=#8C4FFF;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.cloudfront;" vertex="1" parent="1">
+          <mxGeometry x="535" y="220" width="100" height="100" as="geometry"/>
+        </mxCell>
+        <!-- VPC Origin (説明) -->
+        <mxCell id="vpc-origin-label" value="VPC Origin&#xa;(Private ALB へ接続)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1F5FE;strokeColor=#0277BD;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="505" y="360" width="160" height="50" as="geometry"/>
+        </mxCell>
+        <!-- VPC 枠 -->
+        <mxCell id="vpc-box" value="VPC (10.0.0.0/16)" style="points=[[0,0],[0.25,0],[0.5,0],[0.75,0],[1,0],[1,0.25],[1,0.5],[1,0.75],[1,1],[0.75,1],[0.5,1],[0.25,1],[0,1],[0,0.75],[0,0.5],[0,0.25]];outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=12;fontStyle=1;container=1;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_vpc2;strokeColor=#8C4FFF;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontColor=#AAB7B8;dashed=0;" vertex="1" parent="1">
+          <mxGeometry x="200" y="450" width="760" height="320" as="geometry"/>
+        </mxCell>
+        <!-- Private Subnet -->
+        <mxCell id="private-subnet" value="Private Subnet (10.0.2.0/24, 10.0.3.0/24)&#xa;ALB はここに配置・インターネットから直接アクセス不可" style="points=[[0,0],[0.25,0],[0.5,0],[0.75,0],[1,0],[1,0.25],[1,0.5],[1,0.75],[1,1],[0.75,1],[0.5,1],[0.25,1],[0,1],[0,0.75],[0,0.5],[0,0.25]];outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=11;container=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_security_group;grStroke=0;strokeColor=#00A4A6;fillColor=#E6F6F7;verticalAlign=top;align=left;spacingLeft=30;fontColor=#147EBA;dashed=0;" vertex="1" parent="1">
+          <mxGeometry x="220" y="480" width="340" height="270" as="geometry"/>
+        </mxCell>
+        <!-- Private ALB -->
+        <mxCell id="alb" value="Application&#xa;Load Balancer&#xa;(Internal = true)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#8C4FFF;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=10;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.application_load_balancer;" vertex="1" parent="1">
+          <mxGeometry x="330" y="550" width="120" height="120" as="geometry"/>
+        </mxCell>
+        <!-- ALB SG -->
+        <mxCell id="alb-sg" value="alb-sg&#xa;CloudFront マネージド&#xa;プレフィックスリストのみ許可" style="fillColor=none;strokeColor=#DD3522;verticalAlign=top;fontStyle=0;fontColor=#DD3522;whiteSpace=wrap;html=1;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="320" y="690" width="140" height="50" as="geometry"/>
+        </mxCell>
+        <!-- Public Subnet -->
+        <mxCell id="public-subnet" value="Public Subnet&#xa;(ECS Fargate Tasks)" style="points=[[0,0],[0.25,0],[0.5,0],[0.75,0],[1,0],[1,0.25],[1,0.5],[1,0.75],[1,1],[0.75,1],[0.5,1],[0.25,1],[0,1],[0,0.75],[0,0.5],[0,0.25]];outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=11;container=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_security_group;grStroke=0;strokeColor=#7AA116;fillColor=#F2F6E8;verticalAlign=top;align=left;spacingLeft=30;fontColor=#248814;dashed=0;" vertex="1" parent="1">
+          <mxGeometry x="600" y="480" width="340" height="270" as="geometry"/>
+        </mxCell>
+        <!-- API TG -->
+        <mxCell id="api-tg" value="api-tg&#xa;(/api/*)" style="fillColor=none;strokeColor=#6666FF;verticalAlign=top;fontStyle=0;fontColor=#6666FF;whiteSpace=wrap;html=1;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="620" y="520" width="100" height="60" as="geometry"/>
+        </mxCell>
+        <!-- Console TG -->
+        <mxCell id="console-tg" value="console-tg&#xa;(/*)" style="fillColor=none;strokeColor=#6666FF;verticalAlign=top;fontStyle=0;fontColor=#6666FF;whiteSpace=wrap;html=1;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="780" y="520" width="100" height="60" as="geometry"/>
+        </mxCell>
+        <!-- ECS API -->
+        <mxCell id="ecs-api" value="ECS Task&#xa;(API)" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=#232F3E;fillColor=#ED7100;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=10;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.ecs;" vertex="1" parent="1">
+          <mxGeometry x="630" y="610" width="80" height="80" as="geometry"/>
+        </mxCell>
+        <!-- ECS Console -->
+        <mxCell id="ecs-console" value="ECS Task&#xa;(Console)" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=#232F3E;fillColor=#ED7100;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=10;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.ecs;" vertex="1" parent="1">
+          <mxGeometry x="790" y="610" width="80" height="80" as="geometry"/>
+        </mxCell>
+        <!-- RDS (Private) -->
+        <mxCell id="rds" value="" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=#232F3E;fillColor=#C925D1;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.aurora;" vertex="1" parent="1">
+          <mxGeometry x="720" y="720" width="70" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="rds-label" value="RDS / Aurora" style="text;html=1;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="715" y="795" width="80" height="20" as="geometry"/>
+        </mxCell>
+        <!-- 矢印: Internet -> CloudFront -->
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="internet" target="cloudfront">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <!-- 矢印: CloudFront -> VPC Origin -->
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="cloudfront" target="vpc-origin-label">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <!-- 矢印: VPC Origin -> ALB -->
+        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="vpc-origin-label" target="alb">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <!-- 矢印: ALB -> TG -->
+        <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="alb" target="api-tg">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="520" y="610"/>
+              <mxPoint x="670" y="550"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="alb" target="console-tg">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="520" y="610"/>
+              <mxPoint x="830" y="550"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <!-- 矢印: TG -> ECS -->
+        <mxCell id="e6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="api-tg" target="ecs-api">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="console-tg" target="ecs-console">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <!-- 凡例 -->
+        <mxCell id="legend" value="・ALB は Private（internal=true）のためインターネットから直接アクセス不可&#xa;・CloudFront VPC Origin 経由でのみ ALB に到達可能 → 単一の入口で保護&#xa;・アクセス時は CloudFront の URL (https://xxxxx.cloudfront.net) を使用" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF9C4;strokeColor=#F9A825;fontSize=10;align=left;spacingLeft=10;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="220" y="780" width="720" height="60" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

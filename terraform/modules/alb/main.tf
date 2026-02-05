@@ -1,7 +1,7 @@
-# ALB作成
+# ALB作成（Private ALB: CloudFront VPC Origin 経由でのみアクセス可能）
 resource "aws_lb" "main" {
   name               = "${var.name_prefix}alb"
-  internal           = false
+  internal           = true
   load_balancer_type = "application"
   security_groups    = [var.security_group_id]
   subnets            = var.subnets

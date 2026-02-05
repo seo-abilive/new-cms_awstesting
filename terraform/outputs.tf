@@ -1,12 +1,23 @@
-# APIエンドポイントURL（demo/で使用）
+# APIエンドポイントURL（demo/で使用、CloudFront 経由）
 output "api_endpoint_url" {
-  description = "APIエンドポイントURL（demo/で使用）"
-  value       = var.api_url != "" ? "${var.api_url}v1/" : "http://${module.alb.dns_name}/api/v1/"
+  description = "APIエンドポイントURL（CloudFront 経由）"
+  value       = "${local.effective_api_url}v1/"
 }
 
-# ALB DNS名
+# CloudFront URL（ブラウザでアクセスする際はこちらを使用）
+output "cloudfront_url" {
+  description = "CloudFront 配信 URL（アプリの入口）"
+  value       = module.cloudfront.url_http
+}
+
+output "cloudfront_domain_name" {
+  description = "CloudFront ドメイン名"
+  value       = module.cloudfront.domain_name
+}
+
+# ALB DNS名（Private のため直接アクセス不可、CloudFront 経由のみ）
 output "alb_dns_name" {
-  description = "ALB DNS名（ブラウザでアクセス可能）"
+  description = "ALB DNS名（参考・Private のため直接アクセス不可）"
   value       = module.alb.dns_name
 }
 
