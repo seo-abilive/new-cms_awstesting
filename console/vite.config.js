@@ -12,6 +12,8 @@ export default defineConfig(({ mode }) => {
             alias: {
                 '@': '/src',
             },
+            // React が二重にバンドルされると #311 (Invalid hook call) が発生するため、単一インスタンスに統一
+            dedupe: ['react', 'react-dom', 'react-router', 'react-router-dom'],
         },
         plugins: [
             react(),
