@@ -17,4 +17,9 @@ require __DIR__.'/../vendor/autoload.php';
 /** @var Application $app */
 $app = require_once __DIR__.'/../bootstrap/app.php';
 
+// 連続スラッシュを1つに正規化（例: /api//sanctum/csrf-cookie → /api/sanctum/csrf-cookie）
+if (isset($_SERVER['REQUEST_URI'])) {
+    $_SERVER['REQUEST_URI'] = preg_replace('#/+#', '/', $_SERVER['REQUEST_URI']);
+}
+
 $app->handleRequest(Request::capture());

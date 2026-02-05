@@ -20,13 +20,18 @@ return [
     'allowed_methods' => ['*'],
 
     // 資格情報付き(Cookie)リクエストではワイルドカード不可。フロントのオリジンを明示
-    'allowed_origins' => [
-        'http://localhost:5173',
-        'http://localhost:8000',
-        'http://new-cms-main-alb-1834578746.ap-northeast-1.elb.amazonaws.com',
-    ],
+    // CORS_EXTRA_ORIGINS は Terraform 等で CloudFront URL などを追加（カンマ区切り）
+    'allowed_origins' => array_values(array_filter(array_merge(
+        [
+            'http://localhost:5173',
+            'http://localhost:8000',
+            'http://new-cms-main-alb-1834578746.ap-northeast-1.elb.amazonaws.com',
+        ],
+        explode(',', (string) env('CORS_EXTRA_ORIGINS', ''))
+    ))),
 
-    'allowed_origins_patterns' => [],
+    // CloudFront など https://*.cloudfront.net を許可
+    'allowed_origins_patterns' => ['#^https?://[a-z0-9-]+\\.cloudfront\\.net$#i'],
 
     'allowed_headers' => ['*'],
 
