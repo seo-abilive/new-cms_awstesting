@@ -17,6 +17,8 @@ $sanctumCsrfCookieHandler = function (\Illuminate\Http\Request $request) {
     if (!$request->hasSession()) {
         $request->session()->start();
     }
+    // 複数インスタンス時はログインリクエスト前にセッションを永続化するため明示保存
+    $request->session()->save();
     $token = $request->session()->token();
     $response = response()->json(['message' => 'CSRF cookie set'], 200);
     // XSRF-TOKEN クッキー（SameSite=None, Secure で CloudFront 経由でも動作）
