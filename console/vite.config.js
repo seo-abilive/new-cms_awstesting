@@ -12,8 +12,6 @@ export default defineConfig(({ mode }) => {
             alias: {
                 '@': '/src',
             },
-            // React が二重にバンドルされると #311 (Invalid hook call) が発生するため、単一インスタンスに統一
-            dedupe: ['react', 'react-dom', 'react-router', 'react-router-dom'],
         },
         plugins: [
             react(),
@@ -35,9 +33,8 @@ export default defineConfig(({ mode }) => {
             // ECS Fargate 上で npm run preview を起動するための設定
             host: '0.0.0.0',
             port: 4173, // 実際のポートは Dockerfile の CMD 引数(--port 80)で上書きされる
-            // ALB 経由・CloudFront VPC Origin 経由のアクセスを許可
-            // （VPC Origin 時は Host が origin の domain_name になる）
-            allowedHosts: ['.ap-northeast-1.elb.amazonaws.com', 'vpc-origin.cloudfront.net', '.cloudfront.net'],
+            // ALB 経由のアクセスを許可（東京リージョンのELBドメインをワイルドカードで許可）
+            allowedHosts: ['.ap-northeast-1.elb.amazonaws.com'],
             strictPort: false,
             cors: true,
         },
