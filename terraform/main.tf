@@ -18,9 +18,12 @@ provider "aws" {
 # ローカル値: name_prefixをaws_prefixとgithub_branchから動的に生成
 locals {
   name_prefix = var.name_prefix != "" ? var.name_prefix : "${var.aws_prefix}-${var.github_branch}-"
-  # CloudFront 経由をデフォルトとする（api_url 未設定時）
-  effective_api_url     = var.api_url != "" ? var.api_url : "${module.cloudfront.url_http}/api/"
-  effective_frontend_url = var.frontend_url != "" ? var.frontend_url : (var.api_url != "" ? replace(var.api_url, "/api", "") : module.cloudfront.url_http)
+  # CloudFront 経由をデフォルトとする（api_url 未設定時）。末尾スラッシュなしで /sanctum/csrf-cookie 等が .../api/sanctum/... になるよう
+  effective_api_url     = var.api_url != "" ? var.api_url : "${module.cloudfront.url}/api"
+  effective_frontend_url = var.frontend_url != "" ? var.frontend_url : (var.api_url != "" ? replace(var.api_url, "/api", "") : module.cloudfront.url)
+  # CloudFront 利用時: セッション・Sanctum 用ドメイン（ブラウザが *.cloudfront.net でアクセスするため）
+  session_domain_cloudfront     = ".cloudfront.net"
+  sanctum_stateful_domains_cf  = "localhost,localhost:3000,127.0.0.1,127.0.0.1:8000,::1,${module.cloudfront.domain_name}"
 }
 
 # VPCモジュール
@@ -232,12 +235,14 @@ module "ecs" {
         DB_USERNAME   = var.db_username
         DB_PASSWORD   = var.db_password
 
-        # セッション設定（.envから参照）
-        SESSION_DRIVER   = "database" # データベースを使用（.envから参照）
-        SESSION_LIFETIME = "120"
-        SESSION_ENCRYPT  = "false"
-        SESSION_PATH     = "/"
-        SESSION_DOMAIN   = "null"
+        # セッション設定（.envから参照）。CloudFront 経由時はクッキーを *.cloudfront.net で共有
+        SESSION_DRIVER      = "database" # データベースを使用（.envから参照）
+        SESSION_LIFETIME    = "120"
+        SESSION_ENCRYPT     = "false"
+        SESSION_PATH        = "/"
+        SESSION_DOMAIN      = "null" # CloudFront 経由時も null で同一ドメイン（d11krg2ovm7i9g.cloudfront.net）にクッキー設定
+        SESSION_SECURE_COOKIE = var.api_url != "" ? "false" : "true"
+        SESSION_SAME_SITE   = var.api_url != "" ? "lax" : "none"
 
         # ブロードキャスト・ファイルシステム・キュー設定（.envから参照）
         BROADCAST_CONNECTION = "log"
@@ -278,7 +283,8 @@ module "ecs" {
         LOGIN_MAX_ATTEMPTS     = var.login_max_attempts != "" ? var.login_max_attempts : "5"
         LOGIN_LOCKOUT_DURATION = var.login_lockout_duration != "" ? var.login_lockout_duration : "15"
       },
-      { APP_URL = local.effective_api_url }
+      { APP_URL = local.effective_api_url },
+      var.api_url != "" ? {} : { SANCTUM_STATEFUL_DOMAINS = local.sanctum_stateful_domains_cf }
     )
   }
 
