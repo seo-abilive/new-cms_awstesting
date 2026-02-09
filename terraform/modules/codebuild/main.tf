@@ -180,7 +180,7 @@ phases:
       - |
         # BaseイメージをECRに保存（Docker Hub rate limit回避）
         BASE_IMAGE_REPO=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/${var.name_prefix}base-images
-        BASE_IMAGE="node:20"
+        BASE_IMAGE="public.ecr.aws/docker/library/node:20"
         BASE_IMAGE_TAG="node-20"
         # ECRにイメージが存在するか確認
         if ! aws ecr describe-images --repository-name ${var.name_prefix}base-images --image-ids imageTag=$BASE_IMAGE_TAG --region $AWS_DEFAULT_REGION 2>/dev/null; then
@@ -247,7 +247,8 @@ phases:
           BASE_IMAGE_URI=$BASE_IMAGE_REPO:node-20
           echo "ECR base-imagesを使用: $BASE_IMAGE_URI"
         else
-          BASE_IMAGE_URI=node:20
+          # Docker Hub の rate limit を避けるため、Public ECR を使用する
+          BASE_IMAGE_URI=public.ecr.aws/docker/library/node:20
           echo "ECR base-imagesが存在しないため、Docker Hubから取得を試行: $BASE_IMAGE_URI"
         fi
         docker build --build-arg BASE_IMAGE=$BASE_IMAGE_URI -t $REPOSITORY_URI:latest -t $REPOSITORY_URI:$IMAGE_TAG -f Dockerfile .
